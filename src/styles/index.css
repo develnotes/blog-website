@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+body.blog {
+  background-color: lightgoldenrodyellow;
+}
+
+.container.blog {
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.blog {
+  color: midnightblue;
+}
+
+.blog .header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.blog .header__title {
+  font-size: 3rem;
+}
+.blog .header__nav {
+  flex-grow: 1;
+}
+.blog .header__nav__menu {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+.blog .header__nav__menu__item {
+  margin: 1rem 2rem;
+  font-size: 2rem;
+}
+.blog .header__nav__menu__item__link {
+  text-decoration: none;
+}
+
+body.dashboard {
+  background-color: whitesmoke;
+}
+
+.container.dashboard {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard .header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.dashboard .header__title {
+  font-size: 3rem;
+}
+.dashboard .header__nav {
+  flex-grow: 1;
+}
+.dashboard .header__nav__menu {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+.dashboard .header__nav__menu__item {
+  margin: 1rem 2rem;
+  font-size: 2rem;
+}
+.dashboard .header__nav__menu__item__link {
+  text-decoration: none;
+}
+
+.dashboard-home {
+  flex-grow: 1;
+}
+
+.write-page {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.create {
+  width: 98%;
+  max-width: 75rem;
+}
+.create__title {
+  margin-bottom: 1rem;
+}
+.create__title__input {
+  width: 100%;
+  height: 4rem;
+  font-size: 2rem;
+}
+.create__body {
+  margin-bottom: 1rem;
+}
+.create__button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: darkslateblue;
+  color: azure;
+  cursor: pointer;
+}
+.create__button:hover {
+  background-color: rgba(72, 61, 139, 0.85);
+}
+
+.posts__list__item {
+  margin: 2rem;
+  list-style: none;
+  font-size: 1.4rem;
+}
+
+.post__title {
+  font-size: 2.2rem;
+}
+
+/*# sourceMappingURL=index.css.map */

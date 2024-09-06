@@ -1,0 +1,104 @@
+body.dashboard {
+    background-color: whitesmoke;
+}
+
+.container.dashboard {
+    min-height: 100vh;
+    width: 100vw;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard .header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    &__title {
+        font-size: 3rem;
+    }
+
+    &__nav {
+        flex-grow: 1;
+
+        &__menu {
+            display: flex;
+            justify-content: center;
+
+            list-style: none;
+
+            &__item {
+                margin: 1rem 2rem;
+                font-size: 2rem;
+
+                &__link {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
+
+.dashboard-home {
+    flex-grow: 1;
+}
+
+.write-page {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create {
+    width: 98%;
+    max-width: 75rem;
+
+    &__title {
+        margin-bottom: 1rem;
+
+        &__input {
+            width: 100%;
+            height: 4rem;
+
+            font-size: 2rem;
+        }
+    }
+
+    &__body {
+        margin-bottom: 1rem;
+    }
+
+    &__button {
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 0.5rem;
+        background-color: darkslateblue;
+        color: azure;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba($color: darkslateblue, $alpha: 0.85);
+        }
+    }
+}
+
+.posts {
+    &__list {
+        &__item {
+            margin: 2rem;
+            list-style: none;
+            font-size: 1.4rem;
+        }
+    }
+}
+
+
+.post {
+
+    &__title {
+        font-size: 2.2rem;
+    }
+}
