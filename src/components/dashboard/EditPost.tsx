@@ -3,18 +3,20 @@
 import { Editor } from "@/quill/editor/Editor";
 import { useQuill } from "@/quill/context/QuillContext";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Post } from "@prisma/client";
 import { SelectPostImage } from "./SelectPostImage";
 import * as actions from "@/actions"
 import { TitleInput } from "./TitleInput";
 import { useFormState, useFormStatus } from "react-dom";
+import { IconAsterisk, IconCheck } from "@tabler/icons-react";
 
 export const EditPost = ({ post }: { post: Post }) => {
 
     const [image, setImage] = useState<string>(post.image || "");
     const [title, setTitle] = useState<string>(post.title);
+    const [edited, setEdited] = useState<boolean>(false);
     const quill = useQuill();
 
     const initialFormState: actions.FormState = {
@@ -34,12 +36,28 @@ export const EditPost = ({ post }: { post: Post }) => {
 
         return (
             <button
-                disabled={pending}
+                disabled={pending || !edited}
                 className="button button__submit">
-                {pending ? "Saving..." : "Save"}
+                {
+                    pending ?
+                        "Saving..." :
+                        edited ? <span>Save <IconAsterisk size={12} /></span> : <span>Saved  <IconCheck size={12}/></span>
+                }
             </button>
         );
     };
+
+    useEffect(() => {
+
+        console.log(`${title} - ${post.title}`);
+        if (quill.contents === post.body && title === post.title && image === post.image) {
+            console.log("Saved");
+            setEdited(false);
+        } else {
+            console.log("Edited");
+            setEdited(true);
+        }
+    }, [quill.contents, post.body, title, post.title, image, post.image]);
 
     return (
         <div className="edit">
