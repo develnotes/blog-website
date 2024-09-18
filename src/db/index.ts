@@ -28,7 +28,7 @@ export const create = async ({ data }: { data: Post }) => {
     }
 };
 
-/* Trying out this cached version of fetch... */
+/* Cached version... */
 export const fetch = cache(async () => {
     console.log("fetching data...");
     const posts = await prisma.post.findMany({ orderBy: { createdAt: "desc" } });
@@ -36,6 +36,7 @@ export const fetch = cache(async () => {
     return posts as Posts;
 });
 
+/* Cached version... */
 export const fetchPost = cache(async (slug: string) => {
 
     console.log("fetchin post of slug " + slug);

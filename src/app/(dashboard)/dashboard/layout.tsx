@@ -3,7 +3,6 @@ import { Header } from "@/components/dashboard/Header";
 
 import "@/styles/index.css";
 import { SideMenu } from "@/components/dashboard/SideMenu";
-import { Locator } from "@/components/dashboard/Locator";
 
 export const metadata: Metadata = {
 	title: "Blog Dashboard",
