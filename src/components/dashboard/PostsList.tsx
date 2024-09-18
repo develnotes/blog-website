@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Loader } from "./Loader";
 import { useState } from "react";
 import Image from "next/image";
+import { paths } from "@/app/paths";
 
 export const PostsList = ({ posts }: { posts: Post[] }) => {
 
@@ -30,13 +31,13 @@ export const PostsList = ({ posts }: { posts: Post[] }) => {
                                         <Link
                                             className="posts__list__item__view-link"
                                             onClick={() => setLoading(true)}
-                                            href={`/dashboard/posts/${post.slug}`}>
+                                            href={paths.dashboard.post(post.slug)}>
                                             View
                                         </Link>
                                         <Link
                                             className="posts__list__item__edit-link"
                                             onClick={() => setLoading(true)}
-                                            href={`/dashboard/posts/${post.slug}/edit`}>
+                                            href={paths.dashboard.editPost(post.slug)}>
                                             Edit
                                         </Link>
                                     </div>

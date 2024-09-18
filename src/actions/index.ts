@@ -1,5 +1,6 @@
 "use server";
 
+import { paths } from "@/app/paths";
 import * as db from "@/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -61,7 +62,7 @@ export async function createPost(formState: FormState, postData: PostData) {
 
         await db.create({ data });
 
-        revalidatePath("/dashboard/posts");
+        revalidatePath(paths.dashboard.posts());
 
     } catch (err) {
 
@@ -124,8 +125,8 @@ export async function updatePost(formState: FormState, updateData: UpdateData) {
 
         await db.update({ slug, data });
 
-        revalidatePath(`/dashboard/posts/${slug}`);
-        revalidatePath(`/dashboard/posts/${slug}/edit`);
+        revalidatePath(paths.dashboard.post(slug));
+        revalidatePath(paths.dashboard.editPost(slug));
 
     } catch (err) {
 

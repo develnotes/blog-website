@@ -5,6 +5,7 @@ import { IconHome, IconNews, IconTextPlus } from "@tabler/icons-react";
 import { appLogo, appName } from "@/config";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
+import { paths } from "@/app/paths";
 
 export const SideMenu = () => {
     return (
@@ -36,7 +37,7 @@ export const Menu = ({ show, setShow }: { show?: boolean, setShow?: React.Dispat
                         "dashboard__side-menu__nav__menu__item"}>
                         <Link 
                             className="dashboard__side-menu__nav__menu__item__link" 
-                            href={"/dashboard"} 
+                            href={paths.dashboard.home()} 
                             onClick={() => setShow && setShow(false)}>
                             <IconHome />
                             <div className="dashboard__side-menu__nav__menu__item__link__text">
@@ -49,7 +50,7 @@ export const Menu = ({ show, setShow }: { show?: boolean, setShow?: React.Dispat
                         "dashboard__side-menu__nav__menu__item"}>
                         <Link 
                             className="dashboard__side-menu__nav__menu__item__link" 
-                            href={"/dashboard/write"}
+                            href={paths.dashboard.write()}
                             onClick={() => setShow && setShow(false)}>
                             <IconTextPlus />
                             <div className={"dashboard__side-menu__nav__menu__item__link__text"}>
@@ -62,7 +63,7 @@ export const Menu = ({ show, setShow }: { show?: boolean, setShow?: React.Dispat
                         "dashboard__side-menu__nav__menu__item"}>
                         <Link 
                             className="dashboard__side-menu__nav__menu__item__link" 
-                            href={"/dashboard/posts"}
+                            href={paths.dashboard.posts()}
                             onClick={() => setShow && setShow(false)}>
                             <IconNews />
                             <div className="dashboard__side-menu__nav__menu__item__link__text">
@@ -73,7 +74,7 @@ export const Menu = ({ show, setShow }: { show?: boolean, setShow?: React.Dispat
                     <li className="dashboard__side-menu__nav__menu__item">
                         <Link 
                             className="dashboard__side-menu__nav__menu__item__link" 
-                            href={"/"}
+                            href={paths.blog.home()}
                             onClick={() => setShow && setShow(false)}>
                             Blog
                         </Link>

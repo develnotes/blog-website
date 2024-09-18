@@ -1,5 +1,6 @@
 "use client"
 
+import { paths } from "@/app/paths";
 import { Editor } from "@/quill/editor/Editor";
 import { Post } from "@prisma/client";
 import { IconEdit } from "@tabler/icons-react";
@@ -28,7 +29,7 @@ export const ShowPost = ({ post }: { post: Post }) => {
                     {post.title}
                 </div>
 
-                <Link className="post__edit-button" href={`/dashboard/posts/${post.slug}/edit`}>
+                <Link className="post__edit-button" href={paths.dashboard.editPost(post.slug)}>
                     <IconEdit />
                     <div className="post__edit-button__text">Edit</div>
                 </Link>

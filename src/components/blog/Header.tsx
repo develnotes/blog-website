@@ -1,3 +1,4 @@
+import { paths } from "@/app/paths";
 import { appName } from "@/config";
 import Link from "next/link";
 
@@ -10,12 +11,12 @@ export const Header = () => {
             <nav className="header__nav">
                 <ul className="header__nav__menu">
                     <li className="header__nav__menu__item">
-                        <Link className="header__nav__menu__item__link" href={"/"}>
+                        <Link className="header__nav__menu__item__link" href={paths.blog.home()}>
                             Home
                         </Link>
                     </li>
                     <li className="header__nav__menu__item">
-                        <Link className="header__nav__menu__item__link" href={"/posts"}>
+                        <Link className="header__nav__menu__item__link" href={paths.blog.posts()}>
                             Posts
                         </Link>
                     </li>
