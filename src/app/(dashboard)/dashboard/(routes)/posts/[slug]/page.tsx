@@ -1,8 +1,11 @@
 import "@/quill/css/bubble.css";
 
+/* Import QuillContext dynamically */
 import dynamic from "next/dynamic";
 const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr: false });
-import { QuillOptions } from "quill";
+
+/* Import Quill types re-exported from QuillContext  */
+import type { QuillOptions } from "@/quill/context/QuillContext";
 
 import { ShowPost } from "@/components/dashboard/ShowPost";
 import { appName } from "@/config";

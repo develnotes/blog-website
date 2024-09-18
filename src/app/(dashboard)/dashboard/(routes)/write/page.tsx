@@ -1,13 +1,16 @@
 import "@/quill/css/snow.css";
 
+/* Import QuillContext dynamically to prevent document issue */
 import dynamic from "next/dynamic";
 const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr: false });
-import { QuillOptions } from "quill";
-import { ToolbarConfig } from "quill/modules/toolbar";
+
+/* Import Quill types re-exported from QuillContext  */
+import type { QuillOptions, ToolbarConfig } from "@/quill/context/QuillContext";
 
 import { CreatePost } from "@/components/dashboard/CreatePost";
 
 import { appName } from "@/config";
+
 
 import { Metadata } from "next";
 

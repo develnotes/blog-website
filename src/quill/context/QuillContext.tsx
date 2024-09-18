@@ -10,11 +10,19 @@ import hljs from "highlight.js";
 
 /* Quill */
 import Quill, { QuillOptions } from "quill";
+
+/* Import and register blots */
 import ImageBlot from "../customModules/ImageBlot";
 Quill.register(ImageBlot);
+
+/* Import handlers */
 import { imageHandler } from "../customHandlers/imageHandler";
+
 import Toolbar from "quill/modules/toolbar";
 
+export { Quill };
+export type { QuillOptions };
+export type { ToolbarConfig } from "quill/modules/toolbar";
 
 type ContextType = {
     editorRef: RefObject<HTMLDivElement> | null,
