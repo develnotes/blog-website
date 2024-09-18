@@ -1,10 +1,9 @@
-import "@/styles/index.css";
-
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Header } from "@/components/dashboard/Header";
 
-const inter = Inter({ subsets: ["latin"] });
+import "@/styles/index.css";
+import { SideMenu } from "@/components/dashboard/SideMenu";
+import { Locator } from "@/components/dashboard/Locator";
 
 export const metadata: Metadata = {
 	title: "Blog Dashboard",
@@ -18,10 +17,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={inter.className + " dashboard"}>
+			<body className="dashboard">
 				<div className="container dashboard">
-					<Header />
-					{children}
+					<SideMenu />
+					<div className="dashboard__main">
+						<Header />
+						{children}
+					</div>
 				</div>
 			</body>
 		</html>

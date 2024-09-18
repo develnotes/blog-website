@@ -18,4 +18,7 @@ model Post {
     slug  String @unique
     title String
     body  String
+    image String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }

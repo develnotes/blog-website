@@ -1,109 +1,70 @@
 "use client"
 
-import "@/quill/css/snow.css";
-import "@/quill/css/bubble.css";
-import "@/quill/css/styles.css";
+import { useState } from "react";
+import { useQuill } from "@/quill/context/QuillContext";
+import { Editor } from "@/quill/editor/Editor";
+import * as actions from '@/actions';
+import { SelectPostImage } from "./SelectPostImage";
+import { TitleInput } from "./TitleInput";
+import { useFormState, useFormStatus } from "react-dom";
 
-import Quill, { QuillOptions } from "quill";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { create, Post } from "@/db";
+export const CreatePost = () => {
 
-export const CreatePost = ({
-    readOnly=false,
-    theme,
-    placeholder
-}: {
-    readOnly?: boolean,
-    theme: "snow" | "bubble",
-    placeholder?: string
-}) => {
-
-    const editorRef = useRef<HTMLDivElement>(null);
-    const quillRef = useRef<Quill>();
-
+    const [image, setImage] = useState<string>("");
     const [title, setTitle] = useState<string>("");
-    const [body, setBody] = useState<string>("");
+    const quill = useQuill();
 
-    useEffect(() => {
-        const toolbarOptions = [
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-            ['blockquote', 'code-block'],
-            ['link', 'image', 'video', 'formula'],
+    const initialFormState: actions.FormState = {
+        contentsMessage: "",
+        imageMessage: "",
+        titleMessage: "",
+        errorMessage: "",
+    }
 
-            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
-            [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-            [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-            [{ 'direction': 'rtl' }],                         // text direction
+    const createPostAction = actions.createPost.bind(null, initialFormState, { contents: quill.contents, image, title });
 
-            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+    const [state, action] = useFormState(createPostAction, initialFormState);
 
-            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-            [{ 'font': [] }],
-            [{ 'align': [] }],
-
-            ['clean']                                         // remove formatting button
-        ];
-
-        const options: QuillOptions = {
-            readOnly,
-            theme,
-            placeholder,
-            modules: {
-                toolbar: toolbarOptions
-            }
-        };
-
-        const currentEditorRef = editorRef.current;
-
-        if (!quillRef.current) {
-            if (currentEditorRef) {
-                quillRef.current = new Quill(currentEditorRef, options);
-            }
-        }
-    }, [theme, placeholder, readOnly]);
-
-    useEffect(() => {
-        if (quillRef.current) {
-            quillRef.current.on("text-change", () => {
-                const deltaString = JSON.stringify(quillRef.current && quillRef.current.getContents());
-                setBody(deltaString);
-            });
-        }
-    }, []);
-
-    const createPost = useCallback(() => {
-        const data: Post = {
-            body,
-            slug: title.split(" ").join("-").toLowerCase(),
-            title
-        }
-
-        console.log(data);
-
-        create({data})
-            .then(() => {
-                console.log("Post created!");
-            })
-            .catch(err => console.log(err));
-    }, [body, title]);
+    const ButtonSubmit = () => {
+        const { pending } = useFormStatus();
+        return (
+            <button
+                type="submit"
+                disabled={pending}
+                className="button button__submit">
+                {pending ? "Creating" : "Create"} Post {pending && "..."}
+            </button>
+        );
+    }
 
     return (
         <div className="create">
+
+            <div className="create__image">
+                <div className="create__label">Image</div>
+                <SelectPostImage image={image} setImage={setImage} />
+                {state && state.imageMessage && state.imageMessage}
+            </div>
+
             <div className="create__title">
-                <input
-                    type="text"
-                    name="title"
-                    className="create__title__input"
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
-                />
+                <div className="create__label">Title</div>
+                <TitleInput title={title} setTitle={setTitle} />
+                {state && state.titleMessage && state.titleMessage}
             </div>
+
+            <div className="create__label">Content</div>
             <div className="create__body">
-                <div ref={editorRef}></div>
+                <Editor />
+                {state && state.contentsMessage && state.contentsMessage}
             </div>
-            <button className="button create__button create__button--create" onClick={createPost}>Create Post</button>
+
+            {state && state.errorMessage && state.errorMessage}
+
+            <div className="create__footer">
+                <form className="create__form" action={action}>
+                    <ButtonSubmit />
+                </form>
+            </div>
         </div>
     );
 };

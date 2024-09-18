@@ -1,10 +1,11 @@
+import { appName } from "@/config";
 import Link from "next/link";
 
 export const Header = () => {
     return (
         <header className="header">
             <div className="header__title">
-                Blog Title
+                { appName }
             </div>
             <nav className="header__nav">
                 <ul className="header__nav__menu">

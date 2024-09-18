@@ -1,42 +1,42 @@
 "use client"
 
-import "@/quill/css/bubble.css";
-
+import { Editor } from "@/quill/editor/Editor";
 import { Post } from "@prisma/client";
-import Quill, { QuillOptions } from "quill";
-import { useEffect, useRef } from "react";
+import { IconEdit } from "@tabler/icons-react";
+import Image from "next/image";
+import Link from "next/link";
+
 
 export const ShowPost = ({ post }: { post: Post }) => {
-
-    const editorRef = useRef<HTMLDivElement>(null);
-    const quillRef = useRef<Quill>();
-
-    useEffect(() => {
-        const currentEditorRef = editorRef.current;
-
-        const options: QuillOptions = {
-            readOnly: true,
-            theme: "bubble",
-        };
-
-        if (!quillRef.current) {
-            if (currentEditorRef) {
-                quillRef.current = new Quill(currentEditorRef, options);
-            }
-        }
-
-        if (quillRef.current) {
-            quillRef.current.setContents(JSON.parse(post.body));
-        }
-    }, [post.body]);
 
     return (
         <div className="post">
 
-            <div className="post__title">{post.title}</div>
+            <div className="post__header">
+                {
+                    post.image &&
+                    <Image
+                        className="post__header__image"
+                        src={post.image}
+                        alt="Header image"
+                        fill
+                    />}
+            </div>
+
+            <div className="post__title">
+                <div className="post__title__text">
+                    {post.title}
+                </div>
+
+                <Link className="post__edit-button" href={`/dashboard/posts/${post.slug}/edit`}>
+                    <IconEdit />
+                    <div className="post__edit-button__text">Edit</div>
+                </Link>
+
+            </div>
 
             <div className="post__body">
-                <div ref={editorRef}></div>
+                <Editor />
             </div>
         </div>
     );
