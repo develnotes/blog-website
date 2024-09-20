@@ -1,6 +1,6 @@
 "use client"
 
-import { IconHome, IconNews, IconTextPlus } from "@tabler/icons-react";
+import { IconHome, IconNews, IconTextPlus, IconUserCheck } from "@tabler/icons-react";
 
 import { appLogo, appName } from "@/config";
 import Link from "next/link";
@@ -68,6 +68,19 @@ export const Menu = ({ show, setShow }: { show?: boolean, setShow?: React.Dispat
                             <IconNews />
                             <div className="dashboard__side-menu__nav__menu__item__link__text">
                                 Posts
+                            </div>
+                        </Link>
+                    </li>
+                    <li className={path === "/account" ?
+                        "dashboard__side-menu__nav__menu__item dashboard__side-menu__nav__menu__item--active" :
+                        "dashboard__side-menu__nav__menu__item"}>
+                        <Link 
+                            className="dashboard__side-menu__nav__menu__item__link" 
+                            href={paths.dashboard.account()}
+                            onClick={() => setShow && setShow(false)}>
+                            <IconUserCheck />
+                            <div className="dashboard__side-menu__nav__menu__item__link__text">
+                                Account
                             </div>
                         </Link>
                     </li>

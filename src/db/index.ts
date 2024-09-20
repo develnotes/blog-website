@@ -1,23 +1,28 @@
 "use server"
 
 import { cache } from "react";
-import { PrismaClient, Post as PostWithID } from "@prisma/client";
 
-const prisma = new PrismaClient();
+import { prisma, Post, User } from "@/db/prisma";
 
-export type Post = {
+export type PostData = {
     title: string;
     body: string;
     slug: string;
     image: string;
+    html: string;
+    authorId: string;
 }
 
-export type PostUpdates = { title: string, body: string, image: string }
+export type PostUpdates = { 
+    title: string, 
+    body: string, 
+    image: string, 
+    html: string 
+}
 
-export type Posts = PostWithID[];
+export type Posts = Post[];
 
-export const create = async ({ data }: { data: Post }) => {
-
+export const create = async ({ data }: { data: PostData }) => {
     try {
         await prisma.post.create({ data });
     } catch (e) {
@@ -31,7 +36,9 @@ export const create = async ({ data }: { data: Post }) => {
 /* Cached version... */
 export const fetch = cache(async () => {
     console.log("fetching data...");
-    const posts = await prisma.post.findMany({ orderBy: { createdAt: "desc" } });
+    const posts = await prisma.post.findMany({
+        orderBy: { createdAt: "desc" } 
+    });
     await prisma.$disconnect();
     return posts as Posts;
 });
@@ -44,7 +51,7 @@ export const fetchPost = cache(async (slug: string) => {
         where: { slug }
     });
     await prisma.$disconnect();
-    return post as PostWithID;
+    return post as Post;
 });
 
 export const update = async ({ slug, data }: { slug: string, data: PostUpdates }) => {
@@ -71,4 +78,14 @@ export const checkSlugIsUnique = async (slug: string) => {
     });
 
     return results;
+};
+
+/* User queries */
+export const fetchUser = async (email: string) => {
+
+    const user = await prisma.user.findFirst({
+        where: { email }
+    });
+
+    return user;
 };

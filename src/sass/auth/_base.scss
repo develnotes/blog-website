@@ -1,0 +1,82 @@
+.login {
+    width: 100vw;
+    height: 100vh;
+
+    $tone_1: 30;
+    $tone_2: 80;
+    $color_1: rgba($tone_1, $tone_1, $tone_1, 0.75);
+    $color_2: rgba($tone_2, $tone_2, $tone_2, 0.75);
+    background-color: darkslateblue;
+    background-image: radial-gradient($color_1, $color_2);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__box {
+        background-color: rgba($tone_1, $tone_1, $tone_1, 0.75);
+        padding: 6rem;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .app-name {
+            color: whitesmoke;
+            margin-bottom: 4.5rem;
+            text-align: center;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+
+            .text-before {
+                font-size: 1.4rem;
+                margin-top: 1rem;
+            }
+
+            .text-main {
+                font-size: 4rem;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                justify-content: flex-end;
+            }
+        }
+        .text-after {
+            font-size: 2rem;
+        }
+    }
+
+    &__button {
+        background-color: white;
+        border: none;
+        border: 3px solid black;
+        border-radius: 0.4rem;
+        padding: 1rem 2.5rem;
+        font-size: 1.8rem;
+        font-weight: bold;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+
+        //&__icon {}
+
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba($color: #111111, $alpha: 0.85);
+            color: whitesmoke;
+
+            &__icon {
+                color: whitesmoke;
+            }
+        }
+
+        &:active {
+            transform: translateY(0.1rem);
+        }
+    }
+}

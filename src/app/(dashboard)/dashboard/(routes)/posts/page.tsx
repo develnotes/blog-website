@@ -1,10 +1,9 @@
-export const dynamic = "force-static";
-
 import { PostsList } from "@/components/dashboard/PostsList";
 import { fetch } from "@/db";
 
 import { appName } from "@/config";
 import { Metadata } from "next";
+
 
 export const metadata: Metadata =  {
     title: `${appName} dashboard | Posts`

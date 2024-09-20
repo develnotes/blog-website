@@ -5,12 +5,16 @@ body.dashboard {
     align-items: center;
 }
 
-$header-height: 4.5rem;
+$header-height: 5rem;
 $locator-height: 2.5rem;
 
 .header {
     height: $header-height;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
     //border-bottom: 1px solid darkslateblue;
 }
 
@@ -23,7 +27,7 @@ $locator-height: 2.5rem;
     max-width: 75rem;
 
     border-top: 1px solid darkslateblue;
-    padding-top: .3rem;
+    padding-top: 0.3rem;
 
     &__locations {
         font-size: 1.6rem;
@@ -210,7 +214,8 @@ $locator-height: 2.5rem;
 .write-page,
 .edit-page,
 .show-page,
-.posts-page {
+.posts-page,
+.account-page {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -252,7 +257,7 @@ $locator-height: 2.5rem;
 
         &:disabled {
             cursor: default;
-            background-color: rgba(slateblue, .85);
+            background-color: rgba(slateblue, 0.85);
         }
     }
 }
@@ -324,7 +329,7 @@ $locator-height: 2.5rem;
     &__header {
         display: flex;
         gap: 0.4rem;
-        margin-top: .3rem
+        margin-top: 0.3rem;
     }
 
     &__button {
@@ -409,7 +414,7 @@ $locator-height: 2.5rem;
         overflow: hidden;
         position: relative;
         background-color: lightslategray;
-        
+
         &__image {
             object-fit: cover;
 
@@ -516,5 +521,112 @@ $locator-height: 2.5rem;
                 object-fit: cover;
             }
         }
+    }
+}
+
+.header-widget {
+    width: fit-content;
+
+    &__user-avatar {
+        position: relative;
+        width: 3.8rem;
+        height: 3.8rem;
+        object-fit: fill;
+        border-radius: 100%;
+        overflow: hidden;
+
+        &--no-session {
+            border: 1px solid darkslategray;
+        }
+
+        &__icon {
+            color: darkslategray;
+        }
+
+        cursor: pointer;
+    }
+
+    &__details {
+        position: absolute;
+        width: max-content;
+
+        top: $header-height;
+        right: 1rem;
+        padding: 0.4rem;
+
+        border: 1px solid gray;
+        background-color: white;
+
+        z-index: 10000;
+
+        &__email {
+            font-size: 1.4rem;
+        }
+
+        &__link {
+            width: 100%;
+            text-decoration: none;
+            
+            &__text {
+                width: 100%;
+                font-size: 1.6rem;
+                color: black;
+                padding: 1rem;
+                text-align: center;
+            }
+        }
+
+        &__button {
+            border: none;
+            background-color: transparent;
+            padding: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 750px) {
+        display: none;
+    }
+}
+
+.account {
+
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    margin: 3rem 1rem;
+
+    flex-wrap: wrap;
+
+    &__avatar {
+        position: relative;
+        width: 30rem;
+        height: 30rem;
+        border-radius: 100%;
+        overflow: hidden;
+    }
+
+    &__details {
+
+        flex-grow: 1;
+
+        &__name {
+            font-size: 3rem;
+        }
+
+        &__email {
+            font-size: 2rem;
+        }
+    }
+
+    &__logout {
+        width: 100%;
+        margin-top: 3rem;
+
+        &__button {
+            @include base-button();
+        }
+
     }
 }

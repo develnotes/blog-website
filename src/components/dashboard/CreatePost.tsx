@@ -7,21 +7,28 @@ import * as actions from '@/actions';
 import { SelectPostImage } from "./SelectPostImage";
 import { TitleInput } from "./TitleInput";
 import { useFormState, useFormStatus } from "react-dom";
+import { FormState } from "@/types";
 
-export const CreatePost = () => {
+
+export const CreatePost = ({ authorId }: { authorId: string }) => {
 
     const [image, setImage] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     const quill = useQuill();
 
-    const initialFormState: actions.FormState = {
+    const initialFormState: FormState = {
         contentsMessage: "",
         imageMessage: "",
         titleMessage: "",
         errorMessage: "",
     }
 
-    const createPostAction = actions.createPost.bind(null, initialFormState, { contents: quill.contents, image, title });
+    const createPostAction = actions.createPost.bind(null, initialFormState, {
+        contents: quill.contents,
+        image,
+        title,
+        html: quill.htmlContent,
+    }, authorId);
 
     const [state, action] = useFormState(createPostAction, initialFormState);
 
@@ -39,7 +46,6 @@ export const CreatePost = () => {
 
     return (
         <div className="create">
-
             <div className="create__image">
                 <div className="create__label">Image</div>
                 <SelectPostImage image={image} setImage={setImage} />

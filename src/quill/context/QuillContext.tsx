@@ -27,12 +27,14 @@ export type { ToolbarConfig } from "quill/modules/toolbar";
 type ContextType = {
     editorRef: RefObject<HTMLDivElement> | null,
     contents: string,
+    htmlContent: string,
     loading: boolean,
 };
 
 const defaultValue: ContextType = {
     editorRef: null,
     contents: "",
+    htmlContent: "",
     loading: true,
 };
 
@@ -52,6 +54,7 @@ export default function QuillContext({
     const quillRef = useRef<Quill>();
 
     const [contents, setContents] = useState<string>("");
+    const [htmlContent, setHTMLContent] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -76,6 +79,9 @@ export default function QuillContext({
         const quill = quillRef.current;
 
         const setDeltaString = (quill: Quill) => {
+            const htmlString = JSON.stringify(quill.getSemanticHTML());
+            setHTMLContent(htmlString);
+
             const deltaString = JSON.stringify(quill.getContents());
             setContents(deltaString);
         };
@@ -104,6 +110,7 @@ export default function QuillContext({
         <Context.Provider value={{
             editorRef,
             contents,
+            htmlContent,
             loading,
         }}>
             {children}

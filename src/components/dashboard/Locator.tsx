@@ -8,8 +8,6 @@ export const Locator = () => {
     const segments = useSelectedLayoutSegments();
     const length = segments.length;
 
-    console.log(segments);
-
     return (
         <div className="locator">
             {

@@ -48,6 +48,7 @@ export const PostsList = ({ posts }: { posts: Post[] }) => {
                                         src={post.image || "/mountains-8564328_1280.png"}
                                         alt="mountains"
                                         fill
+                                        sizes="200"
                                     />
                                 </div>
                             </li>

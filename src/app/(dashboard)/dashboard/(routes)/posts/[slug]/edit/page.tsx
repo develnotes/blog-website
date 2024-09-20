@@ -10,9 +10,10 @@ import type { QuillOptions, ToolbarConfig } from "@/quill/context/QuillContext";
 import { EditPost } from "@/components/dashboard/EditPost";
 
 import { appName } from "@/config";
-import { fetch, fetchPost } from "@/db";
+import { fetch, fetchPost, fetchUser } from "@/db";
 
 import { Metadata } from "next";
+import { auth } from "@/auth";
 
 type Props = { params: { slug: string } };
 
@@ -58,6 +59,11 @@ export default async function Page({ params }: Props) {
 
     return (
         <div className="edit-page">
+            <noscript>
+                <div className="no-script-message">
+                    The editor needs Javascript to work. Please activate Javascript in the Browser.
+                </div>
+            </noscript>
             <QuillContext
                 options={options}
                 initialContents={post.body}>
@@ -68,6 +74,7 @@ export default async function Page({ params }: Props) {
 }
 
 export async function generateStaticParams() {
+
     const posts = await fetch();
 
     return posts.map(post => {

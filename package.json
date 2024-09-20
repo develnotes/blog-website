@@ -10,6 +10,7 @@
     "sass": "sass ./src/sass/main.scss ./src/styles/index.css --watch"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.5.0",
     "@prisma/client": "^5.19.1",
     "@tabler/icons": "^3.16.0",
     "@tabler/icons-react": "^3.16.0",
@@ -18,6 +19,7 @@
     "highlight.js": "^11.10.0",
     "interactjs": "^1.10.27",
     "next": "^14.2.12",
+    "next-auth": "^5.0.0-beta.21",
     "parchment": "^3.0.0",
     "prisma": "^5.19.1",
     "quill": "^2.0.2",

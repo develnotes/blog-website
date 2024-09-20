@@ -1,5 +1,3 @@
-"use client"
-
 export const Loader = ({ loading }: { loading: boolean }) => {
 
     if (!loading) {

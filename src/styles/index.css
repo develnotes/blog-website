@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -12,6 +14,80 @@ html {
 
 body {
   box-sizing: border-box;
+}
+
+.no-script-message {
+  margin: 2rem;
+  font-size: 1.4rem;
+}
+
+.login {
+  width: 100vw;
+  height: 100vh;
+  background-color: darkslateblue;
+  background-image: radial-gradient(rgba(30, 30, 30, 0.75), rgba(80, 80, 80, 0.75));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login__box {
+  background-color: rgba(30, 30, 30, 0.75);
+  padding: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.login__box .app-name {
+  color: whitesmoke;
+  margin-bottom: 4.5rem;
+  text-align: center;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.login__box .app-name .text-before {
+  font-size: 1.4rem;
+  margin-top: 1rem;
+}
+.login__box .app-name .text-main {
+  font-size: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.login__box .text-after {
+  font-size: 2rem;
+}
+.login__button {
+  background-color: white;
+  border: none;
+  border: 3px solid black;
+  border-radius: 0.4rem;
+  padding: 1rem 2.5rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+.login__button:hover {
+  background-color: rgba(17, 17, 17, 0.85);
+  color: whitesmoke;
+}
+.login__button:hover__icon {
+  color: whitesmoke;
+}
+.login__button:active {
+  transform: translateY(0.1rem);
+}
+
+.login {
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
 }
 
 body.blog {
@@ -59,8 +135,12 @@ body.dashboard {
 }
 
 .header {
-  height: 4.5rem;
+  height: 5rem;
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .locator {
@@ -222,12 +302,13 @@ body.dashboard {
 .write-page,
 .edit-page,
 .show-page,
-.posts-page {
+.posts-page,
+.account-page {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin: 0 1rem;
-  min-height: calc(100% - 4.5rem - 2.5rem);
+  min-height: calc(100% - 5rem - 2.5rem);
   width: 100%;
   max-width: 75rem;
 }
@@ -494,6 +575,100 @@ body.dashboard {
   width: auto;
   height: auto;
   object-fit: cover;
+}
+
+.header-widget {
+  width: fit-content;
+}
+.header-widget__user-avatar {
+  position: relative;
+  width: 3.8rem;
+  height: 3.8rem;
+  object-fit: fill;
+  border-radius: 100%;
+  overflow: hidden;
+  cursor: pointer;
+}
+.header-widget__user-avatar--no-session {
+  border: 1px solid darkslategray;
+}
+.header-widget__user-avatar__icon {
+  color: darkslategray;
+}
+.header-widget__details {
+  position: absolute;
+  width: max-content;
+  top: 5rem;
+  right: 1rem;
+  padding: 0.4rem;
+  border: 1px solid gray;
+  background-color: white;
+  z-index: 10000;
+}
+.header-widget__details__email {
+  font-size: 1.4rem;
+}
+.header-widget__details__link {
+  width: 100%;
+  text-decoration: none;
+}
+.header-widget__details__link__text {
+  width: 100%;
+  font-size: 1.6rem;
+  color: black;
+  padding: 1rem;
+  text-align: center;
+}
+.header-widget__details__button {
+  border: none;
+  background-color: transparent;
+  padding: 1rem;
+  cursor: pointer;
+  width: 100%;
+}
+@media screen and (max-width: 750px) {
+  .header-widget {
+    display: none;
+  }
+}
+
+.account {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  margin: 3rem 1rem;
+  flex-wrap: wrap;
+}
+.account__avatar {
+  position: relative;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.account__details {
+  flex-grow: 1;
+}
+.account__details__name {
+  font-size: 3rem;
+}
+.account__details__email {
+  font-size: 2rem;
+}
+.account__logout {
+  width: 100%;
+  margin-top: 3rem;
+}
+.account__logout__button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  color: azure;
+  background-color: darkslateblue;
+  cursor: pointer;
+}
+.account__logout__button:hover {
+  background-color: rgba(72, 61, 139, 0.85);
 }
 
 body.dashboard {

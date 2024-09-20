@@ -9,9 +9,10 @@ import type { QuillOptions } from "@/quill/context/QuillContext";
 
 import { ShowPost } from "@/components/dashboard/ShowPost";
 import { appName } from "@/config";
-import { fetch, fetchPost } from "@/db";
+import { fetch, fetchPost, fetchUser } from "@/db";
 
 import { Metadata } from "next";
+import { auth } from "@/auth";
 
 type Props = { params: { slug: string } };
 
@@ -32,8 +33,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
         readOnly: true
     };
 
+
     return (
         <div className="show-page">
+            <noscript>
+                <div className="no-script-message">
+                    You must activate Javascript to visualiize the post
+                </div>
+            </noscript>
             <QuillContext options={options} initialContents={post.body}>
                 <ShowPost post={post} />
             </QuillContext>
@@ -42,6 +49,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 }
 
 export async function generateStaticParams() {
+
     const posts = await fetch();
 
     return posts.map(post => {

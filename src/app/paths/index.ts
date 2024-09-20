@@ -15,6 +15,9 @@ export const paths = {
         },
         editPost(slug: string) {
             return `/dashboard/posts/${slug}/edit`;
+        },
+        account() {
+            return `/dashboard/account`;
         }
     },
 
@@ -28,5 +31,11 @@ export const paths = {
         about() {
             return "/about";
         },
-    }
+    },
+
+    auth: {
+        login() {
+            return "/auth/login";
+        },
+    },
 }

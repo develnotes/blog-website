@@ -11,14 +11,15 @@ import { CreatePost } from "@/components/dashboard/CreatePost";
 
 import { appName } from "@/config";
 
+import { auth } from "@/auth";
 
 import { Metadata } from "next";
-
+import { fetchUser } from "@/db";
 export const metadata: Metadata = {
     title: `${appName} dashboard | Write`
 }
 
-export default function Write() {
+export default async function Write() {
 
     const toolbarOptions: ToolbarConfig = [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -48,10 +49,23 @@ export default function Write() {
         }
     };
 
+    const session = await auth();
+
+    const email = session?.user?.email as string;
+
+    const user = await fetchUser(email);
+
+    const authorId = user?.id as string;
+
     return (
         <div className="write-page">
+            <noscript>
+                <div className="no-script-message">
+                    The editor needs Javascript to work. Please activate Javascript in the Browser.
+                </div>
+            </noscript>
             <QuillContext options={options}>
-                <CreatePost />
+                <CreatePost authorId={authorId} />
             </QuillContext>
         </div>
     );

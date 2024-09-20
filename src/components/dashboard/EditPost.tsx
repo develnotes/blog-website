@@ -11,6 +11,7 @@ import * as actions from "@/actions"
 import { TitleInput } from "./TitleInput";
 import { useFormState, useFormStatus } from "react-dom";
 import { IconAsterisk, IconCheck } from "@tabler/icons-react";
+import { FormState } from "@/types";
 
 export const EditPost = ({ post }: { post: Post }) => {
 
@@ -19,14 +20,20 @@ export const EditPost = ({ post }: { post: Post }) => {
     const [edited, setEdited] = useState<boolean>(false);
     const quill = useQuill();
 
-    const initialFormState: actions.FormState = {
+    const initialFormState: FormState = {
         contentsMessage: "",
         imageMessage: "",
         titleMessage: "",
         errorMessage: "",
     }
 
-    const updatePostAction = actions.updatePost.bind(null, initialFormState, { slug: post.slug, contents: quill.contents, image, title });
+    const updatePostAction = actions.updatePost.bind(null, initialFormState, {
+        slug: post.slug,
+        contents: quill.contents,
+        image,
+        title,
+        html: quill.htmlContent
+    });
 
     const [state, action] = useFormState(updatePostAction, initialFormState);
 
@@ -41,20 +48,16 @@ export const EditPost = ({ post }: { post: Post }) => {
                 {
                     pending ?
                         "Saving..." :
-                        edited ? <span>Save <IconAsterisk size={12} /></span> : <span>Saved  <IconCheck size={12}/></span>
+                        edited ? <span>Save <IconAsterisk size={12} /></span> : <span>Saved  <IconCheck size={12} /></span>
                 }
             </button>
         );
     };
 
     useEffect(() => {
-
-        console.log(`${title} - ${post.title}`);
         if (quill.contents === post.body && title === post.title && image === post.image) {
-            console.log("Saved");
             setEdited(false);
         } else {
-            console.log("Edited");
             setEdited(true);
         }
     }, [quill.contents, post.body, title, post.title, image, post.image]);
