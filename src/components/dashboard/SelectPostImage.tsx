@@ -84,11 +84,12 @@ export const SelectPostImage = ({
                             <>
                                 <div className="select-image__from-url__preview-label">Image Preview</div>
 
-                                
+                                <div className="select-image__from-url__preview__wrapper">
                                     <img className="select-image__from-url__preview"
                                         src={imagePreview}
                                         alt="post image"
                                     />
+                                </div>
                             </>
                         }
 

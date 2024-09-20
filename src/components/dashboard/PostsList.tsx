@@ -13,7 +13,7 @@ export const PostsList = ({ posts }: { posts: Post[] }) => {
 
     return (
         <div className="posts">
-            
+
             <Loader loading={loading} />
 
             <ul className="posts__list">
@@ -21,21 +21,23 @@ export const PostsList = ({ posts }: { posts: Post[] }) => {
                     posts.map((post) => {
                         return (
                             <li className="posts__list__item" key={post.id}>
-                                <div className="posts__list__item__info">
-                                    <div
-                                        className="posts__list__item__title">
-                                        {post.title}
+                                <div className="posts__list__item__wrapper">
+                                    <div className="posts__list__item__info">
+                                        <div className="posts__list__item__info__title">
+                                            {post.title}
+                                        </div>
+                                        {/* <div>Author: { }</div> */}
+                                        <div className="posts__list__item__info__date">Created: {new Date(post.createdAt).toLocaleDateString()}</div>
                                     </div>
-                                    <div>Created: {new Date(post.createdAt).toLocaleDateString()}</div>
                                     <div className="posts__list__item__options">
                                         <Link
-                                            className="posts__list__item__view-link"
+                                            className="posts__list__item__options__view-link"
                                             onClick={() => setLoading(true)}
                                             href={paths.dashboard.post(post.slug)}>
                                             View
                                         </Link>
                                         <Link
-                                            className="posts__list__item__edit-link"
+                                            className="posts__list__item__options__edit-link"
                                             onClick={() => setLoading(true)}
                                             href={paths.dashboard.editPost(post.slug)}>
                                             Edit

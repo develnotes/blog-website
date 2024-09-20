@@ -128,6 +128,11 @@ body.blog {
 }
 
 body.dashboard {
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+}
+
+body.dashboard {
   background-color: whitesmoke;
   display: flex;
   flex-direction: column;
@@ -340,7 +345,6 @@ body.dashboard {
 .edit {
   width: 100%;
   max-width: 75rem;
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
@@ -357,13 +361,18 @@ body.dashboard {
 .edit__title {
   margin-bottom: 1rem;
 }
+.create__title .title-input,
+.edit__title .title-input {
+  padding: 2rem;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+}
 .create__body,
 .edit__body {
   margin-top: 0.3rem;
   margin-bottom: 1rem;
   flex-grow: 1;
   position: relative;
-  min-height: 10rem;
   display: flex;
   flex-direction: column;
 }
@@ -371,10 +380,16 @@ body.dashboard {
 .edit__body .ql-editor {
   font-size: 1.6rem !important;
   padding: 0 !important;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+}
+.create__body .ql-editor-wrapper,
+.edit__body .ql-editor-wrapper {
+  flex-grow: 1;
 }
 .create__body .ql-container,
 .edit__body .ql-container {
-  flex-grow: 1 !important;
+  padding: 2rem !important;
 }
 .create__footer,
 .edit__footer {
@@ -426,10 +441,13 @@ body.dashboard {
   font-size: 2rem;
   margin-top: 0.3rem;
   margin-bottom: 0.5rem;
+  padding: 2rem;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
 }
 .select-image__from-url__preview {
-  width: 100%;
-  max-width: 75rem;
+  display: block;
+  max-width: 100%;
   height: auto;
   max-height: 30rem;
   object-fit: cover;
@@ -508,11 +526,16 @@ body.dashboard {
   margin-right: 1rem;
   margin-bottom: 2rem;
   margin-left: 3rem;
-  font-size: 3.2rem;
+  font-size: 4.2rem;
 }
 .post__body {
   margin-left: 4.5rem;
   flex-grow: 1;
+}
+.post__body .ql-editor {
+  font-size: 1.8rem;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
 }
 .post__edit-button {
   font-size: 1.4rem;
@@ -545,25 +568,46 @@ body.dashboard {
 }
 .posts__list__item {
   max-width: 75rem;
-  margin: 2rem;
+  margin: 1rem;
+  padding: 1.2rem;
+  border: 1px solid darkslateblue;
   list-style: none;
   display: flex;
   justify-content: space-between;
+}
+.posts__list__item__wrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 .posts__list__item__info {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+}
+.posts__list__item__info__title {
+  font-size: 2.3rem;
+}
+.posts__list__item__info__date {
+  font-size: 1.4rem;
 }
 .posts__list__item__options {
   display: flex;
   gap: 1rem;
 }
-.posts__list__item__title {
-  font-size: 2.3rem;
-}
-.posts__list__item__view-link, .posts__list__item__edit-link {
+.posts__list__item__options__view-link, .posts__list__item__options__edit-link {
   font-size: 1.6rem;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  color: azure;
+  background-color: darkslateblue;
+  cursor: pointer;
+}
+.posts__list__item__options__view-link:hover, .posts__list__item__options__edit-link:hover {
+  background-color: rgba(72, 61, 139, 0.85);
 }
 .posts__list__item__image-wrapper {
   width: 20rem;
@@ -669,11 +713,6 @@ body.dashboard {
 }
 .account__logout__button:hover {
   background-color: rgba(72, 61, 139, 0.85);
-}
-
-body.dashboard {
-  font-family: "Quicksand", sans-serif;
-  font-optical-sizing: auto;
 }
 
 .loading {
