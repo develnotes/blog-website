@@ -76,7 +76,7 @@ export const checkSlugIsUnique = async (slug: string) => {
     const results = await prisma.post.findFirst({
         where: { slug }
     });
-
+    await prisma.$disconnect();
     return results;
 };
 
@@ -86,6 +86,6 @@ export const fetchUser = async (email: string) => {
     const user = await prisma.user.findFirst({
         where: { email }
     });
-
+    await prisma.$disconnect();
     return user;
 };
