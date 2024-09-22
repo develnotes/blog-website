@@ -14,7 +14,7 @@ export const PostsList = ({ posts }: { posts: Post[] }) => {
     return (
         <div className="posts">
 
-            <Loader loading={loading} />
+            <Loader loading={loading} full />
 
             <ul className="posts__list">
                 {
