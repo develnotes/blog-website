@@ -1,0 +1,282 @@
+.select-image-container {
+    &__button-open {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.4rem;
+        @include base-button();
+    }
+}
+
+.select-image {
+    position: absolute;
+    background-color: whitesmoke;
+    width: 95%;
+    height: 95%;
+    padding: 3rem;
+
+    border: 0.2rem solid darkslateblue;
+
+    overflow-y: scroll;
+
+    &__preview {
+        max-width: 75rem;
+        max-height: 30rem;
+        overflow: hidden;
+        margin-top: 0.4rem;
+
+        &__image {
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    @media screen and (max-width: $breakpoint-md) {
+        &__preview {
+            width: 100%;
+        }
+    }
+
+    &__header {
+        display: flex;
+        gap: 0.4rem;
+        margin-top: 0.3rem;
+    }
+
+    &__main {
+        max-width: 100%;
+    }
+
+    &__button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.4rem;
+        @include base-button();
+    }
+
+    &__button-close {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: darkslateblue;
+        @include icon-button();
+    }
+
+    &__from-url {
+        position: relative;
+        margin-top: 1rem;
+
+        &__label {
+            font-size: 1.2rem;
+        }
+
+        &__input {
+            width: 100%;
+            height: 4rem;
+
+            font-size: 2rem;
+            margin-top: 0.3rem;
+            margin-bottom: 0.5rem;
+
+            padding: 2rem;
+            @include quicksand-font();
+        }
+    }
+
+    &__saved {
+        margin-top: 1rem;
+        height: 15.2rem;
+        width: 100%;
+
+        display: flex;
+        position: relative;
+
+        &__button {
+            width: 2rem;
+            position: absolute;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-color: darkslateblue;
+            border: none;
+            color: whitesmoke;
+            border-radius: 0.4rem;
+            cursor: pointer;
+
+            &--prev {
+                left: 0;
+            }
+
+            &--next {
+                right: 0;
+            }
+
+            &:hover {
+                background-color: rgba($color: darkslateblue, $alpha: 0.85);
+            }
+        }
+
+        &__gallery {
+            display: flex;
+            gap: 0.2rem;
+            margin: 0 2.5rem;
+            overflow-x: scroll;
+            width: 100%;
+
+            &__item {
+                position: relative;
+            }
+            &__item__button-background {
+                position: absolute;
+                height: 4rem;
+                width: 100%;
+            }
+
+            &__item__button {
+                position: absolute;
+                color: white;
+                display: none;
+                @include icon-button();
+            }
+
+            &__item:hover &__item__button-background {
+                background-color: rgba($color: darkslategray, $alpha: 0.25);
+            }
+
+            &__item__button-background:hover &__item__button {
+                display: block;
+            }
+        }
+    }
+
+    &__edit-area {
+        border: 1px solid darkslateblue;
+        padding: 0.4rem;
+        position: relative;
+        margin-top: 1rem;
+
+        display: flex;
+        flex-direction: column;
+
+        &__main {
+            display: flex;
+        }
+
+        &__selected-image-preview {
+            width: 100%;
+            max-height: 30rem;
+            object-fit: contain;
+            overflow: auto;
+            margin-top: 0.3rem;
+
+            justify-self: flex-start;
+        }
+
+        &__tools {
+            padding: 0.4rem;
+
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+
+            &__button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.4rem;
+                @include base-button();
+            }
+        }
+    }
+
+    &__editor {
+        max-width: 90%;
+        height: 90%;
+        background-color: whitesmoke;
+        border: 0.2rem solid darkslateblue;
+        padding: 1rem 1rem 1rem;
+        position: relative;
+
+        overflow-y: auto;
+
+        display: flex;
+        gap: 1rem;
+
+        &__button-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            @include icon-button();
+        }
+
+        &__preview {
+            max-width: 100%;
+            height: 50%;
+            position: relative;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-color: lightgray;
+
+            &__image {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+
+        &__preview__cropped {
+            margin-top: 0.4rem;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+
+            &__image {
+                width: 100%;
+                height: auto;
+            }
+
+            &__button {
+                @include base-button();
+            }
+        }
+
+        &__preview-label {
+            font-size: 1.2rem;
+        }
+
+        &__options {
+            padding-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+
+            &__button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.4rem;
+                @include base-button();
+            }
+        }
+    }
+
+    &__footer {
+        width: 100%;
+        margin-top: 0.4rem;
+
+        display: flex;
+        //justify-content: center;
+        //align-items: center;
+        gap: 0.4rem;
+
+        &__button {
+            @include base-button();
+        }
+    }
+}

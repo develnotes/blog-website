@@ -77,7 +77,6 @@ export const resizeObserver = new ResizeObserver(() => {
             width: preview.clientWidth,
             height: preview.clientHeight,
         }
-        console.log(dimensions);
 
         if (widthInput) {
             widthInput.value = String(dimensions.width);

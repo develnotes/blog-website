@@ -1,0 +1,15 @@
+/* Layout sizes and definitions */
+$header-height: 5rem;
+$locator-height: 2.5rem;
+$side-menu-width: 20rem;
+
+/* Z-Indexes */
+$header-widget-details-z-index: 10000;
+$show-side-menu-z-index: 12000;
+$button-submit-z-index: 12100;
+$overlay-container-z-index: 13000;
+
+/* Breakpoints */
+$breakpoint-sm: 450px;
+$breakpoint-md: 750px;
+$breakpoint-lg: 1200px;

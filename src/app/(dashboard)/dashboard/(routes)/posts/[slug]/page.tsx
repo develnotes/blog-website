@@ -7,12 +7,11 @@ const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr
 /* Import Quill types re-exported from QuillContext  */
 import type { QuillOptions } from "@/quill/context/QuillContext";
 
-import { ShowPost } from "@/components/dashboard/ShowPost";
+import { PostShow } from "@/components/dashboard/PostShow";
 import { appName } from "@/config";
-import { fetch, fetchPost, fetchUser } from "@/db";
+import { fetch, fetchPost } from "@/db";
 
 import { Metadata } from "next";
-import { auth } from "@/auth";
 
 type Props = { params: { slug: string } };
 
@@ -42,7 +41,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 </div>
             </noscript>
             <QuillContext options={options} initialContents={post.body}>
-                <ShowPost post={post} />
+                <PostShow post={post} />
             </QuillContext>
         </div>
     );

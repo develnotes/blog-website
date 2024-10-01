@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 
-export const ShowPost = ({ post }: { post: Post }) => {
+export const PostShow = ({ post }: { post: Post }) => {
 
     return (
         <div className="post">
@@ -29,7 +29,8 @@ export const ShowPost = ({ post }: { post: Post }) => {
                     {post.title}
                 </div>
 
-                <Link className="post__edit-button" href={paths.dashboard.editPost(post.slug)}>
+                <Link className="post__edit-button"
+                    href={paths.dashboard.editPost(post.slug)}>
                     <IconEdit />
                     <div className="post__edit-button__text">Edit</div>
                 </Link>

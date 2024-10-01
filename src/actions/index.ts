@@ -1,3 +1,3 @@
 export { login, logout } from "@/actions/auth"
-export { createPost } from "@/actions/createPost";
+export { createPost, checkTitle, checkImageURL } from "@/actions/createPost";
 export { updatePost } from "@/actions/updatePost";

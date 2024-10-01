@@ -1,0 +1,61 @@
+.dashboard {
+    &__side-menu {
+        width: $side-menu-width;
+        min-width: $side-menu-width;
+
+        &__wrapper {
+            height: 100vh;
+            position: fixed;
+            min-width: 20rem;
+            padding: 0.4rem;
+        }
+
+        &__nav {
+            flex-grow: 1;
+            margin-top: 3rem;
+
+            display: flex;
+            flex-direction: column;
+
+            &__menu {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+
+                list-style: none;
+
+                &__item {
+                    font-size: 2rem;
+
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    color: black;
+
+                    &--active {
+                        background-color: white;
+                    }
+
+                    &__link {
+                        width: 100%;
+                        padding: 2rem;
+                        text-decoration: none;
+                        display: flex;
+                        gap: 1rem;
+                        color: inherit;
+                    }
+                }
+
+                /* Hover an item that is NOT active */
+                &__item:hover:not(&__item--active) {
+                    color: rgba($color: darkslateblue, $alpha: 0.85);
+                }
+
+                /* Use default cursor for active links */
+                &__item--active &__item__link {
+                    cursor: default;
+                }
+            }
+        }
+    }
+}

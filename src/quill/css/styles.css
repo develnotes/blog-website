@@ -45,12 +45,13 @@
     max-height: calc(100vh - 10rem);
     width: calc(100% - 2rem);
     max-width: 90rem;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 .ql-image-preview-wrapper {
     width: 100%;
-    height: calc(100% - 10rem);
+    /* height: calc(100% - 10rem); */
+    height: auto;
     margin-top: 1rem;
     overflow: auto;
 }
@@ -100,7 +101,7 @@
     flex-wrap: wrap;
     align-items: flex-end;
     justify-content: space-evenly;
-    height: 9rem;
+    height: 20rem;
 }
 
 .ql-src-input-wrapper,
@@ -197,3 +198,66 @@
     font-size: 1.4rem;
     height: 5rem;
 }
+
+
+/* Images gallery */
+.ql-gallery-container {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    /*margin: .1rem 0;*/
+}
+
+.ql-gallery-btn-left, .ql-gallery-btn-right {
+    border: none;
+    background-color: chocolate;
+    color: white;
+    height: 10rem;
+}
+
+.ql-gallery-btn-left::after {
+    content: url(../icons/chevron-left.svg);
+}
+
+.ql-gallery-btn-right::after {
+    content: url(../icons/chevron-right.svg);
+}
+
+.ql-gallery {
+    flex-grow: 1;
+    display: flex;
+    max-width: 100%;
+    overflow-x: scroll;
+    display: flex;
+    gap: .2rem;
+    margin: 0 .2rem;
+}
+
+.ql-gallery-item {
+    position: relative;
+    flex-grow: 1;
+}
+
+.ql-gallery-item-button-background {
+    position: absolute;
+    /* background-color: lightgray; */
+    height: 3rem;
+    width: 100%;
+    top: 0;
+}
+
+.ql-button-delete {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.ql-button-delete::after {
+    content: url(../icons/trash.svg);
+}
+
+.ql-gallery-item-image {
+    width: auto;
+    height: 10rem;
+}
+

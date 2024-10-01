@@ -17,9 +17,5 @@ body {
     font-size: 1.4rem
 }
 
-@import "auth/base";
-@import "auth/fonts";
-@import "blog/base";
-@import "dashboard/fonts";
-@import "dashboard/base";
-@import "dashboard/utilities";
+@import "base";
+@import "fonts";

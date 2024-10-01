@@ -1,0 +1,64 @@
+.header__account-widget {
+    width: fit-content;
+
+    @media screen and (max-width: $breakpoint-md) {
+        display: none;
+    }
+
+    &__user-avatar {
+        position: relative;
+        width: 3.8rem;
+        height: 3.8rem;
+        object-fit: fill;
+        border-radius: 100%;
+        overflow: hidden;
+        cursor: pointer;
+
+        &--no-session {
+            border: 1px solid darkslategray;
+        }
+
+        &__icon {
+            color: darkslategray;
+        }
+    }
+
+    &__details {
+        position: absolute;
+        width: max-content;
+
+        top: $header-height;
+        right: 1rem;
+        padding: 0.4rem;
+
+        border: 1px solid gray;
+        background-color: white;
+
+        z-index: $header-widget-details-z-index;
+
+        &__email {
+            font-size: 1.4rem;
+        }
+
+        &__link {
+            width: 100%;
+            text-decoration: none;
+
+            &__text {
+                width: 100%;
+                font-size: 1.6rem;
+                color: black;
+                padding: 1rem;
+                text-align: center;
+            }
+        }
+
+        &__button {
+            border: none;
+            background-color: transparent;
+            padding: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+    }
+}

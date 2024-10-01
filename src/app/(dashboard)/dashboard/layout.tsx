@@ -1,4 +1,4 @@
-import "@/styles/index.css";
+import "@/sass/dashboard/main.scss";
 
 import { Header } from "@/components/dashboard/Header";
 import { SideMenu } from "@/components/dashboard/SideMenu";
@@ -18,10 +18,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className="dashboard">
+			<body>
 				<Authenticate>
 					<SessionProvider>
-						<div className="container dashboard">
+						<div className="dashboard">
 							<SideMenu />
 							<div className="dashboard__main">
 								<Header />

@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "sass": "sass ./src/sass/main.scss ./src/styles/index.css --watch"
+    "lint": "next lint"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.5.0",
@@ -27,12 +26,14 @@
     "react": "^18",
     "react-dom": "^18",
     "react-tooltip": "^5.28.0",
-    "sharp": "^0.33.5"
+    "sharp": "^0.33.5",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "concurrently": "^9.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",
     "sass": "^1.78.0",

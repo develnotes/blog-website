@@ -1,0 +1,53 @@
+.post-editor {
+    width: 100%;
+    max-width: 75rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+
+    &__label {
+        font-size: 2rem;
+        margin-bottom: .4rem;
+
+        display: flex;
+        align-items: center;
+        gap: .4rem;
+    }
+
+    &__image, &__title, &__body {
+        margin-bottom: 2rem;
+    }
+
+    &__body {
+        position: relative;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+
+        .ql-editor {
+            font-size: 1.6rem !important;
+            padding: 0 !important;
+
+            @include quicksand-font();
+        }
+
+        //.ql-editor-wrapper {}
+
+        .ql-container {
+            padding: 2rem !important;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: flex-end;
+        padding-bottom: 0.4rem;
+        margin-bottom: 6rem;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+}

@@ -2,39 +2,43 @@
 
 const folder = "develnotes-blog";
 
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 export type { ResourceApiResponse, UploadApiResponse } from "cloudinary";
 
-export async function saveImage(image: string) {
-    const response = await cloudinary.uploader.upload(image, { 
+
+export async function uploadResource(image: string) {
+    return await cloudinary.uploader.upload(image, {
         folder,
     });
-
-    return response;
 }
 
-export async function saveArrayBuffer(buffer: Buffer) {
-    new Promise((resolve) => {
-        cloudinary.uploader.upload_stream({
-            folder,
-        }, (error, uploadResult) => {
-            return resolve(uploadResult);
-        })
-            .end(buffer);
-    })
-        .then((uploadResult) => {
-            console.log(uploadResult);
-        })
-        .catch((error) => console.log(error));
+export async function uploadResourceAsStream(buffer: Buffer) {
+    try {
+        const result = await new Promise((resolve) => {
+            cloudinary.uploader.upload_stream({
+                folder,
+            }, (error, uploadResult) => {
+                return resolve(uploadResult);
+            })
+                .end(buffer);
+        });
+
+        console.log("result: ", result);
+        return result as UploadApiResponse;
+
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-export async function fetchImages() {
-    const response = await cloudinary.api.resources_by_asset_folder("develnotes-blog", { resource_type: "images" });
-    return response;
+export async function fetchResources() {
+    return await cloudinary.api.resources_by_asset_folder(folder, {
+        resource_type: "images"
+    });
 }
 
-export async function deleteImage(id: string) {
-    const response  = await cloudinary.api.delete_resources([id]);
+export async function removeResource(id: string) {
+    const response = await cloudinary.api.delete_resources([id]);
 }
 
 

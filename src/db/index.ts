@@ -2,7 +2,7 @@
 
 import { cache } from "react";
 
-import { prisma, Post, User } from "@/db/prisma";
+import { prisma, Post } from "@/db/prisma";
 
 export type PostData = {
     title: string;
@@ -14,7 +14,6 @@ export type PostData = {
 }
 
 export type PostUpdates = { 
-    title: string, 
     body: string, 
     image: string, 
     html: string 

@@ -1,4 +1,4 @@
-import "@/styles/index.css";
+import "@/sass/auth/main.scss";
 
 export const metadata = {
   title: 'Sign In | Blog Dashboard',

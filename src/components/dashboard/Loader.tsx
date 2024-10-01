@@ -21,4 +21,4 @@ export const Loader = ({ loading, full }: { loading: boolean, full?: boolean }) 
             </div>
         </div>
     );
-}
+};

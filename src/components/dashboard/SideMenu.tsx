@@ -2,10 +2,10 @@
 
 import { IconHome, IconNews, IconTextPlus, IconUserCheck } from "@tabler/icons-react";
 
-import { appLogo, appName } from "@/config";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import { paths } from "@/app/paths";
+import { AppLogo } from "./AppLogo";
 
 export const SideMenu = () => {
     return (
@@ -17,7 +17,9 @@ export const SideMenu = () => {
     );
 };
 
-export const Menu = ({ show, setShow }: { show?: boolean, setShow?: React.Dispatch<React.SetStateAction<boolean>> }) => {
+interface Menu { show?: boolean, setShow?: React.Dispatch<React.SetStateAction<boolean>> }
+
+export const Menu = ({ show, setShow }: Menu) => {
 
     const segments = useSelectedLayoutSegments();
 
@@ -25,10 +27,8 @@ export const Menu = ({ show, setShow }: { show?: boolean, setShow?: React.Dispat
 
     return (
         <>
-            <div className="dashboard__title">
-                <div className="dashboard__title--logo">{appLogo}</div>
-                <div className="dashboard__title--main">{appName}</div>
-                <div className="dashboard__title--sub">Dashboard</div>
+            <div className="dashboard__side-menu__header">
+                <AppLogo />
             </div>
             <nav className="dashboard__side-menu__nav">
                 <ul className="dashboard__side-menu__nav__menu">

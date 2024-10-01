@@ -1,4 +1,14 @@
-export const TitleInput = ({ title, setTitle }: { title: string, setTitle: React.Dispatch<React.SetStateAction<string>> }) => {
+export const TitleInput = ({
+    title,
+    setTitle,
+    editMode,
+    onBlur,
+}: {
+    title: string,
+    setTitle: React.Dispatch<React.SetStateAction<string>>,
+    editMode?: boolean,
+    onBlur?: () => void,
+}) => {
 
     return (
         <input
@@ -12,6 +22,8 @@ export const TitleInput = ({ title, setTitle }: { title: string, setTitle: React
                     e.preventDefault();
                 }
             }}
+            disabled={editMode}
+            onBlur={onBlur}
         />
     );
 }

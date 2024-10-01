@@ -1,6 +1,15 @@
 import Quill, { EmitterSource, Range } from "quill";
 import * as helpers from "../helpers";
 
+import * as cloudinary from "@/cloudinary";
+import "cropperjs/dist/cropper.css";
+import Cropper from "cropperjs";
+
+let data: cloudinary.ResourceApiResponse | undefined = undefined;
+
+cloudinary.fetchResources().then(r => {
+    data = r;
+});
 
 export const imageHandler = (quill: Quill) => {
 
@@ -87,7 +96,7 @@ export const imageHandler = (quill: Quill) => {
             }
         };
 
-        srcInput.onchange = () => {
+        const previewImage = () => {
             const existingImagePreview = document.querySelector(".ql-image-preview");
             const existingImageResizeWrapper = document.querySelector(".ql-image-resize-wrapper");
 
@@ -103,6 +112,8 @@ export const imageHandler = (quill: Quill) => {
                 }
             }
         };
+
+        srcInput.onchange = previewImage;
 
         if (mode === "edit") {
             const [leaf, offset] = quill.getLeaf(index);
@@ -184,6 +195,49 @@ export const imageHandler = (quill: Quill) => {
         srcInputWrapper.append(srcLabel);
         srcInputWrapper.append(srcInput);
 
+        const createSavedImagesGallery = (header: HTMLDivElement) => {
+            /* Saved images gallery elements */
+            const galleryContainer = helpers.createDiv({ className: "ql-gallery-container" });
+
+            const btnLeft = helpers.createButton({ className: "ql-gallery-btn-left" });
+            const btnRight = helpers.createButton({ className: "ql-gallery-btn-right" });
+            const gallery = helpers.createDiv({ className: "ql-gallery" });
+
+            galleryContainer.append(btnLeft);
+            galleryContainer.append(gallery);
+            galleryContainer.append(btnRight);
+
+            if (data) {
+                console.log(data.resources);
+
+                data.resources.forEach(image => {
+                    const imagePreview = helpers.createImagePreview({
+                        className: "ql-gallery-item-image",
+                        src: image.secure_url,
+                    });
+                    const galleryItemBtnBackground = helpers.createDiv({ className: "ql-gallery-item-button-background" });
+                    const galleryItem = helpers.createDiv({ className: "ql-gallery-item" });
+                    galleryItem.append(imagePreview);
+                    const btnDelete = helpers.createButton({ className: "ql-button-delete" });
+                    galleryItemBtnBackground.append(btnDelete);
+                    galleryItem.append(galleryItemBtnBackground);
+                    gallery.append(galleryItem);
+
+                    const srcInput = document.querySelector(".ql-image-src-input") as HTMLInputElement;
+
+                    imagePreview.onclick = () => {
+                        console.log(image);
+                        srcInput.value = image.secure_url;
+                        previewImage();
+                    };
+                });
+            }
+
+            header.append(galleryContainer);
+        };
+
+        createSavedImagesGallery(header);
+
         header.append(altInputWrapper);
         altInputWrapper.append(altLabel);
         altInputWrapper.append(altInput);
@@ -195,6 +249,36 @@ export const imageHandler = (quill: Quill) => {
         header.append(saveButton);
         imageContainer.append(closeButton);
         imageContainer.append(imagePreviewWrapper);
+
+        const createGalleryEventHandlers = () => {
+            /* Gallery event handlers */
+            const galleryCtn = document.querySelector(".ql-gallery");
+            const btnLeft = document.querySelector(".ql-gallery-btn-left") as HTMLButtonElement;
+            const btnRight = document.querySelector(".ql-gallery-btn-right") as HTMLButtonElement;
+            if (galleryCtn) {
+                if (btnLeft) {
+                    btnLeft.onclick = () => {
+                        galleryCtn.scrollBy({
+                            behavior: "smooth",
+                            left: -galleryCtn.clientWidth,
+                            top: 0
+                        });
+                    };
+                }
+
+                if (btnRight) {
+                    btnRight.onclick = () => {
+                        galleryCtn.scrollBy({
+                            behavior: "smooth",
+                            left: galleryCtn.clientWidth,
+                            top: 0
+                        });
+                    };
+                }
+            }
+        }
+
+        createGalleryEventHandlers();
 
         srcInput.focus();
     };

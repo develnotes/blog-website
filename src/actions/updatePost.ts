@@ -3,46 +3,57 @@
 import { paths } from "@/app/paths";
 import * as db from "@/db";
 import { revalidatePath } from "next/cache";
-import type { FormState } from "@/types";
+import type { EditPostFormState } from "@/types";
+import { z } from "zod";
 
-type UpdateData = { slug: string, contents: string, image: string, title: string, html: string }
 
-export async function updatePost(formState: FormState, updateData: UpdateData) {
+const editPostSchema = z
+    .object({
+        contents: z.string().min(10, {
+            message: "Create a body for your post"
+        }),
+        html: z.string().min(1),
+        image: z.string().min(1, {
+            message: "Provide an image for your post"
+        }),
+    });
 
-    const { slug, contents, image, title, html } = updateData;
+type UpdateData = { slug: string, contents: string, image: string, html: string }
 
-    if (title.length === 0) {
-        const newFormState: FormState = {
-            ...formState, titleMessage: "Give a title for your post",
-        }
+export async function updatePost(formState: EditPostFormState, updateData: UpdateData) {
 
-        return newFormState;
-    }
+    const { contents, image, html, slug } = updateData;
 
-    if (image.length === 0) {
-        const newFormState: FormState = {
-            ...formState, imageMessage: "Provide an image for your post",
-        }
-        return newFormState;
-    }
-
-    if (contents.length === 0) {
-        const newFormState: FormState = {
-            ...formState, contentsMessage: "Create a body for your post",
-        }
-        return newFormState;
-    }
-
-    const data: db.PostUpdates = {
-        title,
-        body: contents,
+    const validation = await editPostSchema.safeParseAsync({
+        contents,
         image,
-        html,
-    };
+        html
+    });
 
+    if (!validation.success) {
+        const errors = validation.error.flatten().fieldErrors;
+
+        const newFormState: EditPostFormState = {
+            ...formState,
+            contentsMessage: errors.contents?.join("; "),
+            imageMessage: errors.image?.join("; "),
+        }
+        return newFormState;
+    }
+
+    /* Save */
     try {
 
-        await db.update({ slug, data });
+        const { contents, html, image } = validation.data;
+
+        await db.update({
+            slug,
+            data: {
+                body: contents,
+                image,
+                html,
+            }
+        });
 
         revalidatePath(paths.dashboard.post(slug));
         revalidatePath(paths.dashboard.editPost(slug));
@@ -52,7 +63,7 @@ export async function updatePost(formState: FormState, updateData: UpdateData) {
         if (err instanceof Error) {
             console.log(err.message);
 
-            const newFormState: FormState = {
+            const newFormState: EditPostFormState = {
                 ...formState, errorMessage: err.message
             };
 
@@ -60,11 +71,13 @@ export async function updatePost(formState: FormState, updateData: UpdateData) {
         } else {
             console.log(err);
 
-            const newFormState: FormState = {
+            const newFormState: EditPostFormState = {
                 ...formState, errorMessage: "Something went wrong. See message in the console.",
             };
 
             return newFormState;
         }
     }
+
+    return {} as EditPostFormState;
 }

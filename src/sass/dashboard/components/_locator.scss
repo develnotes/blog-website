@@ -1,0 +1,21 @@
+.locator {
+    display: flex;
+    height: $locator-height;
+    gap: 1rem;
+    padding-left: 1rem;
+    width: 100%;
+    max-width: 75rem;
+
+    border-top: 1px solid darkslateblue;
+    padding-top: 0.3rem;
+
+    &__locations {
+        font-size: 1.6rem;
+
+        &__location {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

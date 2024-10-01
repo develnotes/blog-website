@@ -7,7 +7,7 @@ const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr
 /* Import Quill types re-exported from QuillContext  */
 import type { QuillOptions, ToolbarConfig } from "@/quill/context/QuillContext";
 
-import { CreatePost } from "@/components/dashboard/CreatePost";
+import { PostCreate } from "@/components/dashboard/PostCreate";
 
 import { appName } from "@/config";
 
@@ -65,7 +65,7 @@ export default async function Write() {
                 </div>
             </noscript>
             <QuillContext options={options}>
-                <CreatePost authorId={authorId} />
+                <PostCreate authorId={authorId} />
             </QuillContext>
         </div>
     );

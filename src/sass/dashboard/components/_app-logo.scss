@@ -1,0 +1,20 @@
+.app-logo {
+ 
+    &__logo {
+        font-size: 2.8rem;
+        font-weight: bold;
+        display: none;
+    }
+
+    &__main {
+        font-size: 2.8rem;
+        width: 100%;
+        
+    }
+
+    &__sub {
+        font-size: 1.6rem;
+        width: 100%;
+        
+    }
+}

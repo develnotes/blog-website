@@ -1,0 +1,17 @@
+.dashboard-home {
+    flex-grow: 1;
+}
+
+.write-page,
+.edit-page,
+.show-page,
+.posts-page,
+.account-page {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 1rem;
+    min-height: calc(100% - $header-height - $locator-height);
+    width: 100%;
+    max-width: 75rem;
+}

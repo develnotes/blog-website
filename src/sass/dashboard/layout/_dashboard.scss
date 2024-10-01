@@ -1,0 +1,12 @@
+.dashboard {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+
+    @media screen and (max-width: $breakpoint-md) {
+        &__side-menu {
+            display: none;
+        }
+    }
+}

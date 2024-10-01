@@ -28,6 +28,9 @@ type ContextType = {
     editorRef: RefObject<HTMLDivElement> | null,
     contents: string,
     htmlContent: string,
+    textContent: string,
+    words: number,
+    characters: number,
     loading: boolean,
 };
 
@@ -35,6 +38,9 @@ const defaultValue: ContextType = {
     editorRef: null,
     contents: "",
     htmlContent: "",
+    textContent: "",
+    words: 0,
+    characters: 0,
     loading: true,
 };
 
@@ -55,6 +61,9 @@ export default function QuillContext({
 
     const [contents, setContents] = useState<string>("");
     const [htmlContent, setHTMLContent] = useState<string>("");
+    const [textContent, setTextContent] = useState<string>("");
+    const [words, setWords] = useState<number>(0);
+    const [characters, setCharacters] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -81,6 +90,26 @@ export default function QuillContext({
         const setDeltaString = (quill: Quill) => {
             const htmlString = JSON.stringify(quill.getSemanticHTML());
             setHTMLContent(htmlString);
+
+            const textString = JSON.stringify(quill.getText());
+            setTextContent(textString);
+
+            const words = textString
+                .replaceAll('"', "")
+                .replaceAll("\\n", "")
+                .split(" ")
+                .filter(w => w.length > 0)
+                .length;
+
+            setWords(words)
+
+            const characters = textString
+                .replaceAll('"', "")
+                .replaceAll("\\n", "")
+                .split(" ")
+                .join("").length;
+
+            setCharacters(characters);
 
             const deltaString = JSON.stringify(quill.getContents());
             setContents(deltaString);
@@ -111,6 +140,9 @@ export default function QuillContext({
             editorRef,
             contents,
             htmlContent,
+            textContent,
+            words,
+            characters,
             loading,
         }}>
             {children}

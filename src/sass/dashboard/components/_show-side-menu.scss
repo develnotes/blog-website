@@ -1,0 +1,56 @@
+.header__show-side-menu {
+    display: none;
+
+    &__button {
+        display: none;
+    }
+}
+
+@media screen and (max-width: $breakpoint-md) {
+    .header__show-side-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: $show-side-menu-z-index;
+        width: 100%;
+        height: 100%;
+        background-color: darkslateblue;
+        color: white;
+        padding: 3rem;
+
+        &__button {
+            background-color: transparent;
+            border: none;
+            display: block;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: white;
+
+            &--open {
+                color: black;
+            }
+        }
+
+        .dashboard {
+            &__side-menu {
+                &__nav {
+                    &__menu {
+                        &__item {
+                            &--active {
+                                background-color: lightslategray;
+                            }
+                            &__link {
+                                color: white;
+                                //&__text {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
