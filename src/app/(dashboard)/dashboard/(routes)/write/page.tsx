@@ -1,5 +1,3 @@
-import "@/quill/css/snow.css";
-
 /* Import QuillContext dynamically to prevent document issue */
 import dynamic from "next/dynamic";
 const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr: false });

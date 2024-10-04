@@ -1,9 +1,12 @@
 import Quill, { EmitterSource, Range } from "quill";
+
 import * as helpers from "../helpers";
 
 import * as cloudinary from "@/cloudinary";
 import "cropperjs/dist/cropper.css";
 import Cropper from "cropperjs";
+import ImageBlot from "../customModules/ImageBlot";
+Quill.register(ImageBlot);
 
 let data: cloudinary.ResourceApiResponse | undefined = undefined;
 
@@ -234,6 +237,35 @@ export const imageHandler = (quill: Quill) => {
             }
 
             header.append(galleryContainer);
+
+            const createGalleryEventHandlers = () => {
+                /* Gallery event handlers */
+                const galleryCtn = document.querySelector(".ql-gallery");
+                
+                if (galleryCtn) {
+                    if (btnLeft) {
+                        btnLeft.onclick = () => {
+                            galleryCtn.scrollBy({
+                                behavior: "smooth",
+                                left: -galleryCtn.clientWidth,
+                                top: 0
+                            });
+                        };
+                    }
+    
+                    if (btnRight) {
+                        btnRight.onclick = () => {
+                            galleryCtn.scrollBy({
+                                behavior: "smooth",
+                                left: galleryCtn.clientWidth,
+                                top: 0
+                            });
+                        };
+                    }
+                }
+            };
+    
+            createGalleryEventHandlers();
         };
 
         createSavedImagesGallery(header);
@@ -250,41 +282,11 @@ export const imageHandler = (quill: Quill) => {
         imageContainer.append(closeButton);
         imageContainer.append(imagePreviewWrapper);
 
-        const createGalleryEventHandlers = () => {
-            /* Gallery event handlers */
-            const galleryCtn = document.querySelector(".ql-gallery");
-            const btnLeft = document.querySelector(".ql-gallery-btn-left") as HTMLButtonElement;
-            const btnRight = document.querySelector(".ql-gallery-btn-right") as HTMLButtonElement;
-            if (galleryCtn) {
-                if (btnLeft) {
-                    btnLeft.onclick = () => {
-                        galleryCtn.scrollBy({
-                            behavior: "smooth",
-                            left: -galleryCtn.clientWidth,
-                            top: 0
-                        });
-                    };
-                }
-
-                if (btnRight) {
-                    btnRight.onclick = () => {
-                        galleryCtn.scrollBy({
-                            behavior: "smooth",
-                            left: galleryCtn.clientWidth,
-                            top: 0
-                        });
-                    };
-                }
-            }
-        }
-
-        createGalleryEventHandlers();
-
         srcInput.focus();
     };
 
     const onSelectionChange = (range: Range, oldRange: Range, source: EmitterSource) => {
-        const removeButton = () => {
+        const removeFloatingDiv = () => {
             const el = document.querySelector(".ql-floating-div");
             if (el) {
                 el.remove();
@@ -293,7 +295,7 @@ export const imageHandler = (quill: Quill) => {
 
         if (quill.isEnabled() && quill.hasFocus()) {
 
-            removeButton();
+            removeFloatingDiv();
 
             if (range) {
                 const { index, length } = range;
@@ -321,24 +323,33 @@ export const imageHandler = (quill: Quill) => {
                     });
 
                     const bounds = quill.getBounds(index);
+                    const node = leaf.domNode as HTMLElement;
+
+                    console.log(bounds);
 
                     if (bounds) {
-                        const floatingDiv = helpers.createDiv({ className: "ql-floating-div", height: String(bounds.height) + "px" });
+                        const floatingDiv = helpers.createDiv({ 
+                            className: "ql-floating-div", 
+                            height: String(bounds.height) + "px" 
+                        });
                         document.querySelector(".ql-container")?.append(floatingDiv);
                         floatingDiv.style.top = String(bounds.top) + "px";
                         floatingDiv.style.left = String(bounds.left) + "px";
                         floatingDiv.style.right = String(bounds.right) + "px";
+                        floatingDiv.style.width = String(node.clientWidth) + "px";
                         floatingDiv.append(editButton);
                         floatingDiv.append(removeButton);
                     }
 
                 } else {
-                    removeButton();
+                    removeFloatingDiv();
                 }
+            } else {
+                removeFloatingDiv();
             }
         } else {
-            removeButton();
-        }
+            removeFloatingDiv();
+        } 
     };
 
     quill.on("selection-change", onSelectionChange);

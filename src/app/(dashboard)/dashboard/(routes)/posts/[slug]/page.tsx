@@ -1,5 +1,3 @@
-import "@/quill/css/bubble.css";
-
 /* Import QuillContext dynamically */
 import dynamic from "next/dynamic";
 const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr: false });

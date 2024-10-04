@@ -1,0 +1,358 @@
+@import "bubble.css";
+@import "snow.css";
+@import "highlightjs-themes/github-dark-dimmed.scss";
+
+.ql-toolbar {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10000 !important;
+    background-color: white;
+}
+
+.ql-editor {
+    position: relative !important;
+}
+
+.ql-overlay {
+    position: fixed;
+    z-index: 10100;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: burlywood;
+    opacity: .75;
+}
+
+.ql-base-container {
+    position: fixed;
+    z-index: 11000;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ql-image-container, .ql-code-container {
+    position: fixed;
+
+    padding: 2rem;
+    padding-right: 4rem;
+    margin: 1rem;
+
+    background-color: wheat;
+    opacity: 1;
+    border: 2px solid chocolate;
+
+    height: calc(100vh - 2rem);
+    max-height: calc(100vh - 10rem);
+    width: calc(100% - 2rem);
+    max-width: 90rem;
+    overflow: scroll;
+}
+
+.ql-image-preview-wrapper {
+    width: 100%;
+    /* height: calc(100% - 10rem); */
+    height: auto;
+    margin-top: 1rem;
+    overflow: auto;
+}
+
+.ql-code-preview-wrapper {
+    width: 100%;
+    height: calc(100% - 6rem);
+    margin-top: 1rem;
+    overflow: auto;
+    position: relative;
+}
+
+.ql-image-preview {
+    width: 100%;
+    height: auto;
+}
+
+.ql-image-resize-wrapper {
+    touch-action: none;
+    user-select: none;
+    box-sizing: border-box;
+    overflow: visible;
+    position: relative;
+}
+
+.ql-image-resize-wrapper::after {
+    border: none;
+    padding: 0;
+    margin: 0;
+    content: url(../../icons/grip.svg);
+    position: absolute;
+    top: 0;
+    right: -24px;
+    height: calc(100% - 2px);
+    background-color: chocolate;
+    border-top: 10px solid chocolate;
+    box-sizing: border-box;
+}
+
+.ql-button-close {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.ql-button-close::after {
+    content: url(../icons/x.svg);
+}
+
+.ql-image-container-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    height: 20rem;
+}
+
+.ql-code-container-header {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    /* justify-content: flex-end; */
+    height: 5rem;
+}
+
+.ql-src-input-wrapper,
+.ql-alt-input-wrapper,
+.ql-width-input-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        font-size: 1.4rem;
+    }
+}
+
+.ql-src-input-wrapper {
+    width: 100%;
+}
+
+.ql-alt-input-wrapper {
+    width: 60%;
+    margin-right: .4rem;
+}
+
+.ql-width-input-wrapper {
+    width: 20%;
+    margin-right: .4rem;
+}
+
+.ql-button-confirm {
+    flex-grow: 1;
+    width: auto;
+    border: none;
+    border-radius: .4rem;
+    background-color: chocolate;
+    color: antiquewhite;
+    cursor: pointer;
+    height: 4rem;
+}
+
+.ql-button-code-confirm {
+    flex-grow: 1;
+    width: auto;
+    border: none;
+    border-radius: .4rem;
+    background-color: chocolate;
+    color: antiquewhite;
+    cursor: pointer;
+    height: 4rem;
+}
+
+.ql-button-edit-image,
+.ql-button-remove-image,
+.ql-button-edit-code,
+.ql-button-remove-code {
+    width: 15rem !important;
+    padding: .5rem;
+    border: 2px solid whitesmoke !important;
+    background-color: chocolate;
+    color: whitesmoke;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.ql-button-edit-image::after, .ql-button-edit-code::after {
+    content: url(../icons/edit.svg);
+}
+
+.ql-button-remove-image::after, .ql-button-remove-code::after {
+    content: url(../icons/delete.svg);
+}
+
+@mixin floating-div {
+    position: absolute;
+    border: 2px solid chocolate;
+    left: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.ql-floating-div {
+    @include floating-div();
+    
+}
+
+.ql-code-floating-div {
+
+    @include floating-div();
+
+    margin: 0 2rem;
+    width: calc(100% - 4rem);
+}
+
+
+.ql-editor-wrapper {
+    position: relative;
+}
+
+.ql-editor-loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.ql-editor-loader--loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    height: 5rem;
+}
+
+
+/* Images gallery */
+.ql-gallery-container {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    /*margin: .1rem 0;*/
+}
+
+.ql-gallery-btn-left, .ql-gallery-btn-right {
+    border: none;
+    background-color: chocolate;
+    color: white;
+    height: 10rem;
+}
+
+.ql-gallery-btn-left::after {
+    content: url(../icons/chevron-left.svg);
+}
+
+.ql-gallery-btn-right::after {
+    content: url(../icons/chevron-right.svg);
+}
+
+.ql-gallery {
+    flex-grow: 1;
+    display: flex;
+    max-width: 100%;
+    overflow-x: scroll;
+    display: flex;
+    gap: .2rem;
+    margin: 0 .2rem;
+}
+
+.ql-gallery-item {
+    position: relative;
+    flex-grow: 1;
+}
+
+.ql-gallery-item-button-background {
+    position: absolute;
+    /* background-color: lightgray; */
+    height: 3rem;
+    width: 100%;
+    top: 0;
+}
+
+.ql-button-delete {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.ql-button-delete::after {
+    content: url(../icons/trash.svg);
+}
+
+.ql-gallery-item-image {
+    width: auto;
+    height: 10rem;
+}
+
+/* Ace editor */
+#ace-editor { 
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+select {
+    height: 4rem;
+    width: 12rem;
+    background-color: chocolate;
+    color: whitesmoke;
+    border: none;
+    border-radius: .4rem;
+    padding: 0 2rem;
+}
+
+code {
+    background-color: transparent !important;
+}
+
+.ql-code-block-container {
+    //background-color: rgba($color: #444444, $alpha: 1.0) !important;
+    background-color: #24292e;
+    color: #FFFFFF;
+}
+
+blockquote {
+    font-size: 2rem;
+    border: none !important;
+    text-align: center !important;
+    border-left: .4rem solid darkslateblue !important;
+    padding: 3rem 8rem !important;
+    position: relative;
+}
+
+blockquote::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: url(../icons/quote.svg);
+    margin: 0 2rem;
+    transform: rotate(180deg)
+}
+
+blockquote::after {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    content: url(../icons/quote.svg);
+    margin: 0 2rem;
+}

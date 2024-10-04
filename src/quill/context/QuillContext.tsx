@@ -1,22 +1,19 @@
 "use client"
 
-import "highlight.js/styles/stackoverflow-dark.min.css";
-import "@/quill/css/styles.css";
+import "@/quill/styles/index.scss";
 
 import { createContext, RefObject, useContext, useEffect, useRef, useState } from "react";
 
 /* Highlight JS for code module */
-import hljs from "highlight.js";
+import hljs, { HLJSApi } from "highlight.js";
 
 /* Quill */
 import Quill, { QuillOptions } from "quill";
 
-/* Import and register blots */
-import ImageBlot from "../customModules/ImageBlot";
-Quill.register(ImageBlot);
 
 /* Import handlers */
 import { imageHandler } from "../customHandlers/imageHandler";
+import { codeHandler } from "../customHandlers/codeHandler";
 
 import Toolbar from "quill/modules/toolbar";
 
@@ -32,6 +29,7 @@ type ContextType = {
     words: number,
     characters: number,
     loading: boolean,
+    hljs: HLJSApi | null
 };
 
 const defaultValue: ContextType = {
@@ -42,6 +40,7 @@ const defaultValue: ContextType = {
     words: 0,
     characters: 0,
     loading: true,
+    hljs: null,
 };
 
 const Context = createContext<ContextType>(defaultValue);
@@ -75,7 +74,10 @@ export default function QuillContext({
             if (editor) {
                 quillRef.current = new Quill(editor, {
                     ...options,
-                    modules: { ...options.modules, syntax: { hljs } }
+                    modules: {
+                        ...options.modules,
+                        //syntax: { hljs }
+                    }
                 });
                 console.log("Loaded Quill...");
             }
@@ -117,11 +119,17 @@ export default function QuillContext({
 
         if (quill) {
             const toolbar = quill.getModule("toolbar") as Toolbar;
+
             toolbar.addHandler("image", imageHandler(quill));
+            toolbar.addHandler("code-block", codeHandler(quill, hljs));
 
             if (initialContents) {
                 quill.setContents(JSON.parse(initialContents));
             }
+
+            document.querySelectorAll("code").forEach(el => {
+                hljs.highlightElement(el);
+            });
 
             quill.on("text-change", () => setDeltaString(quill));
 
@@ -144,6 +152,7 @@ export default function QuillContext({
             words,
             characters,
             loading,
+            hljs: hljs,
         }}>
             {children}
         </Context.Provider>

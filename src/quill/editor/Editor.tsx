@@ -1,7 +1,6 @@
 "use client"
 
 import { useQuill } from "../context/QuillContext";
-import "@/quill/css/styles.css";
 
 export const Editor = () => {
 
