@@ -5,5 +5,6 @@ export default {
     providers: [Github],
     pages: {
         signIn: "/login",
-    }
+    },
+    trustHost: true,
 } satisfies NextAuthConfig;
