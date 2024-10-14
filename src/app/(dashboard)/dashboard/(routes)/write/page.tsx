@@ -43,7 +43,7 @@ export default async function Write() {
     const options: QuillOptions = {
         theme: "snow",
         modules: {
-            toolbar: toolbarOptions
+            toolbar: "#toolbar"//toolbarOptions
         }
     };
 

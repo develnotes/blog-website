@@ -8,7 +8,7 @@ export const Editor = () => {
 
     return (
         <div className="ql-editor-wrapper">
-            <Loader  loading={loading} />
+            <Loader loading={loading} />
             <div ref={editorRef}></div>
         </div>
     );
@@ -22,3 +22,4 @@ const Loader = ({ loading }: { loading: boolean }) => {
         </div>
     );
 };
+

@@ -12,6 +12,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import { IconAlertCircle, IconAsterisk, IconCheck } from "@tabler/icons-react";
 import { EditPostFormState } from "@/types";
 import { PostHeaderImageSelector } from "./PostHeaderImageSelector";
+import { Toolbar } from "@/quill/toolbar/Toolbar";
 
 
 export const PostEdit = ({ post }: { post: Post }) => {
@@ -102,6 +103,7 @@ export const PostEdit = ({ post }: { post: Post }) => {
 
             <div className="post-editor__body">
                 <div className="post-editor__label">Content</div>
+                <Toolbar />
                 <Editor />
                 <div>
                     {

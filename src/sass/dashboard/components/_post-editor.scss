@@ -31,7 +31,9 @@
             @include quicksand-font();
         }
 
-        //.ql-editor-wrapper {}
+        //.ql-editor-wrapper {
+            //outline: 1px solid lightgray;
+        //}
 
         .ql-container {
             padding: 2rem !important;

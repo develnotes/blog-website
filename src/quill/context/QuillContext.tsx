@@ -4,18 +4,19 @@ import "@/quill/styles/index.scss";
 
 import { createContext, RefObject, useContext, useEffect, useRef, useState } from "react";
 
-/* Highlight JS for code module */
-import hljs, { HLJSApi } from "highlight.js";
-
 /* Quill */
 import Quill, { QuillOptions } from "quill";
 
+import "../config";
 
 /* Import handlers */
-import { imageHandler } from "../customHandlers/imageHandler";
-import { codeHandler } from "../customHandlers/codeHandler";
+import * as handlers from "@/quill/customHandlers";
+
+import * as helpers from "@/quill/helpers";
 
 import Toolbar from "quill/modules/toolbar";
+import { renderKatex } from "../katex";
+import hljs from "highlight.js";
 
 export { Quill };
 export type { QuillOptions };
@@ -29,7 +30,6 @@ type ContextType = {
     words: number,
     characters: number,
     loading: boolean,
-    hljs: HLJSApi | null
 };
 
 const defaultValue: ContextType = {
@@ -40,7 +40,6 @@ const defaultValue: ContextType = {
     words: 0,
     characters: 0,
     loading: true,
-    hljs: null,
 };
 
 const Context = createContext<ContextType>(defaultValue);
@@ -65,84 +64,86 @@ export default function QuillContext({
     const [characters, setCharacters] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
 
+
     useEffect(() => {
-        console.log("Init...")
 
         const editor = editorRef.current;
 
         if (!quillRef.current) {
+            console.log("Init...");
+
             if (editor) {
                 quillRef.current = new Quill(editor, {
                     ...options,
-                    modules: {
-                        ...options.modules,
-                        //syntax: { hljs }
-                    }
+                    modules: { ...options.modules }
                 });
+
                 console.log("Loaded Quill...");
+
+                const quill = quillRef.current;
+
+                const setDeltaString = (quill: Quill) => {
+                    const htmlString = JSON.stringify(quill.getSemanticHTML());
+                    setHTMLContent(htmlString);
+
+                    const textString = JSON.stringify(quill.getText());
+                    setTextContent(textString);
+
+                    const words = textString
+                        .replaceAll('"', "")
+                        .replaceAll("\\n", "")
+                        .split(" ")
+                        .filter(w => w.length > 0)
+                        .length;
+
+                    setWords(words)
+
+                    const characters = textString
+                        .replaceAll('"', "")
+                        .replaceAll("\\n", "")
+                        .split(" ")
+                        .join("").length;
+
+                    setCharacters(characters);
+
+                    const deltaString = JSON.stringify(quill.getContents());
+                    setContents(deltaString);
+                };
+
+                if (quill) {
+                    initialContents && quill.setContents(JSON.parse(initialContents));
+
+                    quill.on("editor-change", renderKatex);
+                    renderKatex();
+
+                    helpers.queryAllElements("code").forEach(el => hljs.highlightElement(el as HTMLElement));
+
+                    if (quill.isEnabled()) {
+                        const toolbar = quill.getModule("toolbar") as Toolbar;
+
+                        Object.values(handlers).forEach(({ handler, handlerType }) => {
+                            toolbar.addHandler(handlerType, handler(quill));
+                        });
+
+                        quill.on("text-change", () => setDeltaString(quill));
+
+                        setDeltaString(quill);
+                    }
+
+                    setLoading(false);
+                }
+
+                return () => {
+                    quill && quill.off("text-change", () => setDeltaString(quill));
+                }
             }
         }
-    }, [options]);
+    }, [options, initialContents]);
 
-    useEffect(() => {
-        console.log("setting quill");
-
-        const quill = quillRef.current;
-
-        const setDeltaString = (quill: Quill) => {
-            const htmlString = JSON.stringify(quill.getSemanticHTML());
-            setHTMLContent(htmlString);
-
-            const textString = JSON.stringify(quill.getText());
-            setTextContent(textString);
-
-            const words = textString
-                .replaceAll('"', "")
-                .replaceAll("\\n", "")
-                .split(" ")
-                .filter(w => w.length > 0)
-                .length;
-
-            setWords(words)
-
-            const characters = textString
-                .replaceAll('"', "")
-                .replaceAll("\\n", "")
-                .split(" ")
-                .join("").length;
-
-            setCharacters(characters);
-
-            const deltaString = JSON.stringify(quill.getContents());
-            setContents(deltaString);
-        };
-
-        if (quill) {
-            const toolbar = quill.getModule("toolbar") as Toolbar;
-
-            toolbar.addHandler("image", imageHandler(quill));
-            toolbar.addHandler("code-block", codeHandler(quill, hljs));
-
-            if (initialContents) {
-                quill.setContents(JSON.parse(initialContents));
-            }
-
-            document.querySelectorAll("code").forEach(el => {
-                hljs.highlightElement(el);
-            });
-
-            quill.on("text-change", () => setDeltaString(quill));
-
-            setLoading(false);
-        }
-
-        return () => {
-            if (quill) {
-                quill.off("text-change", () => setDeltaString(quill));
-            }
-        }
-    }, [initialContents]);
-
+/*      useEffect(() => {
+        console.log(contents);
+    }, [contents]);
+ */
     return (
         <Context.Provider value={{
             editorRef,
@@ -152,7 +153,6 @@ export default function QuillContext({
             words,
             characters,
             loading,
-            hljs: hljs,
         }}>
             {children}
         </Context.Provider>

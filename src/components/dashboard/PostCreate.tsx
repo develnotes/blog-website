@@ -9,6 +9,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import { PostFormState } from "@/types";
 import { PostHeaderImageSelector } from "./PostHeaderImageSelector";
 import { IconAlertCircle, IconCheck } from "@tabler/icons-react";
+import { Toolbar } from "@/quill/toolbar/Toolbar";
 
 
 export const PostCreate = ({ authorId }: { authorId: string }) => {
@@ -37,11 +38,6 @@ export const PostCreate = ({ authorId }: { authorId: string }) => {
     useEffect(() => {
         setMessages(state);
     }, [state]);
-
-
-    useEffect(() => {
-        console.log(quill.contents);
-    }, [quill]);
 
     const onTitleBlur = useCallback(() => {
         actions.checkTitle(title)
@@ -118,6 +114,7 @@ export const PostCreate = ({ authorId }: { authorId: string }) => {
                 <div className="post-editor__label">
                     Content
                 </div>
+                <Toolbar />
                 <Editor />
                 <div className="form-error-message">
                     {

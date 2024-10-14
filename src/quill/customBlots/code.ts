@@ -1,36 +1,35 @@
 import { EmbedBlot } from "parchment";
 
-
-class CodeBlot extends EmbedBlot {
+class Code extends EmbedBlot {
     static blotName: string = "code-block";
     static tagName: string | string[] = "DIV";
+    static className: string = "ql-code-block-container";
 
     static create(value: {
         code: string,
         language: string,
     }) {
         const node = super.create() as Element;
-        node.classList.add("ql-code-block-container");
         node.setAttribute("spellcheck", "false");
-        node.setAttribute("contenteditable", "false")
+        node.setAttribute("contenteditable", "false");
+        node.setAttribute("data-language", value.language);
+        node.setAttribute("data-code", value.code);
         const codeEl = document.createElement("code");
-        codeEl.classList.add("ql-code-block");
-        codeEl.classList.add(`language-${value.language}`)
+        codeEl.classList.add("ql-code-block", `language-${value.language}`)
         const textNode = document.createTextNode(value.code);
         const preEl = document.createElement("pre");
         node.append(preEl);
         preEl.append(codeEl);
         codeEl.append(textNode);
-        node.setAttribute("language", value.language);
         return node;
     }
 
     static value(node: Element) {
         return {
-            code: node.firstElementChild?.firstChild?.textContent,
-            language: node.getAttribute("language"),
+            code: node.firstElementChild?.firstElementChild?.textContent,
+            language: node.getAttribute("data-language"),
         }       
     }
 }
 
-export default CodeBlot;
+export default Code;

@@ -8,7 +8,7 @@ import type { QuillOptions, ToolbarConfig } from "@/quill/context/QuillContext";
 import { PostEdit } from "@/components/dashboard/PostEdit";
 
 import { appName } from "@/config";
-import { fetch, fetchPost, fetchUser } from "@/db";
+import { fetch, fetchPost } from "@/db";
 
 import { Metadata } from "next";
 
@@ -50,7 +50,7 @@ export default async function Page({ params }: Props) {
     const options: QuillOptions = {
         theme: "snow",
         modules: {
-            toolbar: toolbarOptions
+            toolbar: "#toolbar"//toolbarOptions
         }
     };
 
