@@ -1,3 +1,5 @@
+"use server";
+
 /* Import QuillContext dynamically */
 import dynamic from "next/dynamic";
 const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr: false });
@@ -7,20 +9,10 @@ import type { QuillOptions, ToolbarConfig } from "@/quill/context/QuillContext";
 
 import { PostEdit } from "@/components/dashboard/PostEdit";
 
-import { appName } from "@/config";
-import { fetch, fetchPost } from "@/db";
-
-import { Metadata } from "next";
+import { fetchAllPosts, fetchPost } from "@/db";
 
 type Props = { params: { slug: string } };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const post = await fetchPost(params.slug);
-
-    return {
-        title: `${appName} dashboard | Edit ${post.title}`,
-    }
-}
 
 export default async function Page({ params }: Props) {
 
@@ -72,7 +64,7 @@ export default async function Page({ params }: Props) {
 
 export async function generateStaticParams() {
 
-    const posts = await fetch();
+    const posts = await fetchAllPosts();
 
     return posts.map(post => {
         return { slug: post.slug };

@@ -1,3 +1,5 @@
+"use server";
+
 /* Import QuillContext dynamically to prevent document issue */
 import dynamic from "next/dynamic";
 const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr: false });
@@ -7,15 +9,9 @@ import type { QuillOptions, ToolbarConfig } from "@/quill/context/QuillContext";
 
 import { PostCreate } from "@/components/dashboard/PostCreate";
 
-import { appName } from "@/config";
-
 import { auth } from "@/auth";
-
-import { Metadata } from "next";
 import { fetchUser } from "@/db";
-export const metadata: Metadata = {
-    title: `${appName} dashboard | Write`
-}
+
 
 export default async function Write() {
 

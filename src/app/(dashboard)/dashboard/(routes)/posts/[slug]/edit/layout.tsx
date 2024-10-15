@@ -8,12 +8,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const post = await fetchPost(params.slug);
 
     return {
-        title: `${appName} dashboard | ${post.title}`,
+        title: `${appName} dashboard | Edit ${post.title}`,
     };
 }
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-    return (
-        <>{children}</>
-    );
+    return <>{ children }</>;
 }

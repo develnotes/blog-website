@@ -6,20 +6,8 @@ const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr
 import type { QuillOptions } from "@/quill/context/QuillContext";
 
 import { PostShow } from "@/components/dashboard/PostShow";
-import { appName } from "@/config";
-import { fetch, fetchPost } from "@/db";
+import { fetchAllPosts, fetchPost } from "@/db";
 
-import { Metadata } from "next";
-
-type Props = { params: { slug: string } };
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const post = await fetchPost(params.slug);
-
-    return {
-        title: `${appName} dashboard | ${post.title}`,
-    }
-}
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
@@ -29,7 +17,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
         theme: "bubble",
         readOnly: true
     };
-
 
     return (
         <div className="show-page">
@@ -47,7 +34,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 export async function generateStaticParams() {
 
-    const posts = await fetch();
+    const posts = await fetchAllPosts();
 
     return posts.map(post => {
         return { slug: post.slug };
