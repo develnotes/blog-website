@@ -10,11 +10,11 @@ export default async function Login() {
 
             <div className="login__box">
                 <div className="app-name">
-                    <span className="text-before">Login to</span>
+                    {/* <span className="text-before">Login to</span> */}
                     <div className="text-main">
                         {appName}
-                        <div className="text-after">dashboard</div>
                     </div>
+                    <div className="text-after">dashboard</div>
                 </div>
                 <form action={login}>
                     <button type="submit"
