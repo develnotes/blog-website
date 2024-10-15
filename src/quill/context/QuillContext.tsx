@@ -75,7 +75,9 @@ export default function QuillContext({
             if (editor) {
                 quillRef.current = new Quill(editor, {
                     ...options,
-                    modules: { ...options.modules }
+                    modules: {
+                        ...options.modules
+                    }
                 });
 
                 console.log("Loaded Quill...");
@@ -140,10 +142,6 @@ export default function QuillContext({
         }
     }, [options, initialContents]);
 
-/*      useEffect(() => {
-        console.log(contents);
-    }, [contents]);
- */
     return (
         <Context.Provider value={{
             editorRef,
