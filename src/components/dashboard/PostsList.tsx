@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Post } from "@prisma/client";
 import Link from "next/link";
@@ -7,7 +7,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { paths } from "@/app/paths";
 
-export const PostsList = ({ posts }: { posts: Post[] }) => {
+
+export const PostsList = ({ posts, user }: { posts: Post[], user: { name: string, email: string } }) => {
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -26,7 +27,7 @@ export const PostsList = ({ posts }: { posts: Post[] }) => {
                                         <div className="posts__list__item__info__title">
                                             {post.title}
                                         </div>
-                                        {/* <div>Author: { }</div> */}
+                                        <div>Author: { user.name }</div>
                                         <div className="posts__list__item__info__date">Created: {new Date(post.createdAt).toLocaleDateString()}</div>
                                     </div>
                                     <div className="posts__list__item__options">

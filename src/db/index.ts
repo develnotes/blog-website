@@ -2,7 +2,7 @@
 
 import { cache } from "react";
 
-import { prisma, Post } from "@/db/prisma";
+import { prisma, Post, User } from "@/db/prisma";
 
 export type PostData = {
     title: string;
@@ -13,10 +13,10 @@ export type PostData = {
     authorId: string;
 }
 
-export type PostUpdates = { 
-    body: string, 
-    image: string, 
-    html: string 
+export type PostUpdates = {
+    body: string,
+    image: string,
+    html: string
 }
 
 export type Posts = Post[];
@@ -33,10 +33,20 @@ export const create = async ({ data }: { data: PostData }) => {
 };
 
 /* Cached version... */
-export const fetch = cache(async () => {
+export const fetch = cache(async (authorId: string) => {
     console.log("fetching data...");
     const posts = await prisma.post.findMany({
-        orderBy: { createdAt: "desc" } 
+        where: { authorId },
+        orderBy: { createdAt: "desc" }
+    });
+    await prisma.$disconnect();
+    return posts as Posts;
+});
+
+export const fetchAllPosts = cache(async () => {
+    console.log("fetching data...");
+    const posts = await prisma.post.findMany({
+        orderBy: { createdAt: "desc" }
     });
     await prisma.$disconnect();
     return posts as Posts;
@@ -80,11 +90,21 @@ export const checkSlugIsUnique = async (slug: string) => {
 };
 
 /* User queries */
-export const fetchUser = async (email: string) => {
+export const fetchUser = async (email?: string, id?: string) => {
 
-    const user = await prisma.user.findFirst({
-        where: { email }
-    });
-    await prisma.$disconnect();
-    return user;
+    if (email) {
+        const user = await prisma.user.findFirst({
+            where: { email }
+        });
+        await prisma.$disconnect();
+        return user;
+    }
+
+    if (email) {
+        const user = await prisma.user.findFirst({
+            where: { id }
+        });
+        await prisma.$disconnect();
+        return user;
+    }
 };
