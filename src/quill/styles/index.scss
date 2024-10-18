@@ -14,7 +14,36 @@
     position: sticky !important;
     top: 0 !important;
     z-index: $ql-toolbar-z-index !important;
-    background-color: white;
+}
+
+.light {
+    .ql-toolbar {
+        background-color: #ffffff !important;
+
+        button, span {
+            background-color: #ffffff !important;
+            color: #222222 !important;
+
+            &:hover {
+                color: #aaaaaa !important;
+            }
+        }
+    }  
+}
+
+.dark {
+    .ql-toolbar {
+        background-color: #222222 !important;
+
+        button, span {
+            background-color: #222222 !important;
+            color: #eeeeee !important;
+
+            &:hover {
+                color: #aaaaaa !important;
+            }
+        }
+    }    
 }
 
 .ql-editor {
@@ -492,9 +521,19 @@ code {
     padding: 1rem 0;
 }
 
-.ql-latex-display:hover {
-    background-color: #eeeeee;
-    cursor: pointer;
+.light {
+    .ql-latex-display:hover {
+        //background-color: #eeeeee;
+        cursor: pointer;
+    }
+}
+
+.dark {
+    .ql-latex-display:hover {
+        //background-color: #222222;
+        cursor: pointer;
+    }
+    
 }
 
 .ql-latex-inline {
@@ -503,7 +542,7 @@ code {
 }
 
 .ql-latex-inline:hover {
-    background-color: #eeeeee;
+    //background-color: #eeeeee;
     cursor: pointer;
 }
 
@@ -544,31 +583,28 @@ code {
     }
 
     &:hover {
-        background-color: #eeeeee;
+        //background-color: #eeeeee;
     }
 }
 
 .ql-blockquote-block-container {
-    background-color: #eeeeee;
-    border-left: 3rem solid darkslateblue;
     position: relative;
     border-top-left-radius: 3rem;
     border-bottom-right-radius: 3rem;
     cursor: pointer;
     @include prevent-select();
-    padding-bottom: 1rem;
+    padding: 5rem 4rem 2rem 7rem;
 
     blockquote {
+        padding: 0 !important;
         font-size: 2rem;
         border: none !important;
-        text-align: center !important;
-        padding: 3rem 8rem;
+        padding-bottom: 2rem !important;
 
         &::before {
             position: absolute;
             top: 0;
             left: 0;
-            content: url(../icons/quote.svg);
             margin: 0 2rem;
             transform: rotate(180deg);
         }
@@ -577,13 +613,12 @@ code {
             position: absolute;
             bottom: 0;
             right: 0;
-            content: url(../icons/quote.svg);
+            content: url(../icons/quote-light.svg);
             margin: 0 2rem;
         }
     }
 
     figcaption {
-        margin-left: 3rem;
         display: flex;
         gap: 1rem;
 
@@ -598,6 +633,35 @@ code {
         }
     }
 }
+
+.light {
+    .ql-blockquote-block-container {
+        border: 1px solid darkslateblue;
+        border-left-width: 3rem;
+
+        blockquote::before {
+            content: url(../icons/quote-light.svg);
+        }
+        blockquote::after {
+            content: url(../icons/quote-light.svg);
+        }
+    }
+}
+
+.dark {
+    .ql-blockquote-block-container {
+        border: 1px solid #aaaaaa;
+        background-color: #222222;
+
+        blockquote::before {
+            content: url(../icons/quote-dark.svg);
+        }
+        blockquote::after {
+            content: url(../icons/quote-dark.svg);
+        }
+    }
+}
+
 //#toolbar {}
 .ql-hyperlink-block-container {
     position: relative;

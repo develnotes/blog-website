@@ -19,7 +19,7 @@ export const PostHeaderImageSelector = ({
 
     return (
         <div className="select-image-container">
-            <button className="select-image-container__button-open"
+            <button className="button select-image-container__button-open"
                 onClick={() => setOpen(true)}>
                 <IconPhotoPlus />
                 <div>Add Image</div>

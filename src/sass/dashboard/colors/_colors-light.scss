@@ -1,0 +1,205 @@
+@import "../variables";
+
+@mixin button-close-light() {
+    color: $button-color-icon-close-light;
+
+    &:hover {
+        color: $button-color-icon-close-hovered-light;
+    }
+}
+
+@mixin button-light() {
+    color: $button-color-light;
+    background-color: $button-background-light;
+
+    &:hover {
+        background-color: $button-background-hovered-light;
+    }
+
+    &__submit {
+        &:disabled {
+            background-color: $button-background-disabled-light;
+        }
+    }
+}
+
+@mixin icon-button-light() {
+    color: $color-light-1;
+
+    &:hover {
+        color: $color-light-2;
+    }
+}
+
+body {
+    .light {
+        background-color: $background-color-body-light;
+        color: $color-body-light;
+
+        a {
+            color: #2f4f4f;
+
+            &:hover {
+                color: #6a5acd;
+            }
+        }
+
+        .dashboard {
+            //&__menu {}
+
+            &__main {
+                background-color: $background-color-dashboard-light;
+            }
+        }
+
+        .menu {
+            &__nav {
+                &__list {
+                    &__item {
+                        a {
+                            color: $link-color-light;
+
+                            @media screen and (max-width: $breakpoint-md) {
+                                color: $color-white-1;
+                            }
+                        }
+
+                        &--active {
+                            background-color: $link-background-color-active-light;
+                            a {
+                                color: $link-color-active-light;
+                            }
+                        }
+                    }
+
+                    &__item:hover:not(&__item--active) {
+                        a {
+                            color: $link-color-hovered-light;
+
+                            @media screen and (max-width: $breakpoint-md) {
+                                color: $color-dark-1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .header {
+            @include icon-button-light();
+
+            &__menu-widget {
+                background-color: $color-blue-1;
+            }
+
+            &__account-widget {
+                &__user-avatar {
+                    &__icon {
+                        color: inherit;
+                    }
+                }
+
+                &__details {
+                    border-color: $border-color-light;
+                    background-color: $background-color-dashboard-light;
+
+                    &__link {
+                        &__text {
+                            color: $link-color-light;
+
+                            &:hover {
+                                color: $link-color-hovered-light;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &__theme-widget {
+                &__button {
+                    @include icon-button-light();
+                }
+            }
+        }
+
+        .button {
+            @include button-light();
+        }
+
+        .locator {
+            border-color: $border-color-light;
+        }
+
+        .overlay {
+            background-color: $background-color-overlay-light;
+        }
+
+        .select-image {
+            background-color: $background-color-dashboard-light;
+            border-color: $border-color-light;
+
+            &__button-close {
+                @include button-close-light();
+            }
+
+            &__saved {
+                &__button {
+                    background-color: $button-background-light;
+                    color: $button-color-light;
+
+                    &:hover {
+                        background-color: $button-background-hovered-light;
+                    }
+                }
+
+                &__gallery {
+                    /* Same for light and dark */
+                    &__item__button {
+                        color: white;
+                    }
+
+                    &__item__button-background:hover {
+                        background-color: rgba($color: darkslategray, $alpha: 0.55);
+                    }
+                }
+            }
+
+            &__edit-area {
+                border-color: $border-color-light;
+            }
+
+            &__editor {
+                background-color: inherit;
+                border-color: $border-color-light;
+
+                &__button-close {
+                    @include button-close-light();
+                }
+
+                &__preview {
+                    background-color: inherit;
+                }
+            }
+        }
+
+        .posts {
+            &__list {
+                &__item {
+                    border-color: $border-color-light;
+
+                    &__options {
+                        .button {
+                            @include button-light();
+                        }
+                    }
+                }
+            }
+        }
+
+        .post {
+            .button {
+                @include button-light();
+            }
+        }
+    }
+}

@@ -1,0 +1,32 @@
+$color-dark-1: #aaaaaa;
+$color-dark-2: #eeeeee;
+
+$color-black-1: #111111;
+$color-black-2: #222222;
+
+$background-color-dark-1: #111111;
+$background-color-dark-2: #222222;
+
+$background-color-dashboard-dark: $background-color-dark-1;
+$background-color-body-dark: $background-color-dark-2;
+$color-body-dark: $color-dark-2;
+
+$border-color-dark: #aaaaaa;
+
+$button-background-dark: #111111;
+$button-color-dark: #eeeeee;
+$button-background-hovered-dark: #222222;
+$button-background-disabled-dark: $color-dark-1;
+$button-color-icon-close-dark: $color-dark-1;
+$button-color-icon-close-hovered-dark: $color-dark-2;
+
+$link-color-dark: $color-dark-1;
+$link-color-active-dark: $color-dark-2;
+$link-color-hovered-dark: $color-dark-2;
+$link-background-color-active-dark: $background-color-dark-1;
+
+$background-color-overlay-dark: rgba(
+    $color: darkslategray,
+    $alpha: 0.55
+);
+

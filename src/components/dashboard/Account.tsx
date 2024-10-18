@@ -31,7 +31,7 @@ export const Account = ({ user }: { user: User }) => {
 
             <div className="account__logout">
                 <form className="account__logout__form" action={logout}>
-                    <button className="account__logout__button" type="submit">Logout</button>
+                    <button className="button account__logout__button" type="submit">Logout</button>
                 </form>
             </div>
         </div>

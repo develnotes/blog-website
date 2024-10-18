@@ -1,11 +1,11 @@
 "use client";
 
-import { Post } from "@prisma/client";
-import Link from "next/link";
-import { Loader } from "./Loader";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { Loader } from "./Loader";
 import { paths } from "@/app/paths";
+import type { Post } from "@/types";
 
 
 export const PostsList = ({ posts, user }: { posts: Post[], user: { name: string, email: string } }) => {
@@ -32,13 +32,13 @@ export const PostsList = ({ posts, user }: { posts: Post[], user: { name: string
                                     </div>
                                     <div className="posts__list__item__options">
                                         <Link
-                                            className="posts__list__item__options__view-link"
+                                            className="button posts__list__item__options__view-link"
                                             onClick={() => setLoading(true)}
                                             href={paths.dashboard.post(post.slug)}>
                                             View
                                         </Link>
                                         <Link
-                                            className="posts__list__item__options__edit-link"
+                                            className="button posts__list__item__options__edit-link"
                                             onClick={() => setLoading(true)}
                                             href={paths.dashboard.editPost(post.slug)}>
                                             Edit

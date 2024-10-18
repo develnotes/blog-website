@@ -4,7 +4,7 @@ import { PostsList } from "@/components/dashboard/PostsList";
 import { fetch } from "@/db";
 
 import { auth } from "@/auth";
-import { getUser } from "@/actions/getUser";
+import { getUser } from "@/actions";
 
 
 export default async function Posts() {

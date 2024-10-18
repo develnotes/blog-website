@@ -1,6 +1,7 @@
 import { auth, Session } from "@/auth";
-import { HeaderWidget } from "./HeaderAccountWidget"; 
-import { SideMenuShowWidget } from "./SideMenuShowWidget";
+import { HeaderAccountWidget } from "./HeaderAccountWidget"; 
+import { HeaderMenuWidget } from "./HeaderMenuWidget";
+import { HeaderThemeWidget } from "./HeaderThemeWidget";
 
 export const Header = async () => {
 
@@ -11,11 +12,13 @@ export const Header = async () => {
     return (
         <header className="header">
 
-            <SideMenuShowWidget />
+            <HeaderMenuWidget />
+
+            <HeaderThemeWidget />
 
             {
                 user &&
-                <HeaderWidget user={user} />
+                <HeaderAccountWidget user={user} />
             }
 
         </header>

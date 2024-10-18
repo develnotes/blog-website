@@ -8,7 +8,7 @@ import Image from "next/image";
 import { User } from "@/auth";
 import { logout } from "@/actions/auth";
 
-export const HeaderWidget = ({ user }: { user: User }) => {
+export const HeaderAccountWidget = ({ user }: { user: User }) => {
 
     const { accountRef, showDetails, toggleVisibility, closeOnClick } = useHeaderWidget();
 
@@ -42,7 +42,7 @@ export const HeaderWidget = ({ user }: { user: User }) => {
                     </Link>
 
                     <form action={logout}>
-                        <button className="header__account-widget__details__button"
+                        <button className="button header__account-widget__details__button"
                             type="submit">
                             Logout
                         </button>

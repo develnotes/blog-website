@@ -10,13 +10,10 @@
 
 .select-image {
     position: absolute;
-    background-color: whitesmoke;
     width: 95%;
     height: 95%;
     padding: 3rem;
-
-    border: 0.2rem solid darkslateblue;
-
+    border: 0.2rem solid;
     overflow-y: scroll;
 
     &__preview {
@@ -59,7 +56,6 @@
         position: absolute;
         right: 1rem;
         top: 1rem;
-        color: darkslateblue;
         @include icon-button();
     }
 
@@ -101,9 +97,7 @@
             justify-content: center;
             align-items: center;
 
-            background-color: darkslateblue;
             border: none;
-            color: whitesmoke;
             border-radius: 0.4rem;
             cursor: pointer;
 
@@ -113,10 +107,6 @@
 
             &--next {
                 right: 0;
-            }
-
-            &:hover {
-                background-color: rgba($color: darkslateblue, $alpha: 0.85);
             }
         }
 
@@ -138,14 +128,11 @@
 
             &__item__button {
                 position: absolute;
-                color: white;
                 display: none;
                 @include icon-button();
             }
 
-            &__item:hover &__item__button-background {
-                background-color: rgba($color: darkslategray, $alpha: 0.25);
-            }
+            //&__item:hover &__item__button-background {}
 
             &__item__button-background:hover &__item__button {
                 display: block;
@@ -154,13 +141,12 @@
     }
 
     &__edit-area {
-        border: 1px solid darkslateblue;
         padding: 0.4rem;
         position: relative;
         margin-top: 1rem;
-
         display: flex;
         flex-direction: column;
+        border: 1px solid;
 
         &__main {
             display: flex;
@@ -172,13 +158,11 @@
             object-fit: contain;
             overflow: auto;
             margin-top: 0.3rem;
-
             justify-self: flex-start;
         }
 
         &__tools {
             padding: 0.4rem;
-
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
@@ -196,8 +180,7 @@
     &__editor {
         max-width: 90%;
         height: 90%;
-        background-color: whitesmoke;
-        border: 0.2rem solid darkslateblue;
+        border: 0.2rem solid;
         padding: 1rem 1rem 1rem;
         position: relative;
 

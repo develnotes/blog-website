@@ -1,25 +1,8 @@
 "use server"
 
 import { cache } from "react";
-
-import { prisma, Post, User } from "@/db/prisma";
-
-export type PostData = {
-    title: string;
-    body: string;
-    slug: string;
-    image: string;
-    html: string;
-    authorId: string;
-}
-
-export type PostUpdates = {
-    body: string,
-    image: string,
-    html: string
-}
-
-export type Posts = Post[];
+import { prisma } from "@/db/prisma";
+import { Post, Posts, PostData, PostUpdates } from "@/types";
 
 export const create = async ({ data }: { data: PostData }) => {
     try {

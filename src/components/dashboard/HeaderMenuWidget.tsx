@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { Menu } from "./SideMenu";
+import { Menu } from "./Menu";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 
-export const SideMenuShowWidget = () => {
+export const HeaderMenuWidget = () => {
 
     const [show, setShow] = useState<boolean>(false);
 
@@ -22,10 +22,10 @@ export const SideMenuShowWidget = () => {
 
     if (show) {
         return (
-            <div className="header__show-side-menu">
+            <div className="header__menu-widget">
                 <button
                     onClick={() => setShow(false)}
-                    className="header__show-side-menu__button header__show-side-menu__button--close">
+                    className="header__menu-widget__button header__menu-widget__button--close">
                     <IconX />
                 </button>
                 <Menu setShow={setShow} />
@@ -35,7 +35,7 @@ export const SideMenuShowWidget = () => {
         return (
             <button
                 onClick={() => setShow(true)}
-                className="header__show-side-menu__button header__show-side-menu__button--open">
+                className="header__menu-widget__button header__menu-widget__button--open">
                 <IconMenu2 />
             </button>
         );

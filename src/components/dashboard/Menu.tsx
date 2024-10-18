@@ -7,16 +7,6 @@ import { useSelectedLayoutSegments } from "next/navigation";
 import { paths } from "@/app/paths";
 import { AppLogo } from "./AppLogo";
 
-export const SideMenu = () => {
-    return (
-        <div className="dashboard__side-menu">
-            <div className="dashboard__side-menu__wrapper">
-                <Menu />
-            </div>
-        </div>
-    );
-};
-
 interface Menu { show?: boolean, setShow?: React.Dispatch<React.SetStateAction<boolean>> }
 
 export const Menu = ({ show, setShow }: Menu) => {
@@ -27,66 +17,66 @@ export const Menu = ({ show, setShow }: Menu) => {
 
     return (
         <>
-            <div className="dashboard__side-menu__header">
+            <div className="menu__header">
                 <AppLogo />
             </div>
-            <nav className="dashboard__side-menu__nav">
-                <ul className="dashboard__side-menu__nav__menu">
+            <nav className="menu__nav">
+                <ul className="menu__nav__list">
                     <li className={path === "/" ?
-                        "dashboard__side-menu__nav__menu__item dashboard__side-menu__nav__menu__item--active" :
-                        "dashboard__side-menu__nav__menu__item"}>
+                        "menu__nav__list__item menu__nav__list__item--active" :
+                        "menu__nav__list__item"}>
                         <Link 
-                            className="dashboard__side-menu__nav__menu__item__link" 
+                            className="menu__nav__list__item__link" 
                             href={paths.dashboard.home()} 
                             onClick={() => setShow && setShow(false)}>
                             <IconHome />
-                            <div className="dashboard__side-menu__nav__menu__item__link__text">
+                            <div className="menu__nav__list__item__link__text">
                                 Home
                             </div>
                         </Link>
                     </li>
                     <li className={path === "/write" ?
-                        "dashboard__side-menu__nav__menu__item dashboard__side-menu__nav__menu__item--active" :
-                        "dashboard__side-menu__nav__menu__item"}>
+                        "menu__nav__list__item menu__nav__list__item--active" :
+                        "menu__nav__list__item"}>
                         <Link 
-                            className="dashboard__side-menu__nav__menu__item__link" 
+                            className="menu__nav__list__item__link" 
                             href={paths.dashboard.write()}
                             onClick={() => setShow && setShow(false)}>
                             <IconTextPlus />
-                            <div className={"dashboard__side-menu__nav__menu__item__link__text"}>
+                            <div className={"menu__nav__list__item__link__text"}>
                                 Write
                             </div>
                         </Link>
                     </li>
                     <li className={path === "/posts" ?
-                        "dashboard__side-menu__nav__menu__item dashboard__side-menu__nav__menu__item--active" :
-                        "dashboard__side-menu__nav__menu__item"}>
+                        "menu__nav__list__item menu__nav__list__item--active" :
+                        "menu__nav__list__item"}>
                         <Link 
-                            className="dashboard__side-menu__nav__menu__item__link" 
+                            className="menu__nav__list__item__link" 
                             href={paths.dashboard.posts()}
                             onClick={() => setShow && setShow(false)}>
                             <IconNews />
-                            <div className="dashboard__side-menu__nav__menu__item__link__text">
+                            <div className="menu__nav__list__item__link__text">
                                 Posts
                             </div>
                         </Link>
                     </li>
                     <li className={path === "/account" ?
-                        "dashboard__side-menu__nav__menu__item dashboard__side-menu__nav__menu__item--active" :
-                        "dashboard__side-menu__nav__menu__item"}>
+                        "menu__nav__list__item menu__nav__list__item--active" :
+                        "menu__nav__list__item"}>
                         <Link 
-                            className="dashboard__side-menu__nav__menu__item__link" 
+                            className="menu__nav__list__item__link" 
                             href={paths.dashboard.account()}
                             onClick={() => setShow && setShow(false)}>
                             <IconUserCheck />
-                            <div className="dashboard__side-menu__nav__menu__item__link__text">
+                            <div className="menu__nav__list__item__link__text">
                                 Account
                             </div>
                         </Link>
                     </li>
-                    <li className="dashboard__side-menu__nav__menu__item">
+                    <li className="menu__nav__list__item">
                         <Link 
-                            className="dashboard__side-menu__nav__menu__item__link" 
+                            className="menu__nav__list__item__link" 
                             href={paths.blog.home()}
                             onClick={() => setShow && setShow(false)}>
                             Blog

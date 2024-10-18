@@ -2,13 +2,7 @@
     padding: 1rem 2rem;
     border: none;
     border-radius: 0.5rem;
-    color: azure;
-    background-color: darkslateblue;
     cursor: pointer;
-
-    &:hover {
-        background-color: rgba($color: darkslateblue, $alpha: 0.85);
-    }
 }
 
 @mixin icon-button() {
@@ -30,7 +24,10 @@
 
         &:disabled {
             cursor: default;
-            background-color: rgba(slateblue, 0.85);
         }
     }
+}
+
+.icon-button {
+    @include icon-button();
 }

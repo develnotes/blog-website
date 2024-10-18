@@ -1,18 +1,19 @@
 "use client"
 
+import { useEffect, useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
+
 import { Editor } from "@/quill/editor/Editor";
 import { useQuill } from "@/quill/context/QuillContext";
-
-import { useEffect, useState } from "react";
-
-import { Post } from "@prisma/client";
-import * as actions from "@/actions"
-import { TitleInput } from "./TitleInput";
-import { useFormState, useFormStatus } from "react-dom";
-import { IconAlertCircle, IconAsterisk, IconCheck } from "@tabler/icons-react";
-import { EditPostFormState } from "@/types";
-import { PostHeaderImageSelector } from "./PostHeaderImageSelector";
 import { Toolbar } from "@/quill/toolbar/Toolbar";
+
+import * as actions from "@/actions"
+
+import { TitleInput } from "./TitleInput";
+import { PostHeaderImageSelector } from "./PostHeaderImageSelector";
+
+import { IconAlertCircle, IconAsterisk, IconCheck } from "@tabler/icons-react";
+import type { Post, EditPostFormState } from "@/types";
 
 
 export const PostEdit = ({ post }: { post: Post }) => {

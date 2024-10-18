@@ -14,25 +14,18 @@
         overflow: hidden;
         cursor: pointer;
 
-        &--no-session {
-            border: 1px solid darkslategray;
-        }
+        //&--no-session {}
 
-        &__icon {
-            color: darkslategray;
-        }
+        //&__icon {}
     }
 
     &__details {
         position: absolute;
         width: max-content;
-
+        border: 1px solid;
         top: $header-height;
         right: 1rem;
         padding: 0.4rem;
-
-        border: 1px solid gray;
-        background-color: white;
 
         z-index: $header-widget-details-z-index;
 
@@ -47,7 +40,6 @@
             &__text {
                 width: 100%;
                 font-size: 1.6rem;
-                color: black;
                 padding: 1rem;
                 text-align: center;
             }
@@ -55,7 +47,6 @@
 
         &__button {
             border: none;
-            background-color: transparent;
             padding: 1rem;
             cursor: pointer;
             width: 100%;

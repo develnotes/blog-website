@@ -1,0 +1,186 @@
+@mixin button-close-dark() {
+    color: $button-color-icon-close-dark;
+
+    &:hover {
+        color: $button-color-icon-close-hovered-dark;
+    }
+}
+
+@mixin button-dark() {
+    color: $button-color-dark;
+    background-color: $button-background-dark;
+    border: 0.1rem solid $border-color-dark;
+
+    &:hover {
+        background-color: $button-background-hovered-dark;
+    }
+
+    &__submit {
+        &:disabled {
+            background-color: $button-background-disabled-dark;
+        }
+    }
+}
+
+@mixin icon-button-dark() {
+    color: $color-dark-2;
+
+    &:hover {
+        color: $color-dark-1;
+    }
+}
+
+body {
+    .dark {
+        background-color: $background-color-body-dark;
+        color: $color-body-dark;
+
+        a {
+            color: #aaaaaa;
+
+            &:hover {
+                color: #eeeeee;
+            }
+        }
+
+        .dashboard {
+            //&__menu {}
+            
+            &__main {
+                background-color: $background-color-dashboard-dark;
+            }
+        }
+
+        .menu {
+            &__nav {
+                &__list {
+                    &__item {
+                        a {
+                            color: $link-color-dark;
+                        }
+
+                        &--active {
+                            background-color: $link-background-color-active-dark;
+                            a {
+                                color: $link-color-active-dark;
+                            }
+                        }
+                    }
+
+                    &__item:hover:not(&__item--active) {
+                        a {
+                            color: $link-color-active-dark;
+                        }
+                    }
+                }
+            }
+        }
+
+        .header {
+            &__menu-widget {
+                background-color: $background-color-body-dark;
+
+                &__button {
+                    @include icon-button-dark();
+                }
+            }
+
+            &__account-widget {
+                &__user-avatar {
+                    &__icon {
+                        color: inherit;
+                    }
+                }
+
+                &__details {
+                    border-color: $border-color-dark;
+                    background-color: $background-color-dashboard-dark;
+
+                    &__link {
+                        &__text {
+                            color: $link-color-dark;
+
+                            &:hover {
+                                color: $link-color-hovered-dark;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &__theme-widget {
+                &__button {
+                    @include icon-button-dark();
+                }
+            }
+        }
+
+        .button {
+            @include button-dark();
+        }
+
+        .locator {
+            border-color: $border-color-dark;
+        }
+
+        .overlay {
+            background-color: $background-color-overlay-dark;
+        }
+
+        .select-image {
+            background-color: $background-color-dashboard-dark;
+            border-color: $border-color-dark;
+
+            &__button-close {
+                @include button-close-dark();
+            }
+
+            &__saved {
+                &__button {
+                    background-color: $button-background-dark;
+                    color: $button-color-dark;
+
+                    &:hover {
+                        background-color: $button-background-hovered-dark;
+                    }
+                }
+
+                &__gallery {
+                    /* Same for light and dark */
+                    &__item__button {
+                        color: white;
+                    }
+
+                    &__item__button-background:hover {
+                        background-color: rgba($color: darkslategray, $alpha: 0.55);
+                    }
+                }
+            }
+
+            &__edit-area {
+                border-color: $border-color-dark;
+            }
+
+            &__editor {
+                background-color: $background-color-dashboard-dark;
+                border-color: $border-color-dark;
+
+                &__button-close {
+                    @include button-close-dark();
+                }
+
+                &__preview {
+                    background-color: inherit;
+                }
+            }
+        }
+
+        .posts {
+            &__list {
+                &__item {
+                    border-color: $border-color-dark;
+                }
+            }
+        }
+    }
+}

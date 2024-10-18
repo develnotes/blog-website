@@ -1,7 +1,9 @@
-@import "variables";
-@import "fonts";
+@import "themes/index.scss";
+@import "colors/index.scss";
 @import "base";
+@import "fonts";
 @import "pages";
+@import "variables";
 
 /* Layout */
 @import "layout/index.scss";

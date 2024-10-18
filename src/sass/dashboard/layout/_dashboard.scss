@@ -5,8 +5,24 @@
     flex-direction: row;
 
     @media screen and (max-width: $breakpoint-md) {
-        &__side-menu {
+        &__menu {
             display: none;
+        }
+    }
+
+    //&__menu{}
+
+    &__main {
+        width: calc(100% - $menu-width);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 1rem;
+    
+        @media screen and (max-width: $breakpoint-md) {
+            width: 100%;
         }
     }
 }

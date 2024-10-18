@@ -112,7 +112,7 @@ export const ImageCroppingEditor = ({
     const ButtonUploadStreamImage = () => {
         const { pending } = useFormStatus();
         return (
-            <button className="select-image__editor__options__button" type="submit">
+            <button className="button select-image__editor__options__button" type="submit">
                 <>
                     {
                         pending ?
@@ -191,19 +191,19 @@ export const ImageCroppingEditor = ({
                 <div className='select-image__editor__options'>
                     <button
                         onClick={loadCropper}
-                        className="select-image__editor__options__button">
+                        className="button select-image__editor__options__button">
                         <IconCrop />
                         <div>Crop</div>
                     </button>
                     <button
                         onClick={revertImage}
-                        className="select-image__editor__options__button">
+                        className="button select-image__editor__options__button">
                         <IconRestore />
                         <div>Revert</div>
                     </button>
                     {
                         uploadStreamState.response ?
-                            <button className="select-image__editor__options__button"
+                            <button className="button select-image__editor__options__button"
                                 onClick={acceptCroppedImage}>
                                 <IconPhotoCheck />
                                 <div>Ok</div>

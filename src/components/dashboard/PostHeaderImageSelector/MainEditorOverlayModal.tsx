@@ -97,13 +97,13 @@ export const MainEditorOverlayModal = ({
     return (
         <Overlay open={open}>
             <div className="select-image">
-                <button className="select-image__button-close" onClick={closeOverlay}>
+                <button className="icon-button select-image__button-close" onClick={closeOverlay}>
                     <IconX />
                 </button>
 
                 <div className="select-image__header">
                     <button
-                        className="select-image__button"
+                        className="button select-image__button"
                         onClick={() => {
                             showSelector === "from-url" ?
                                 setShowSelector(null) :
@@ -113,7 +113,7 @@ export const MainEditorOverlayModal = ({
                         <div>Add from URL</div>
                     </button>
                     <button
-                        className="select-image__button"
+                        className="button select-image__button"
                         onClick={() => {
                             showSelector === "saved-images" ?
                                 setShowSelector(null) :
@@ -160,7 +160,7 @@ export const MainEditorOverlayModal = ({
 
                             {/* Tools */}
                             <div className="select-image__edit-area__tools">
-                                <button className="select-image__edit-area__tools__button"
+                                <button className="button select-image__edit-area__tools__button"
                                     onClick={() => setOpenImageEditor(true)}>
                                     <IconPhotoEdit />
                                     <div>Edit</div>
@@ -182,10 +182,10 @@ export const MainEditorOverlayModal = ({
                         />
 
                         <div className="select-image__footer">
-                            <button onClick={saveAddedImage} className="select-image__footer__button">
+                            <button onClick={saveAddedImage} className="button select-image__footer__button">
                                 Ok
                             </button>
-                            <button onClick={cancelAddImage} className="select-image__footer__button">
+                            <button onClick={cancelAddImage} className="button select-image__footer__button">
                                 Cancel
                             </button>
                         </div>
@@ -207,7 +207,7 @@ const ButtonUploadImage = ({ imagePreview }: { imagePreview: string }) => {
     }, []);
 
     return (
-        <button className="select-image__edit-area__tools__button"
+        <button className="button select-image__edit-area__tools__button"
             disabled={isCloudinaryImage(imagePreview)}>
             {
                 isCloudinaryImage(imagePreview) ?
