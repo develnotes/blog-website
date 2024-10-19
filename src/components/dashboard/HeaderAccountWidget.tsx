@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { paths } from "@/app/paths";
+import { paths } from "@/config";
 import { useSelectedLayoutSegments } from "next/navigation";
 import Image from "next/image";
 import { User } from "@/auth";

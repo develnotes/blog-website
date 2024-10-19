@@ -1,6 +1,6 @@
 "use server";
 
-import { paths } from "@/app/paths";
+import { paths } from "@/config";
 import { signIn, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 

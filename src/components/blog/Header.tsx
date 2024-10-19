@@ -1,4 +1,4 @@
-import { paths } from "@/app/paths";
+import { paths } from "@/config";
 import { appName } from "@/config";
 import Link from "next/link";
 

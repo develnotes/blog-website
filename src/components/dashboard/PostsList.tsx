@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Loader } from "./Loader";
-import { paths } from "@/app/paths";
+import { paths } from "@/config";
 import type { Post } from "@/types";
 
 

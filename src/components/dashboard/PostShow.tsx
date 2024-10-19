@@ -4,7 +4,7 @@ import { Editor } from "@/quill/editor/Editor";
 import { IconEdit } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
-import { paths } from "@/app/paths";
+import { paths } from "@/config";
 import type { Post } from "@/types";
 
 

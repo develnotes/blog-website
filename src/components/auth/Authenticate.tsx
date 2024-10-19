@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { paths } from "@/app/paths";
+import { paths } from "@/config";
 import { auth } from "@/auth";
 
 export default async function Authenticate({ children }: { children: React.ReactNode }) {
