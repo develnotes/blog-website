@@ -3,45 +3,43 @@
 import Quill from "quill";
 import * as helpers from "@/quill/helpers";
 
-/* Ace */
-import { Ace } from "../../../ace/ace-builds/ace";
-import ace, { edit } from "../../../ace/ace-builds/src-noconflict/ace";
-import "../../../ace/ace-builds/src-noconflict/ext-language_tools";
-import "../../../ace/ace-builds/src-noconflict/ext-searchbox";
-import "../../../ace/ace-builds/src-noconflict/ext-emmet";
-import theme from "../../../ace/ace-builds/src-noconflict/theme-monokai";
-import javascript from "../../../ace/ace-builds/src-noconflict/mode-javascript";
-import python from "../../../ace/ace-builds/src-noconflict/mode-python";
-import typescript from "../../../ace/ace-builds/src-noconflict/mode-javascript";
-import html from "../../../ace/ace-builds/src-noconflict/mode-html";
-import css from "../../../ace/ace-builds/src-noconflict/mode-css";
-
 /* Highlight JS for code module */
 import hljs from "highlight.js";
 
 import Code from "../customBlots/code";
 Quill.register(Code);
 
-import { Blot, Leaf } from "parchment";
+import { Leaf } from "parchment";
 import BlockHandler from "./handler";
 
-const JavascriptMode = javascript.Mode;
-const PythonMode = python.Mode;
-const TypescriptMode = typescript.Mode;
-const HtmlMode = html.Mode;
-const CssMode = css.Mode;
+/* Ace code editor */
+import * as ace from "ace-code";
+
+/* Ace ext */
+import "ace-code/src/ext/language_tools";
+import "ace-code/styles/theme/monokai.css";
+
+/* Ace theme */
+//@ts-ignore
+import * as theme from "ace-code/src/theme/monokai";
+
+import javascript from "ace-code/src/mode/javascript";
+import python from "ace-code/src/mode/python";
+import typescript from "ace-code/src/mode/typescript";
+import html from "ace-code/src/mode/html";
+import css from "ace-code/src/mode/css";
 
 const languages = [
-    { name: "javascript", mode: JavascriptMode },
-    { name: "python", mode: PythonMode },
-    { name: "typescript", mode: TypescriptMode },
-    { name: "html", mode: HtmlMode },
-    { name: "css", mode: CssMode },
+    { name: "javascript", mode: javascript.Mode },
+    { name: "python", mode: python.Mode },
+    { name: "typescript", mode: typescript.Mode },
+    { name: "html", mode: html.Mode },
+    { name: "css", mode: css.Mode },
 ];
 
 const startAce = (code: string, language: string) => {
 
-    const aceEditor: Ace.Editor = edit("ace-editor", {
+    const aceEditor = ace.edit("ace-editor", {
         enableAutoIndent: true,
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true,
@@ -52,7 +50,7 @@ const startAce = (code: string, language: string) => {
         value: code,
         tooltipFollowsMouse: true,
         tabSize: 4,
-    } as Ace.EditorOptions);
+    });
 
     aceEditor.focus();
 

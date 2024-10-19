@@ -2,7 +2,7 @@
 
 /* Quill */
 import Quill from "quill";
-import { Blot, Leaf, LeafBlot } from "parchment";
+import { Leaf, LeafBlot } from "parchment";
 
 import Latex, { LatexBlotValue, LatexDisplayMode } from "../customBlots/latex";
 Quill.register(Latex);
@@ -10,12 +10,8 @@ Quill.register(Latex);
 import * as helpers from "@/quill/helpers";
 
 /* Ace */
-import ace, { edit } from "../../../ace/ace-builds/src-noconflict/ace";
-import { Ace } from "../../../ace/ace-builds/ace";
-import theme from "../../../ace/ace-builds/src-noconflict/theme-ambiance";
-import latex from "../../../ace/ace-builds/src-noconflict/mode-latex";
-import "../../../ace/ace-builds/src-noconflict/ext-language_tools";
-import "../../../ace/ace-builds/src-noconflict/ext-searchbox";
+import * as ace from "ace-code";
+import latex from "ace-code/src/mode/latex";
 
 /* Katex */
 import { renderKatex } from "../katex";
@@ -25,19 +21,19 @@ import BlockHandler from "./handler";
 
 
 const startAce = ({ latexFormula }: { latexFormula?: string }) => {
-    const aceEditor: Ace.Editor = edit("ace-editor", {
+    const aceEditor = ace.edit("ace-editor", {
         enableAutoIndent: true,
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true,
         enableSnippets: true,
         enableMultiselect: true,
         fontSize: 16,
-        theme,
         value: latexFormula || "",
         tooltipFollowsMouse: true,
         tabSize: 4,
         wrap: true,
-    } as Ace.EditorOptions);
+        showLineNumbers: false,
+    });
 
     aceEditor.session.setMode(new latex.Mode());
     aceEditor.focus();
