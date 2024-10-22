@@ -1,4 +1,4 @@
-.home-page, 
+.home-page,
 .about-page,
 .write-page,
 .edit-page,
@@ -12,4 +12,16 @@
     min-height: calc(100% - $header-height - $locator-height);
     width: 100%;
     max-width: 75rem;
+}
+
+.home-page {
+    
+    &__heading {
+        padding-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    h2 {
+        font-weight: 600;
+    }
 }

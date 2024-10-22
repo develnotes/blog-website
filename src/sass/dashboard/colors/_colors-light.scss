@@ -52,6 +52,31 @@ body {
             }
         }
 
+        .home-page {
+
+            //&__heading {}
+        
+            //h2 {}
+
+            .headline {
+                &__text {
+                    background-color: $background-color-dashboard-light;
+                }
+
+                &__button {
+                    color: lighten($color: $color-light-1, $amount: 20);
+
+                    a {
+                        color: $color-blue-1;
+                    }
+                }
+        
+                &__icon {
+                    color: lighten($color: $color-light-1, $amount: 20);
+                }
+            }
+        }
+
         .menu {
             &__nav {
                 &__list {
@@ -197,6 +222,19 @@ body {
         }
 
         .post {
+            .button {
+                @include button-light();
+            }
+        }
+
+        .carousel {
+            &__button {
+                color: $color-blue-1;
+                background-color: rgba($background-color-dashboard-light, 0.5);
+            }
+        }
+
+        .post-card {
             .button {
                 @include button-light();
             }

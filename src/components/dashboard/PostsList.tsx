@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Loader } from "./Loader";
 import { paths } from "@/config";
 import type { Post } from "@/types";
+import { IconEdit, IconEye, IconStar } from "@tabler/icons-react";
 
 
 export const PostsList = ({ posts, user }: { posts: Post[], user: { name: string, email: string } }) => {
@@ -27,8 +28,15 @@ export const PostsList = ({ posts, user }: { posts: Post[], user: { name: string
                                         <div className="posts__list__item__info__title">
                                             {post.title}
                                         </div>
-                                        <div>Author: { user.name }</div>
-                                        <div className="posts__list__item__info__date">Created: {new Date(post.createdAt).toLocaleDateString()}</div>
+                                        <div className="posts__list__item__info__author">Author: {user.name}</div>
+                                        <div className="posts__list__item__info__date">
+                                            <IconStar size={18}/>
+                                            Created: {new Date(post.createdAt).toLocaleDateString()}
+                                        </div>
+                                        <div className="posts__list__item__info__date">
+                                            <IconEdit size={18} />
+                                            Updated: {new Date(post.updatedAt).toLocaleDateString()}
+                                        </div>
                                     </div>
                                     <div className="posts__list__item__options">
                                         <Link
@@ -36,12 +44,14 @@ export const PostsList = ({ posts, user }: { posts: Post[], user: { name: string
                                             onClick={() => setLoading(true)}
                                             href={paths.dashboard.post(post.slug)}>
                                             View
+                                            <IconEye size={20} />
                                         </Link>
                                         <Link
                                             className="button posts__list__item__options__edit-link"
                                             onClick={() => setLoading(true)}
                                             href={paths.dashboard.editPost(post.slug)}>
                                             Edit
+                                            <IconEdit size={20} />
                                         </Link>
                                     </div>
                                 </div>

@@ -51,6 +51,31 @@ body {
             }
         }
 
+        .home-page {
+            
+            //&__heading {}
+        
+            //h2 {}
+
+            .headline {
+                &__text {
+                    background-color: $background-color-dashboard-dark;
+                }
+
+                &__button {
+                    color: lighten($color: $color-dark-2, $amount: 20);
+
+                    a {
+                        color: $color-dark-2;
+                    }
+                }
+        
+                &__icon {
+                    color: lighten($color: $color-dark-2, $amount: 20);
+                }
+            }
+        }
+
         .menu {
             &__nav {
                 &__list {
@@ -180,6 +205,13 @@ body {
                 &__item {
                     border-color: $border-color-dark;
                 }
+            }
+        }
+
+        .carousel {
+            &__button {
+                color: $color-dark-2;
+                background-color: rgba($background-color-dashboard-dark, 0.5);
             }
         }
     }

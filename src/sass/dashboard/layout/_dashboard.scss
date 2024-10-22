@@ -10,7 +10,15 @@
         }
     }
 
-    //&__menu{}
+    &__menu{
+        height: 100vh;
+        position: sticky;
+        top: 0;
+        width: $menu-width;
+        min-width: $menu-width;
+        padding: 0.4rem;
+        padding-right: 0;
+    }
 
     &__main {
         width: calc(100% - $menu-width);

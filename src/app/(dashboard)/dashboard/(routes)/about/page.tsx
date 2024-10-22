@@ -1,4 +1,4 @@
-export default function Page({ children }: { children: React.ReactNode }) {
+export default function Page() {
     return (
         <div className="about-page">
             

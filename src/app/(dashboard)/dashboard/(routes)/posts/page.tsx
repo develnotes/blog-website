@@ -1,35 +1,28 @@
 "use server";
 
 import { PostsList } from "@/components/dashboard/PostsList";
-import { fetch } from "@/db";
-
 import { auth } from "@/auth";
-import { getUser } from "@/actions";
+import { getUserData } from "@/data/getUserData";
 
 
 export default async function Posts() {
 
     const session = await auth();
 
-    if (session) {
-        const user = session.user;
-        const email = user?.email;
+    const data = await getUserData(session);
+    
+    if (data) {
 
-        if (email) {
-            const user = await getUser(email);
-            const userId = user?.id;
-            const name = user?.name as string;
-            
-            if (userId) {
-                const posts = await fetch(userId);
-                
-                return (
-                    <div className="posts-page">
-                        <PostsList posts={posts} user={{ email, name }}/>
-                    </div>
-                );
-            }
-        }
+        const { posts, user } = data;
+
+        const email = user.email as string;
+        const name = user.name as string;
+
+        return (
+            <div className="posts-page">
+                <PostsList posts={posts} user={{ email, name }}/>
+            </div>
+        );
     }
 
     return (

@@ -12,7 +12,6 @@ export const PostShow = ({ post }: { post: Post }) => {
 
     return (
         <div className="post">
-
             <div className="post__header">
                 {
                     post.image &&
@@ -21,7 +20,14 @@ export const PostShow = ({ post }: { post: Post }) => {
                         src={post.image}
                         alt="Header image"
                         fill
-                    />}
+                    />
+                }
+
+                <Link className="button post__edit-button"
+                    href={paths.dashboard.editPost(post.slug)}>
+                    <IconEdit />
+                    <div className="post__edit-button__text">Edit Post</div>
+                </Link>
             </div>
 
             <div className="post__title">
@@ -29,11 +35,7 @@ export const PostShow = ({ post }: { post: Post }) => {
                     {post.title}
                 </div>
 
-                <Link className="button post__edit-button"
-                    href={paths.dashboard.editPost(post.slug)}>
-                    <IconEdit />
-                    <div className="post__edit-button__text">Edit</div>
-                </Link>
+
 
             </div>
 

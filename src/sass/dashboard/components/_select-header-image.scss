@@ -1,10 +1,18 @@
 .select-image-container {
+    position: relative;
+
+    min-height: 5rem;
+    
     &__button-open {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 0.4rem;
         @include base-button();
+        
+        position: absolute;
+        margin: .4rem;
+        
     }
 }
 

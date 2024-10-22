@@ -52,16 +52,21 @@
     }
 
     &__edit-button {
-        font-size: 1.4rem;
-        //background-color: darkslateblue;
+        @include base-button();
+
+        position: relative;
+        top: 0;
+        right: 0;
+        font-size: 1.6rem;
         border-radius: 0.4rem;
-        padding: 0.4rem 0.8rem;
+        width: max-content;
         cursor: pointer;
 
         display: flex;
         align-items: center;
+        gap: .4rem;
         text-decoration: none;
-        //color: whitesmoke;
+        margin: 1rem;
 
         &__text {
             font-weight: bold;
