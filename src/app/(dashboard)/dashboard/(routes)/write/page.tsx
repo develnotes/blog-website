@@ -47,7 +47,7 @@ export default async function Write() {
 
     const email = session?.user?.email as string;
 
-    const user = await fetchUser(email);
+    const user = await fetchUser({ email });
 
     const authorId = user?.id as string;
 

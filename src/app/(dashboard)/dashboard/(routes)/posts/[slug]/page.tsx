@@ -6,12 +6,19 @@ const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr
 import type { QuillOptions } from "@/quill/context/QuillContext";
 
 import { PostShow } from "@/components/dashboard/PostShow";
-import { fetchAllPosts, fetchPost } from "@/db";
+import * as db from "@/db";
+import { auth } from "@/auth";
+import { getUserData } from "@/data/getUserData";
 
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
-    const post = await fetchPost(params.slug);
+    const post = await db.fetchPost(params.slug);
+
+    const session = await auth();
+    const data = await getUserData(session);
+
+    const posts = data?.posts || [post];
 
     const options: QuillOptions = {
         theme: "bubble",
@@ -26,7 +33,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 </div>
             </noscript>
             <QuillContext options={options} initialContents={post.body}>
-                <PostShow post={post} />
+                <PostShow post={post} posts={posts}/>
             </QuillContext>
         </div>
     );
@@ -34,7 +41,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 export async function generateStaticParams() {
 
-    const posts = await fetchAllPosts();
+    const posts = await db.fetchAllPosts();
 
     return posts.map(post => {
         return { slug: post.slug };

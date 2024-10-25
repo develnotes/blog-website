@@ -73,7 +73,7 @@ export const checkSlugIsUnique = async (slug: string) => {
 };
 
 /* User queries */
-export const fetchUser = async (email?: string, id?: string) => {
+export const fetchUser = async ({email, id}: {email?: string, id?: string}) => {
 
     if (email) {
         const user = await prisma.user.findFirst({
@@ -83,7 +83,7 @@ export const fetchUser = async (email?: string, id?: string) => {
         return user;
     }
 
-    if (email) {
+    if (id) {
         const user = await prisma.user.findFirst({
             where: { id }
         });

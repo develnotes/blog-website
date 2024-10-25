@@ -12,7 +12,7 @@ export const getUser = async (session: Session | null) => {
         const email = user?.email;
 
         if (email) {
-            const user = await db.fetchUser(email);
+            const user = await db.fetchUser({ email });
 
             return user;
         }
