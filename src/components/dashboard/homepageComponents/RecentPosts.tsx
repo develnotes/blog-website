@@ -5,16 +5,12 @@ import Link from "next/link";
 import * as config from "@/config";
 import { IconChevronRight } from "@tabler/icons-react";
 import { PostCard } from "./PostCard";
-import Carousel from "../carousel";
+import Carousel from "@develnotes/carousel";
 
 
 export const RecentPosts = ({ posts }: { posts: Posts | undefined }) => {
 
-    const renderPost = ({ item }: { item: Post }) => {
-        return (
-            <PostCard post={item} />
-        );
-    };
+    const renderPost = (item: Post) => <PostCard post={item} />;
 
     if (posts) {
         return (

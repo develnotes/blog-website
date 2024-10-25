@@ -2,7 +2,7 @@
 
 import { Post, Posts } from "@/types";
 import { PostCard } from "./PostCard";
-import Carousel from "../carousel";
+import Carousel from "@develnotes/carousel";
 
 
 export const LastEditedPost = ({ posts }: { posts: Posts | undefined }) => {
@@ -13,11 +13,7 @@ export const LastEditedPost = ({ posts }: { posts: Posts | undefined }) => {
             return Number(b.updatedAt) - Number(a.updatedAt);
         }).slice(0, 3);
 
-        const renderComponent = ({ item }: { item: Post }) => {
-            return (
-                <PostCard post={item} />
-            );
-        };
+        const renderComponent = (item: Post) => <PostCard post={item} />;
 
         return (
             <div className="last-edited">
