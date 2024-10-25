@@ -5,11 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Loader } from "./Loader";
 import { paths } from "@/config";
-import type { Post } from "@/types";
+import type { Posts } from "@/types";
 import { IconEdit, IconEye, IconStar } from "@tabler/icons-react";
 
 
-export const PostsList = ({ posts, user }: { posts: Post[], user: { name: string, email: string } }) => {
+export const PostsList = ({ posts, user }: { posts: Posts, user: { name: string, email: string } }) => {
 
     const [loading, setLoading] = useState<boolean>(false);
 

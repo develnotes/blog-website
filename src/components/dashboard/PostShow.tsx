@@ -5,10 +5,22 @@ import { IconEdit } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { paths } from "@/config";
-import type { Post } from "@/types";
+import type { Post, Posts } from "@/types";
+import { useEffect, useState } from "react";
 
 
-export const PostShow = ({ post }: { post: Post }) => {
+export const PostShow = ({ post, posts }: { post: Post, posts: Posts }) => {
+
+
+    const [index, setIndex] = useState<number>();
+
+    useEffect(() => {
+        posts.forEach((item, index) => {
+            if (item.id === post.id) {
+                setIndex(index);
+            }
+        });
+    }, [post.id, posts]);
 
     return (
         <div className="post">
@@ -22,7 +34,6 @@ export const PostShow = ({ post }: { post: Post }) => {
                         fill
                     />
                 }
-
                 <Link className="button post__edit-button"
                     href={paths.dashboard.editPost(post.slug)}>
                     <IconEdit />
@@ -34,13 +45,26 @@ export const PostShow = ({ post }: { post: Post }) => {
                 <div className="post__title__text">
                     {post.title}
                 </div>
-
-
-
             </div>
 
             <div className="post__body">
                 <Editor />
+            </div>
+
+            <div className="suggestion-menu">
+                {
+                    (index !== undefined && index > 0 ) ?
+                    <Link href={paths.dashboard.post(posts[index - 1].slug)}>Prev</Link> :
+                    <span></span>
+                }
+                { 
+                    (index !== undefined) ? <span>{index + 1}</span> : <span></span>
+                }
+                {
+                    (index !== undefined && index < posts.length - 1) ?
+                    <Link href={paths.dashboard.post(posts[index + 1].slug)}>Next</Link> :
+                    <span></span>
+                }
             </div>
         </div>
     );

@@ -9,7 +9,7 @@
     flex-direction: column;
     align-items: flex-start;
     margin: 0 1rem;
-    min-height: calc(100% - $header-height - $locator-height);
+    min-height: 100vh;
     width: 100%;
     max-width: 75rem;
 }
