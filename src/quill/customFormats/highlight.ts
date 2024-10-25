@@ -6,7 +6,7 @@ class Highlight extends Inline {
     static tagName: string | string[] = "MARK";
     static className: string = "ql-highlighted";
 
-    static creaste() {
+    static create() {
         return super.create();
     }
 
