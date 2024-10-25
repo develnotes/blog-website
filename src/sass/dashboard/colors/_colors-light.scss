@@ -227,13 +227,6 @@ body {
             }
         }
 
-        .carousel {
-            &__button {
-                color: $color-blue-1;
-                background-color: rgba($background-color-dashboard-light, 0.5);
-            }
-        }
-
         .post-card {
             .button {
                 @include button-light();
