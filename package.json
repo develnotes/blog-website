@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.5.0",
-    "@develnotes/carousel": "^0.0.7",
+    "@develnotes/carousel": "^0.0.8",
     "@prisma/client": "^5.19.1",
     "@tabler/icons": "^3.16.0",
     "@tabler/icons-react": "^3.16.0",
