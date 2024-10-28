@@ -1,20 +1,13 @@
 @import "buttons";
+@import "header/index.scss";
+@import "homepage-sections/index.scss";
+@import "posts/index.scss";
+@import "image-selector/index.scss";
 @import "account";
 @import "app-logo";
-@import "post-editor";
-@import "header";
-@import "header-menu-widget";
-@import "header-account-widget";
-@import "header-theme-widget";
 @import "menu";
 @import "loader";
 @import "locator";
 @import "overlay";
-@import "post";
-@import "posts";
-@import "select-header-image";
 @import "title-input";
 @import "error-messages";
-
-@import "headlines";
-@import "post-card";

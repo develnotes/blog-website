@@ -1,6 +1,6 @@
 import "@/sass/dashboard/main.scss";
 
-import { Header } from "@/components/dashboard/Header";
+import { Header } from "@/components/dashboard/header";
 import { Menu } from "@/components/dashboard/Menu";
 import { SessionProvider } from "next-auth/react";
 import Authenticate from "@/components/auth/Authenticate";

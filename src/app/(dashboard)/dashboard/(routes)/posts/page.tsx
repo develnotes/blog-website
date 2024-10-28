@@ -1,6 +1,6 @@
 "use server";
 
-import { PostsList } from "@/components/dashboard/PostsList";
+import { PostsList } from "@/components/dashboard/posts";
 import { auth } from "@/auth";
 import { getUserData } from "@/data/getUserData";
 

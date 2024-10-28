@@ -1,10 +1,8 @@
 import "@/sass/blog/main.scss";
 
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Header } from "@/components/blog/Header";
-
-const inter = Inter({ subsets: ["latin"] });
+import { GoToTopButton } from "@/components/common/GoToTopButton";
 
 export const metadata: Metadata = {
 	title: "Blog Website",
@@ -18,10 +16,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={inter.className + " blog"}>
-				<div className="container blog">
+			<body>
+				<div className="blog">
 					<Header />
 					{children}
+					<GoToTopButton />
 				</div>
 			</body>
 		</html>

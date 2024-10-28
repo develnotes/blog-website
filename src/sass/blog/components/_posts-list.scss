@@ -1,0 +1,16 @@
+.posts {
+    width: 100vw;
+    padding: 5rem;
+
+    &__list {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 3rem;
+
+        &__item {
+            @include postcard-layout();
+        }
+    }
+}

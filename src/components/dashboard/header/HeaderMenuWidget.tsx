@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { Menu } from "./Menu";
+import { Menu } from "@/components/dashboard/Menu";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 
 export const HeaderMenuWidget = () => {

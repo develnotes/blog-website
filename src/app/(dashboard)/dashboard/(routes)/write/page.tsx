@@ -7,7 +7,7 @@ const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr
 /* Import Quill types re-exported from QuillContext  */
 import type { QuillOptions, ToolbarConfig } from "@/quill/context/QuillContext";
 
-import { PostCreate } from "@/components/dashboard/PostCreate";
+import { PostCreate } from "@/components/dashboard/posts";
 
 import { auth } from "@/auth";
 import { fetchUser } from "@/db";

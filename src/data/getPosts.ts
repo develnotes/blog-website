@@ -10,3 +10,9 @@ export const getPosts = async (userId: string | undefined) => {
         return posts;
     }
 };
+
+export const getAllPosts = async () => {
+
+    const posts = await db.fetchAllPosts();
+    return posts;
+};

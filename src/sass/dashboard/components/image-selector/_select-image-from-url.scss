@@ -1,0 +1,23 @@
+.select-image {
+
+    &__from-url {
+        position: relative;
+        margin-top: 1rem;
+
+        &__label {
+            font-size: 1.2rem;
+        }
+
+        &__input {
+            width: 100%;
+            height: 4rem;
+
+            font-size: 2rem;
+            margin-top: 0.3rem;
+            margin-bottom: 0.5rem;
+
+            padding: 2rem;
+            @include quicksand-font();
+        }
+    }
+}

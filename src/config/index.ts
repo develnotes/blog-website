@@ -1,4 +1,4 @@
-import { Icon, IconHome, IconInfoCircle, IconNews, IconProps, IconTextPlus, IconUserCheck } from "@tabler/icons-react";
+import { Icon, IconHome, IconInfoCircle, IconLibrary, IconNews, IconProps, IconTextPlus, IconUserCheck, IconWriting } from "@tabler/icons-react";
 
 export const appName = "DevelNotes";
 export const appLogo = "DN";
@@ -61,14 +61,14 @@ export const menuItems = [
     {
         path: "/write",
         href: paths.dashboard.write(),
-        Icon: IconTextPlus,
+        Icon: IconWriting,
         label: "Write",
         id: 1,
     },
     {
         path: "/posts",
         href: paths.dashboard.posts(),
-        Icon: IconNews,
+        Icon: IconLibrary,
         label: "Posts",
         id: 2,
     },

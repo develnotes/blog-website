@@ -14,23 +14,25 @@ export const RecentPosts = ({ posts }: { posts: Posts | undefined }) => {
 
     if (posts) {
         return (
-            <div className="recent-posts">
-                <div className="headline">
-                    <div className="headline__text">
-                        Recent Posts
-                    </div>
-                    <div className="headline__button">
-                        <div className="headline__button__link">
-                            <Link href={config.paths.dashboard.posts()}>View all</Link>
+            <section id="recent">
+                <div className="recent-posts">
+                    <div className="headline">
+                        <div className="headline__text">
+                            <h3>Recent Posts</h3>
                         </div>
-                        <IconChevronRight />
+                        <div className="headline__button">
+                            <div className="headline__button__link">
+                                <Link href={config.paths.dashboard.posts()}>View all</Link>
+                            </div>
+                            <IconChevronRight size={20} />
+                        </div>
+                        <div className="headline__icon">
+                            <IconChevronRight size={20} />
+                        </div>
                     </div>
-                    <div className="headline__icon">
-                        <IconChevronRight />
-                    </div>
-                </div>
-                <Carousel list={posts} renderComponent={renderPost} />
-            </div >
+                    <Carousel list={posts} renderComponent={renderPost} />
+                </div >
+            </section>
         );
     }
 };

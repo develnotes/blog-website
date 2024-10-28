@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Quicksand:wght@300..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Quicksand:wght@300..700&display=swap");
 
 @mixin quicksand-font() {
     font-family: "Quicksand", sans-serif;
@@ -11,10 +11,12 @@
 }
 
 body {
-    @include quicksand-font();
+    @include comfortaa-font();
 }
 
 .app-logo {
+    @include comfortaa-font();
+
     &__main {
         font-size: 2.8rem;
     }

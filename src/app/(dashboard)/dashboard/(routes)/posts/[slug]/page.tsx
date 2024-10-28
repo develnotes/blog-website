@@ -5,7 +5,7 @@ const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr
 /* Import Quill types re-exported from QuillContext  */
 import type { QuillOptions } from "@/quill/context/QuillContext";
 
-import { PostShow } from "@/components/dashboard/PostShow";
+import { PostShow } from "@/components/dashboard/posts";
 import * as db from "@/db";
 import { auth } from "@/auth";
 import { getUserData } from "@/data/getUserData";

@@ -1,20 +1,6 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
-}
-
-html {
-    font-size: 62.5%;
-}
-
-body {
-    box-sizing: border-box;
-}
-
-.no-script-message {
-    margin: 2rem;
-    font-size: 1.4rem
-}
-
+@import "variables";
+@import "fonts";
 @import "base";
+@import "colors/light.scss";
+@import "pages";
+@import "components/index.scss";

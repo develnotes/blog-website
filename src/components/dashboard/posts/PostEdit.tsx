@@ -9,8 +9,8 @@ import { Toolbar } from "@/quill/toolbar/Toolbar";
 
 import * as actions from "@/actions"
 
-import { TitleInput } from "./TitleInput";
-import { PostHeaderImageSelector } from "./PostHeaderImageSelector";
+import { TitleInput } from "@/components/dashboard/TitleInput";
+import { PostHeaderImageSelector } from "@/components/dashboard/imageSelector/PostHeaderImageSelector";
 
 import { IconAlertCircle, IconAsterisk, IconCheck } from "@tabler/icons-react";
 import type { Post, EditPostFormState } from "@/types";

@@ -1,7 +1,7 @@
 import { auth, Session } from "@/auth";
-import { HeaderAccountWidget } from "./HeaderAccountWidget"; 
-import { HeaderMenuWidget } from "./HeaderMenuWidget";
-import { HeaderThemeWidget } from "./HeaderThemeWidget";
+import { HeaderAccountWidget } from "@/components/dashboard/header/HeaderAccountWidget"; 
+import { HeaderMenuWidget } from "@/components/dashboard/header/HeaderMenuWidget";
+import { HeaderThemeWidget } from "@/components/dashboard/header/HeaderThemeWidget";
 
 export const Header = async () => {
 

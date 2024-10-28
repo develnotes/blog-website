@@ -3,6 +3,7 @@
 import { Post, Posts } from "@/types";
 import { PostCard } from "./PostCard";
 import Carousel from "@develnotes/carousel";
+import { IconChevronRight } from "@tabler/icons-react";
 
 
 export const LastEditedPost = ({ posts }: { posts: Posts | undefined }) => {
@@ -16,15 +17,19 @@ export const LastEditedPost = ({ posts }: { posts: Posts | undefined }) => {
         const renderComponent = (item: Post) => <PostCard post={item} />;
 
         return (
-            <div className="last-edited">
-                <div className="headline">Continue editing...</div>
+            <section id="last-edited">
+                <div className="last-edited">
+                    <div className="headline">
+                        <h3>Continue editing</h3>
+                        <IconChevronRight size={20} />
+                    </div>
 
-                <Carousel
-                    list={lastEditedPost}
-                    renderComponent={renderComponent}
-                />
-
-            </div>
+                    <Carousel
+                        list={lastEditedPost}
+                        renderComponent={renderComponent}
+                    />
+                </div>
+            </section>
         );
     }
 }

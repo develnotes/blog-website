@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Loader } from "./Loader";
+import { Loader } from "@/components/dashboard/Loader";
 import { paths } from "@/config";
 import type { Posts } from "@/types";
 import { IconEdit, IconEye, IconStar } from "@tabler/icons-react";

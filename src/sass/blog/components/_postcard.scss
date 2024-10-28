@@ -1,0 +1,69 @@
+@mixin postcard-layout {
+    width: 40rem;
+    height: 40rem;
+    border: 1px solid;
+    border-radius: 0.4rem;
+
+    &:hover {
+        transform: scale(1.05);
+        transition: transform 0.2s;
+    }
+
+    transition: transform 0.1s;
+
+    @media screen and (max-width: $breakpoint-md) {
+        width: 90%;
+    }
+}
+
+.postcard-link {
+    position: relative;
+    z-index: 1;
+}
+
+.postcard {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    &__overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        top: 0;
+        left: 0;
+
+        &:hover {
+            background-color: rgba(#d1d1d1, 0.15);
+            transition: background-color .4s;
+        }
+    }
+
+    &__image {
+        position: relative;
+        width: 100%;
+        height: 25rem;
+
+        img {
+            border-top-left-radius: 0.4rem;
+            border-top-right-radius: 0.4rem;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &__details {
+        padding: 1rem;
+    }
+
+    &__title {
+        font-size: 3rem;
+        text-transform: capitalize;
+    }
+
+    &__date {
+        font-size: 1.4rem;
+    }
+}

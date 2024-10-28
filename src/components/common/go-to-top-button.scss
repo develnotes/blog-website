@@ -1,0 +1,23 @@
+.go-to-top {
+    background-color: transparent;
+    border: none;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    cursor: pointer;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    &:hover {
+        gap: .4rem;
+        transition: gap .2s;
+    }
+
+    transition: gap .2s;
+
+    &--visible {
+        visibility: visible;
+    }
+}

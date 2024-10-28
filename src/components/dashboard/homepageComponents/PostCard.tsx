@@ -11,13 +11,13 @@ export const PostCard = ({ post }: { post: Post }) => {
                 <div className="post-card__info__wrapper">
                     <h3 className="post-card__title">{post.title}</h3>
                     <div className="post-card__date">
-                        <IconStarFilled size={20}/>
+                        <IconStarFilled size={16}/>
                         Created at {new Date(post.createdAt).toLocaleDateString()}
                     </div>
                     {
                         post.updatedAt &&
                         <div className="post-card__date">
-                            <IconEdit size={20}/>
+                            <IconEdit size={16}/>
                             Last updated {new Date(post.updatedAt).toLocaleDateString()}
                         </div>
                     }

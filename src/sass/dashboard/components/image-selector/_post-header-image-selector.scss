@@ -1,0 +1,38 @@
+.select-image-container {
+    position: relative;
+
+    min-height: 5rem;
+    
+    &__button-open {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.4rem;
+        @include base-button();
+        
+        position: absolute;
+        margin: .4rem;
+        
+    }
+}
+
+.select-image {
+
+    &__preview {
+        max-width: 75rem;
+        max-height: 30rem;
+        overflow: hidden;
+        margin-top: 0.4rem;
+
+        &__image {
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    @media screen and (max-width: $breakpoint-md) {
+        &__preview {
+            width: 100%;
+        }
+    }
+}

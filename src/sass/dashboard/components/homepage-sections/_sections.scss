@@ -20,6 +20,13 @@
     }
 }
 
+section {
+    width: 100%;
+    margin-bottom: 3rem;
+}
+
+.stats,
+.options,
 .recent-posts,
 .last-edited {
     width: 100%;
@@ -81,5 +88,43 @@
         align-items: center;
         position: absolute;
         left: 100%;
+    }
+}
+
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 3rem;
+
+    @media screen and (max-width: $breakpoint-sm) { 
+        flex-wrap: nowrap;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .link {
+            width: 90%;
+        }
+    }
+
+    .link {
+        text-decoration: none;
+        font-size: 1.6rem;
+    }
+    
+    .link-card {
+        border: .1rem solid;
+        border-radius: .4rem;
+        padding: 2rem;
+    
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    
+        .link-title {
+            margin-bottom: 1rem;
+        }
     }
 }

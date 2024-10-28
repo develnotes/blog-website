@@ -1,0 +1,82 @@
+.select-image {
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    padding: 3rem;
+    border: 0.2rem solid;
+    overflow-y: scroll;
+
+    &__header {
+        display: flex;
+        gap: 0.4rem;
+        margin-top: 0.3rem;
+    }
+
+    &__main {
+        max-width: 100%;
+    }
+
+    &__button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.4rem;
+        @include base-button();
+    }
+
+    &__button-close {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        @include icon-button();
+    }
+
+    &__edit-area {
+        padding: 0.4rem;
+        position: relative;
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid;
+
+        &__main {
+            display: flex;
+        }
+
+        &__selected-image-preview {
+            width: 100%;
+            max-height: 30rem;
+            object-fit: contain;
+            overflow: auto;
+            margin-top: 0.3rem;
+            justify-self: flex-start;
+        }
+
+        &__tools {
+            padding: 0.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+
+            &__button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.4rem;
+                @include base-button();
+            }
+        }
+    }
+
+    &__footer {
+        width: 100%;
+        margin-top: 0.4rem;
+
+        display: flex;
+        gap: 0.4rem;
+
+        &__button {
+            @include base-button();
+        }
+    }
+}
