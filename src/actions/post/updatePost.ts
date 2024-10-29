@@ -12,22 +12,20 @@ const editPostSchema = z
         contents: z.string().min(10, {
             message: "Create a body for your post"
         }),
-        html: z.string().min(1),
         image: z.string().min(1, {
             message: "Provide an image for your post"
         }),
     });
 
-type UpdateData = { slug: string, contents: string, image: string, html: string }
+type UpdateData = { slug: string, contents: string, image: string }
 
 export async function updatePost(formState: EditPostFormState, updateData: UpdateData) {
 
-    const { contents, image, html, slug } = updateData;
+    const { contents, image, slug } = updateData;
 
     const validation = await editPostSchema.safeParseAsync({
         contents,
         image,
-        html
     });
 
     if (!validation.success) {
@@ -44,14 +42,13 @@ export async function updatePost(formState: EditPostFormState, updateData: Updat
     /* Save */
     try {
 
-        const { contents, html, image } = validation.data;
+        const { contents, image } = validation.data;
 
         await db.update({
             slug,
             data: {
                 body: contents,
                 image,
-                html,
             }
         });
 

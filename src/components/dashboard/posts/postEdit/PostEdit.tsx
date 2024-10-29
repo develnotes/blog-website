@@ -3,10 +3,6 @@
 import { useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 
-import { Editor } from "@/quill/editor/Editor";
-import { useQuill } from "@/quill/context/QuillContext";
-import { Toolbar } from "@/quill/toolbar/Toolbar";
-
 import * as actions from "@/actions"
 
 import { TitleInput } from "@/components/dashboard/TitleInput";
@@ -14,6 +10,7 @@ import { PostHeaderImageSelector } from "@/components/dashboard/imageSelector/Po
 
 import { IconAlertCircle, IconAsterisk, IconCheck } from "@tabler/icons-react";
 import type { Post, EditPostFormState } from "@/types";
+import { ContentEditor } from "./ContentEditor";
 
 
 export const PostEdit = ({ post }: { post: Post }) => {
@@ -26,15 +23,14 @@ export const PostEdit = ({ post }: { post: Post }) => {
 
     const [image, setImage] = useState<string>(post.image || "");
     const [title, setTitle] = useState<string>(post.title);
+    const [contents, setContents] = useState<string>("");
     const [messages, setMessages] = useState<EditPostFormState>(initialFormState);
     const [edited, setEdited] = useState<boolean>(false);
-    const quill = useQuill();
 
     const updatePostAction = actions.updatePost.bind(null, initialFormState, {
         slug: post.slug,
-        contents: quill.contents,
+        contents: contents,
         image,
-        html: quill.htmlContent
     });
 
     const [state, action] = useFormState(updatePostAction, initialFormState);
@@ -65,12 +61,12 @@ export const PostEdit = ({ post }: { post: Post }) => {
     };
 
     useEffect(() => {
-        if (quill.contents === post.body && title === post.title && image === post.image) {
+        if (contents === post.body && title === post.title && image === post.image) {
             setEdited(false);
         } else {
             setEdited(true);
         }
-    }, [quill.contents, post.body, title, post.title, image, post.image]);
+    }, [contents, post.body, title, post.title, image, post.image]);
 
     return (
         <div className="post-editor">
@@ -104,15 +100,7 @@ export const PostEdit = ({ post }: { post: Post }) => {
 
             <div className="post-editor__body">
                 <div className="post-editor__label">Content</div>
-                <Toolbar />
-                <Editor />
-                <div>
-                    {
-                        /* Insert contents statistics (number of words) */
-                        `words: ${quill.words}; 
-                        characters: ${quill.characters}`
-                    }
-                </div>
+                <ContentEditor setContents={setContents} initialContents={post.body}  />
             </div>
 
             <div className="post-editor__footer">

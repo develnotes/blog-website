@@ -1,7 +1,7 @@
-import { PostCreate } from "./PostCreate";
-import { PostEdit } from "./PostEdit";
-import { PostShow } from "./PostShow";
-import { PostsList } from "./PostsList";
+import { PostCreate } from "./postCreate/PostCreate";
+import { PostEdit } from "./postEdit/PostEdit";
+import { PostShow } from "./postShow/PostShow";
+import { PostsList } from "./postsList/PostsList";
 
 export {
     PostCreate,

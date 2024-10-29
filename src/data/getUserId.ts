@@ -1,9 +1,7 @@
-"use sever";
-
 import { Session } from "next-auth";
 import * as db from "@/db";
 
-export const getUserData = async (session: Session | null) => {
+export const getUserId = async (session: Session | null) => {
 
     if (session) {
 
@@ -14,10 +12,9 @@ export const getUserData = async (session: Session | null) => {
 
             if (email) {
                 const user = await db.fetchUser({ email });
-    
+
                 if (user) {
-                    const posts = await db.fetch(user.id);
-                    return { user, posts };
+                    return user.id;
                 }
             }
         }

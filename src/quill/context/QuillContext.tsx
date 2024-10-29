@@ -25,20 +25,22 @@ export type { ToolbarConfig } from "quill/modules/toolbar";
 type ContextType = {
     editorRef: RefObject<HTMLDivElement> | null,
     contents: string,
-    htmlContent: string,
     textContent: string,
-    words: number,
-    characters: number,
+    stats: {
+        words: number,
+        characters: number,
+    },
     loading: boolean,
 };
 
 const defaultValue: ContextType = {
     editorRef: null,
     contents: "",
-    htmlContent: "",
     textContent: "",
-    words: 0,
-    characters: 0,
+    stats: {
+        words: 0,
+        characters: 0,
+    },
     loading: true,
 };
 
@@ -57,8 +59,8 @@ export default function QuillContext({
     const editorRef = useRef<HTMLDivElement>(null);
     const quillRef = useRef<Quill>();
 
+    const [isMounted, setIsMounted] = useState<boolean>(false);
     const [contents, setContents] = useState<string>("");
-    const [htmlContent, setHTMLContent] = useState<string>("");
     const [textContent, setTextContent] = useState<string>("");
     const [words, setWords] = useState<number>(0);
     const [characters, setCharacters] = useState<number>(0);
@@ -66,90 +68,96 @@ export default function QuillContext({
 
 
     useEffect(() => {
+        setIsMounted(true);
 
-        const editor = editorRef.current;
+        if (isMounted) {
 
-        if (!quillRef.current) {
-            console.log("Init...");
+            const editor = editorRef.current;
 
-            if (editor) {
-                quillRef.current = new Quill(editor, {
-                    ...options,
-                    modules: {
-                        ...options.modules
+            if (!quillRef.current) {
+                console.log("Init...");
+
+                if (editor) {
+                    quillRef.current = new Quill(editor, {
+                        ...options,
+                        modules: {
+                            ...options.modules
+                        }
+                    });
+
+                    console.log("Loaded Quill...");
+
+                    const quill = quillRef.current;
+
+                    const setDeltaString = (quill: Quill) => {
+                        const textString = JSON.stringify(quill.getText());
+                        setTextContent(textString);
+
+                        const words = textString
+                            .replaceAll('"', "")
+                            .replaceAll("\\n", "")
+                            .split(" ")
+                            .filter(w => w.length > 0)
+                            .length;
+
+                        setWords(words)
+
+                        const characters = textString
+                            .replaceAll('"', "")
+                            .replaceAll("\\n", "")
+                            .split(" ")
+                            .join("").length;
+
+                        setCharacters(characters);
+
+                        const deltaString = JSON.stringify(quill.getContents());
+                        setContents(deltaString);
+                    };
+
+                    if (quill) {
+                        initialContents && quill.setContents(JSON.parse(initialContents));
+
+                        quill.on("editor-change", renderKatex);
+                        renderKatex();
+
+                        helpers.queryAllElements("code").forEach(el => hljs.highlightElement(el as HTMLElement));
+
+                        if (quill.isEnabled()) {
+                            const toolbar = quill.getModule("toolbar") as Toolbar;
+
+                            Object.values(handlers).forEach(({ handler, handlerType }) => {
+                                toolbar.addHandler(handlerType, handler(quill));
+                            });
+
+                            quill.on("text-change", () => setDeltaString(quill));
+
+                            setDeltaString(quill);
+                        }
+
+                        setLoading(false);
                     }
-                });
 
-                console.log("Loaded Quill...");
-
-                const quill = quillRef.current;
-
-                const setDeltaString = (quill: Quill) => {
-                    const htmlString = JSON.stringify(quill.getSemanticHTML());
-                    setHTMLContent(htmlString);
-
-                    const textString = JSON.stringify(quill.getText());
-                    setTextContent(textString);
-
-                    const words = textString
-                        .replaceAll('"', "")
-                        .replaceAll("\\n", "")
-                        .split(" ")
-                        .filter(w => w.length > 0)
-                        .length;
-
-                    setWords(words)
-
-                    const characters = textString
-                        .replaceAll('"', "")
-                        .replaceAll("\\n", "")
-                        .split(" ")
-                        .join("").length;
-
-                    setCharacters(characters);
-
-                    const deltaString = JSON.stringify(quill.getContents());
-                    setContents(deltaString);
-                };
-
-                if (quill) {
-                    initialContents && quill.setContents(JSON.parse(initialContents));
-
-                    quill.on("editor-change", renderKatex);
-                    renderKatex();
-
-                    helpers.queryAllElements("code").forEach(el => hljs.highlightElement(el as HTMLElement));
-
-                    if (quill.isEnabled()) {
-                        const toolbar = quill.getModule("toolbar") as Toolbar;
-
-                        Object.values(handlers).forEach(({ handler, handlerType }) => {
-                            toolbar.addHandler(handlerType, handler(quill));
-                        });
-
-                        quill.on("text-change", () => setDeltaString(quill));
-
-                        setDeltaString(quill);
-                    }
-
-                    setLoading(false);
-                }
-
-                return () => {
-                    quill && quill.off("text-change", () => setDeltaString(quill));
+                    /* return () => {
+                        if (quill) {
+                            quill.off("text-change", () => setDeltaString(quill));
+                            quill.off("editor-change", renderKatex);
+                        }
+                    } */
                 }
             }
         }
-    }, [options, initialContents]);
+
+        return () => {
+            setIsMounted(false);
+        }
+    }, [options, initialContents, isMounted]);
 
     return (
         <Context.Provider value={{
             editorRef,
             contents,
-            htmlContent,
             textContent,
-            words,
-            characters,
+            stats: { characters, words },
             loading,
         }}>
             {children}

@@ -1,11 +1,7 @@
-"use client"
+"use client";
 
 import { useCallback, useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
-
-import { useQuill } from "@/quill/context/QuillContext";
-import { Editor } from "@/quill/editor/Editor";
-import { Toolbar } from "@/quill/toolbar/Toolbar";
 
 import * as actions from '@/actions';
 
@@ -14,6 +10,7 @@ import { PostHeaderImageSelector } from "@/components/dashboard/imageSelector/Po
 
 import { IconAlertCircle, IconCheck } from "@tabler/icons-react";
 import { PostFormState } from "@/types";
+import { ContentEditor } from "./ContentEditor";
 
 
 export const PostCreate = ({ authorId }: { authorId: string }) => {
@@ -28,13 +25,12 @@ export const PostCreate = ({ authorId }: { authorId: string }) => {
     const [image, setImage] = useState<string>("");
     const [title, setTitle] = useState<string>("");
     const [messages, setMessages] = useState<PostFormState>(initialFormState);
-    const quill = useQuill();
+    const [contents, setContents] = useState<string>("");
 
     const createPostAction = actions.createPost.bind(null, initialFormState, {
-        contents: quill.contents,
+        contents,
         image,
         title,
-        html: quill.htmlContent,
     }, authorId);
 
     const [state, action] = useFormState(createPostAction, initialFormState);
@@ -64,7 +60,7 @@ export const PostCreate = ({ authorId }: { authorId: string }) => {
             </button>
         );
     };
-
+    
     return (
         <div className="post-editor">
             <div className="post-editor__image">
@@ -114,12 +110,22 @@ export const PostCreate = ({ authorId }: { authorId: string }) => {
                 </div>
             </div>
 
+            <div className="post-editor__description">
+                <div className="post-editor__label">
+                    <div>Post description, resume or exerpt</div>
+                    {/* {
+                        messages.titleMessage === undefined &&
+                        <IconCheck size={20} color="green" />
+                    } */}
+                </div>
+                <textarea></textarea>
+            </div>
+
             <div className="post-editor__body">
                 <div className="post-editor__label">
                     Content
                 </div>
-                <Toolbar />
-                <Editor />
+                <ContentEditor setContents={setContents} />
                 <div className="form-error-message">
                     {
                         messages.contentsMessage &&
@@ -127,13 +133,6 @@ export const PostCreate = ({ authorId }: { authorId: string }) => {
                             <IconAlertCircle size={20} />
                             <div>{messages.contentsMessage}</div>
                         </>
-                    }
-                </div>
-                <div>
-                    {
-                        /* Insert contents statistics (number of words) */
-                        `words: ${quill.words};
-                        characters: ${quill.characters}`
                     }
                 </div>
             </div>

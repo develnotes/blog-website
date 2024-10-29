@@ -1,5 +1,5 @@
 import { PostsList } from "@/components/blog/PostsList";
-import { getAllPosts } from "@/data/getPosts";
+import { getAllPosts } from "@/data";
 
 
 export default async function Home() {

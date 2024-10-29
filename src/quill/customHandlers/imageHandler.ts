@@ -6,19 +6,15 @@ import * as cloudinary from "@/cloudinary";
 
 /* Cropper js */
 import "cropperjs/dist/cropper.css";
-import Cropper from "cropperjs";
+///import Cropper from "cropperjs";
 
 import Image from "../customBlots/image";
 Quill.register(Image);
 
-import { Blot, Leaf } from "parchment";
+import { Leaf } from "parchment";
 import BlockHandler from "./handler";
 
 let data: cloudinary.ResourceApiResponse | undefined = undefined;
-
-cloudinary.fetchResources().then(r => {
-    data = r;
-});
 
 const FORMAT = "image";
 const elementName = "image";
@@ -194,28 +190,33 @@ class ImageHandler extends BlockHandler {
             galleryContainer.append(gallery);
             galleryContainer.append(btnRight);
 
-            if (data) {
-                data.resources.forEach(image => {
-                    const imagePreview = helpers.createElement.img({
-                        className: `ql-gallery-item-${elementName}`,
-                        src: image.secure_url,
+            cloudinary.fetchResources().then(r => {
+                data = r;
+
+                if (data) {
+                    data.resources.forEach(image => {
+                        const imagePreview = helpers.createElement.img({
+                            className: `ql-gallery-item-${elementName}`,
+                            src: image.secure_url,
+                        });
+                        const galleryItemBtnBackground = helpers.createElement.div({ className: "ql-gallery-item-button-background" });
+                        const galleryItem = helpers.createElement.div({ className: "ql-gallery-item" });
+                        galleryItem.append(imagePreview);
+                        const btnDelete = helpers.createElement.button({ className: "ql-button-delete" });
+                        galleryItemBtnBackground.append(btnDelete);
+                        galleryItem.append(galleryItemBtnBackground);
+                        gallery.append(galleryItem);
+
+                        const srcInput = document.querySelector(`.ql-${elementName}-src-input`) as HTMLInputElement;
+
+                        imagePreview.onclick = () => {
+                            srcInput.value = image.secure_url;
+                            previewImage();
+                        };
                     });
-                    const galleryItemBtnBackground = helpers.createElement.div({ className: "ql-gallery-item-button-background" });
-                    const galleryItem = helpers.createElement.div({ className: "ql-gallery-item" });
-                    galleryItem.append(imagePreview);
-                    const btnDelete = helpers.createElement.button({ className: "ql-button-delete" });
-                    galleryItemBtnBackground.append(btnDelete);
-                    galleryItem.append(galleryItemBtnBackground);
-                    gallery.append(galleryItem);
+                }
+            });
 
-                    const srcInput = document.querySelector(`.ql-${elementName}-src-input`) as HTMLInputElement;
-
-                    imagePreview.onclick = () => {
-                        srcInput.value = image.secure_url;
-                        previewImage();
-                    };
-                });
-            }
 
             header.append(galleryContainer);
 

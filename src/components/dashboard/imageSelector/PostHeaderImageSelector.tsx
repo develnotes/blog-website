@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
+//"use client";
 
 import { useState } from "react";
-
 import { IconPhotoPlus } from "@tabler/icons-react";
 import { MainEditorOverlayModal } from "./MainEditorOverlayModal";
 

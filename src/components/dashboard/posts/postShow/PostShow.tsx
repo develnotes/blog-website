@@ -1,16 +1,15 @@
 "use client"
 
-import { Editor } from "@/quill/editor/Editor";
 import { IconEdit } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { paths } from "@/config";
 import type { Post, Posts } from "@/types";
 import { useEffect, useState } from "react";
+import { ContentEditor } from "./ContentEditor";
 
 
 export const PostShow = ({ post, posts }: { post: Post, posts: Posts }) => {
-
 
     const [index, setIndex] = useState<number>();
 
@@ -48,7 +47,7 @@ export const PostShow = ({ post, posts }: { post: Post, posts: Posts }) => {
             </div>
 
             <div className="post__body">
-                <Editor />
+                <ContentEditor initialContents={post.body} />
             </div>
 
             <div className="suggestion-menu">

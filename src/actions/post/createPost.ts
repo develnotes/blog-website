@@ -4,7 +4,7 @@ import { paths } from "@/config";
 import * as db from "@/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import type { PostFormState } from "@/types";
+import type { Data, PostFormState } from "@/types";
 import { z } from "zod";
 
 const createSlug = (s: string) => {
@@ -58,8 +58,6 @@ const postSchema = z
 
         contents: z.string().min(10, { message: "Create a body for your post" }),
 
-        html: z.string().min(1),
-
         image: z.string().min(1, { message: "Provide an image for your post" }),
 
         slug: z.string().transform(async (title) => createSlug(title)),
@@ -88,17 +86,14 @@ export async function checkImageURL(imageURL: string) {
     return { message: undefined };
 }
 
-type Data = { contents: string, image: string, title: string, html: string }
-
 export async function createPost(formState: PostFormState, data: Data, authorId: string) {
 
-    const { contents, image, title, html } = data;
+    const { contents, image, title } = data;
 
     const validation = await postSchema.safeParseAsync({
         title,
         contents,
         image,
-        html,
         slug: title,
     });
 
@@ -117,7 +112,7 @@ export async function createPost(formState: PostFormState, data: Data, authorId:
     /* Save to DB */
     try {
 
-        const { contents, html, image, slug, title } = validation.data;
+        const { contents, image, slug, title } = validation.data;
 
         await db.create({
             data: {
@@ -125,7 +120,6 @@ export async function createPost(formState: PostFormState, data: Data, authorId:
                 slug,
                 title,
                 image,
-                html,
                 authorId,
             }
         });

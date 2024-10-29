@@ -1,0 +1,126 @@
+.postcard {
+    width: 100%;
+    height: 100%;
+    border: 1px solid;
+    border-radius: 0.4rem;
+    padding: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+
+    &__details {
+        width: calc(100% - 20rem);
+        padding-right: 0.4rem;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__info {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        &__title {
+            font-size: 2.8rem;
+            margin-bottom: 0.4rem;
+
+            &::first-letter {
+                text-transform: uppercase;
+            }
+        }
+
+        &__author {
+            font-size: 1.6rem;
+            line-height: 2;
+        }
+
+        &__date {
+            font-size: 1.4rem;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+    }
+
+    &__options {
+        display: flex;
+        gap: 0.4rem;
+
+        &__view-link,
+        &__edit-link {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 1.6rem;
+            text-decoration: none;
+            @include base-button();
+        }
+    }
+
+    &__image {
+        width: 20rem;
+        height: 20rem;
+        position: relative;
+        background-color: lightgray;
+
+        img {
+            width: auto;
+            height: 20rem;
+            object-fit: cover;
+        }
+    }
+
+    @media screen and (max-width: $breakpoint-md) {
+        &__wrapper {
+            width: calc(100% - 15rem);
+        }
+        &__info {
+            &__title {
+                font-size: 2.4rem;
+            }
+            &__author {
+                font-size: 1.6rem;
+            }
+            &_date {
+                font-size: 1.4rem;
+            }
+        }
+
+        &__options {
+            &__view-link,
+            &__edit-link {
+                font-size: 1.4rem;
+                padding: 0.6rem 1rem;
+            }
+        }
+
+        &__image-wrapper {
+            width: 15rem;
+            height: 15rem;
+        }
+    }
+
+    @media screen and (max-width: $breakpoint-sm) {
+        &__wrapper {
+            width: calc(100% - 10rem);
+        }
+        &__info {
+            &__title {
+                font-size: 2.4rem;
+            }
+            &__author {
+                font-size: 1.6rem;
+            }
+            &_date {
+                font-size: 1.4rem;
+            }
+        }
+
+        &__image-wrapper {
+            width: 10rem;
+            height: 10rem;
+        }
+    }
+}

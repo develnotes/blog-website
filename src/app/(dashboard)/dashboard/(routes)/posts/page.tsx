@@ -2,13 +2,12 @@
 
 import { PostsList } from "@/components/dashboard/posts";
 import { auth } from "@/auth";
-import { getUserData } from "@/data/getUserData";
+import { getUserData } from "@/data";
 
 
 export default async function Posts() {
 
     const session = await auth();
-
     const data = await getUserData(session);
     
     if (data) {

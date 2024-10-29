@@ -1,42 +1,31 @@
-/* Import QuillContext dynamically */
-import dynamic from "next/dynamic";
-const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr: false });
-
-/* Import Quill types re-exported from QuillContext  */
-import type { QuillOptions } from "@/quill/context/QuillContext";
+"use server";
 
 import { PostShow } from "@/components/dashboard/posts";
 import * as db from "@/db";
 import { auth } from "@/auth";
-import { getUserData } from "@/data/getUserData";
+import { getUserData } from "@/data";
 
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
     const post = await db.fetchPost(params.slug);
-
     const session = await auth();
     const data = await getUserData(session);
 
-    const posts = data?.posts || [post];
+    if (data) {
+        const posts = data.posts || [post];
 
-    const options: QuillOptions = {
-        theme: "bubble",
-        readOnly: true
-    };
-
-    return (
-        <div className="show-page">
-            <noscript>
-                <div className="no-script-message">
-                    You must activate Javascript to visualiize the post
-                </div>
-            </noscript>
-            <QuillContext options={options} initialContents={post.body}>
-                <PostShow post={post} posts={posts}/>
-            </QuillContext>
-        </div>
-    );
+        return (
+            <div className="show-page">
+                <noscript>
+                    <div className="no-script-message">
+                        You must activate Javascript to visualiize the post
+                    </div>
+                </noscript>
+                <PostShow post={post} posts={posts} />
+            </div>
+        );
+    }
 }
 
 export async function generateStaticParams() {

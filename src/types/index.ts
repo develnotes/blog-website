@@ -2,19 +2,20 @@ import type { Post, User, Account, Session } from "@prisma/client";
 
 export type { Post, User, Account, Session };
 
+
+export type Data = { contents: string, image: string, title: string }
+
 export type PostData = {
     title: string;
     body: string;
     slug: string;
     image: string;
-    html: string;
     authorId: string;
 }
 
 export type PostUpdates = {
     body: string,
     image: string,
-    html: string
 }
 
 export type Posts = Post[];

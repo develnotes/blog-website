@@ -26,8 +26,8 @@
     "parchment": "^3.0.0",
     "prisma": "^5.19.1",
     "quill": "^2.0.2",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-tooltip": "^5.28.0",
     "sharp": "^0.33.5",
     "zod": "^3.23.8"
