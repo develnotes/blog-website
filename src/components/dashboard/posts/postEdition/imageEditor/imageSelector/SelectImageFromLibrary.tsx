@@ -10,7 +10,7 @@ import {
     IconTrash,
 } from "@tabler/icons-react";
 
-import { Loader } from "../Loader";
+import { Loader } from "@/components/dashboard/Loader";
 
 type SelectImageFromLibraryType = {
     setImage: React.Dispatch<React.SetStateAction<string>>,

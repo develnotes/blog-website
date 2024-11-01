@@ -2,7 +2,7 @@
 
 import "@/quill/styles/index.scss";
 
-import { createContext, RefObject, useContext, useEffect, useRef, useState } from "react";
+import { createContext, Dispatch, MutableRefObject, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 
 /* Quill */
 import Quill, { QuillOptions } from "quill";
@@ -17,30 +17,23 @@ import * as helpers from "@/quill/helpers";
 import Toolbar from "quill/modules/toolbar";
 import { renderKatex } from "../katex";
 import hljs from "highlight.js";
+import { QuillContents } from "@/types";
 
 export { Quill };
 export type { QuillOptions };
 export type { ToolbarConfig } from "quill/modules/toolbar";
 
 type ContextType = {
-    editorRef: RefObject<HTMLDivElement> | null,
-    contents: string,
-    textContent: string,
-    stats: {
-        words: number,
-        characters: number,
-    },
+    editorRef: MutableRefObject<HTMLDivElement | null>,
+    contents: { delta: string, text: string },
+    stats: { words: number, characters: number },
     loading: boolean,
 };
 
 const defaultValue: ContextType = {
-    editorRef: null,
-    contents: "",
-    textContent: "",
-    stats: {
-        words: 0,
-        characters: 0,
-    },
+    editorRef: { current: null },
+    contents: { delta: "", text: "" },
+    stats: { words: 0, characters: 0 },
     loading: true,
 };
 
@@ -48,115 +41,119 @@ const Context = createContext<ContextType>(defaultValue);
 
 export default function QuillContext({
     options,
-    initialContents,
+    initialDelta,
+    setContents,
     children,
 }: {
     options: QuillOptions,
-    initialContents?: string,
+    initialDelta?: string,
+    setContents?: Dispatch<SetStateAction<QuillContents>>,
     children: React.ReactNode,
 }) {
 
     const editorRef = useRef<HTMLDivElement>(null);
     const quillRef = useRef<Quill>();
+    const mountRef = useRef<boolean>(false);
 
-    const [isMounted, setIsMounted] = useState<boolean>(false);
-    const [contents, setContents] = useState<string>("");
-    const [textContent, setTextContent] = useState<string>("");
+    const [delta, setDelta] = useState<string>("");
+    const [text, setText] = useState<string>("");
     const [words, setWords] = useState<number>(0);
     const [characters, setCharacters] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
 
 
     useEffect(() => {
-        setIsMounted(true);
+        mountRef.current = true;
 
-        if (isMounted) {
+        if (mountRef.current) {
 
-            const editor = editorRef.current;
+            if (editorRef) {
 
-            if (!quillRef.current) {
-                console.log("Init...");
+                const editor = editorRef.current;
 
-                if (editor) {
-                    quillRef.current = new Quill(editor, {
-                        ...options,
-                        modules: {
-                            ...options.modules
-                        }
-                    });
+                if (!quillRef.current) {
+                    console.log("Init...");
 
-                    console.log("Loaded Quill...");
+                    if (editor) {
+                        quillRef.current = new Quill(editor, {
+                            ...options,
+                            modules: {
+                                ...options.modules
+                            }
+                        });
 
-                    const quill = quillRef.current;
+                        console.log("Loaded Quill...");
 
-                    const setDeltaString = (quill: Quill) => {
-                        const textString = JSON.stringify(quill.getText());
-                        setTextContent(textString);
+                        const quill = quillRef.current;
 
-                        const words = textString
-                            .replaceAll('"', "")
-                            .replaceAll("\\n", "")
-                            .split(" ")
-                            .filter(w => w.length > 0)
-                            .length;
+                        const setDeltaString = (quill: Quill) => {
+                            const textString = JSON.stringify(quill.getText());
+                            setText(textString);
 
-                        setWords(words)
+                            const words = textString
+                                .replaceAll('"', "")
+                                .replaceAll("\\n", "")
+                                .split(" ")
+                                .filter(w => w.length > 0)
+                                .length;
 
-                        const characters = textString
-                            .replaceAll('"', "")
-                            .replaceAll("\\n", "")
-                            .split(" ")
-                            .join("").length;
+                            setWords(words)
 
-                        setCharacters(characters);
+                            const characters = textString
+                                .replaceAll('"', "")
+                                .replaceAll("\\n", "")
+                                .split(" ")
+                                .join("").length;
 
-                        const deltaString = JSON.stringify(quill.getContents());
-                        setContents(deltaString);
-                    };
+                            setCharacters(characters);
 
-                    if (quill) {
-                        initialContents && quill.setContents(JSON.parse(initialContents));
+                            const deltaString = JSON.stringify(quill.getContents());
+                            setDelta(deltaString);
 
-                        quill.on("editor-change", renderKatex);
-                        renderKatex();
+                            if (setContents) {
+                                setContents({ 
+                                    delta: JSON.stringify(quill.getContents()),
+                                    text: JSON.stringify(quill.getText()),
+                                });
+                            }
+                        };
 
-                        helpers.queryAllElements("code").forEach(el => hljs.highlightElement(el as HTMLElement));
-
-                        if (quill.isEnabled()) {
-                            const toolbar = quill.getModule("toolbar") as Toolbar;
-
-                            Object.values(handlers).forEach(({ handler, handlerType }) => {
-                                toolbar.addHandler(handlerType, handler(quill));
-                            });
-
-                            quill.on("text-change", () => setDeltaString(quill));
-
-                            setDeltaString(quill);
-                        }
-
-                        setLoading(false);
-                    }
-
-                    /* return () => {
                         if (quill) {
-                            quill.off("text-change", () => setDeltaString(quill));
-                            quill.off("editor-change", renderKatex);
+                            initialDelta && quill.setContents(JSON.parse(initialDelta));
+
+                            quill.on("editor-change", renderKatex);
+                            renderKatex();
+
+                            helpers.queryAllElements("code").forEach(el => hljs.highlightElement(el as HTMLElement));
+
+                            if (quill.isEnabled()) {
+                                const toolbar = quill.getModule("toolbar") as Toolbar;
+
+                                Object.values(handlers).forEach(({ handler, handlerType }) => {
+                                    toolbar.addHandler(handlerType, handler(quill));
+                                });
+
+                                quill.on("text-change", () => setDeltaString(quill));
+
+                                setDeltaString(quill);
+                            }
+
+                            setLoading(false);
                         }
-                    } */
+                    }
                 }
             }
         }
 
         return () => {
-            setIsMounted(false);
+            mountRef.current = false;
         }
-    }, [options, initialContents, isMounted]);
+    }, [options, initialDelta, editorRef, setContents]);
 
     return (
         <Context.Provider value={{
             editorRef,
-            contents,
-            textContent,
+            contents: { delta, text },
             stats: { characters, words },
             loading,
         }}>

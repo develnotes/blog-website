@@ -29,7 +29,7 @@ export const Post = ({ post }: { post: PostType }) => {
             </div>
 
             <div className="post__body">
-                <Editor />
+                <Editor id="post-editor"/>
             </div>
         </div>
     );

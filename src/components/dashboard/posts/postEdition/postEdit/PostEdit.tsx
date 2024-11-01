@@ -5,31 +5,49 @@ import { useFormState, useFormStatus } from "react-dom";
 
 import * as actions from "@/actions"
 
-import { TitleInput } from "@/components/dashboard/TitleInput";
-import { PostHeaderImageSelector } from "@/components/dashboard/imageSelector/PostHeaderImageSelector";
+import { IconAsterisk, IconCheck } from "@tabler/icons-react";
+import type { Post, PostFormState, QuillContents } from "@/types";
 
-import { IconAlertCircle, IconAsterisk, IconCheck } from "@tabler/icons-react";
-import type { Post, EditPostFormState } from "@/types";
-import { ContentEditor } from "./ContentEditor";
+import { ImageEditor } from "../imageEditor";
+import { TitleEditor } from "../titleEditor";
+import { BodyEditor } from "../bodyEditor";
+import { DescriptionEditor } from "../descriptionEditor";
+import { ErrorMessage } from "../errorMessage";
+
+import ErrorMessagesContext, { useErrorMessages } from "@/contexts/ErrorMessagesContext";
 
 
 export const PostEdit = ({ post }: { post: Post }) => {
 
-    const initialFormState: EditPostFormState = {
-        contentsMessage: "",
+    const initialFormState: PostFormState = {
         imageMessage: "",
+        titleMessage: "",
+        descriptionMessage: "",
+        bodyMessage: "",
         errorMessage: "",
-    }
+    };
+
+    return (
+        <ErrorMessagesContext initialFormState={initialFormState}>
+            <EditPostComponent post={post} />
+        </ErrorMessagesContext>
+    );
+};
+
+const EditPostComponent = ({ post }: { post: Post }) => {
 
     const [image, setImage] = useState<string>(post.image || "");
     const [title, setTitle] = useState<string>(post.title);
-    const [contents, setContents] = useState<string>("");
-    const [messages, setMessages] = useState<EditPostFormState>(initialFormState);
+    const [description, setDescription] = useState<QuillContents>({ text: "", delta: post.description || "" });
+    const [body, setBody] = useState<QuillContents>({ text: "", delta: post.body || "" });
     const [edited, setEdited] = useState<boolean>(false);
+
+    const { messages, setMessages, initialFormState } = useErrorMessages();
 
     const updatePostAction = actions.updatePost.bind(null, initialFormState, {
         slug: post.slug,
-        contents: contents,
+        body,
+        description,
         image,
     });
 
@@ -37,7 +55,7 @@ export const PostEdit = ({ post }: { post: Post }) => {
 
     useEffect(() => {
         setMessages(state);
-    }, [state]);
+    }, [state, setMessages]);
 
     const SubmitButton = () => {
         const { pending } = useFormStatus();
@@ -61,47 +79,32 @@ export const PostEdit = ({ post }: { post: Post }) => {
     };
 
     useEffect(() => {
-        if (contents === post.body && title === post.title && image === post.image) {
+        if (body.delta === post.body && title === post.title && image === post.image) {
             setEdited(false);
         } else {
             setEdited(true);
         }
-    }, [contents, post.body, title, post.title, image, post.image]);
+    }, [body.delta, post.body, title, post.title, image, post.image]);
 
     return (
         <div className="post-editor">
             <div className="post-editor__image">
-                <div className="post-editor__label">
-                    Image
-                    {
-                        image.length > 0 && image.startsWith("https") &&
-                        <IconCheck size={20} color="green" />
-                    }
-                </div>
-                <PostHeaderImageSelector image={image} setImage={setImage} />
-                <div className="form-error-message">
-                    {
-                        (image.length === 0 || !image.startsWith("https")) &&
-                        (
-                            messages.imageMessage &&
-                            <>
-                                <IconAlertCircle size={20} />
-                                <div>{messages.imageMessage}</div>
-                            </>
-                        )
-                    }
-                </div>
+                <ImageEditor image={image} setImage={setImage} />
             </div>
 
             <div className="post-editor__title">
-                <div className="post-editor__label">Title</div>
-                <TitleInput title={title} setTitle={setTitle} editMode />
+                <TitleEditor title={title} setTitle={setTitle} editMode />
+            </div>
+
+            <div className="post-editor__description">
+                <DescriptionEditor initialDelta={post.description as string} setContents={setDescription} />
             </div>
 
             <div className="post-editor__body">
-                <div className="post-editor__label">Content</div>
-                <ContentEditor setContents={setContents} initialContents={post.body}  />
+                <BodyEditor initialDelta={post.body} setContents={setBody} />
             </div>
+
+            <ErrorMessage message={messages.errorMessage} />
 
             <div className="post-editor__footer">
                 <form action={action} className="post-editor__form">

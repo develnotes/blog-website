@@ -1,12 +1,12 @@
 import dynamic from "next/dynamic";
 const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr: false });
 import { QuillOptions } from "@/quill/context/QuillContext";
-import { QuillEditor } from "./QuillEditor";
+import { Editor } from "@/quill/editor/Editor";
 
-export const ContentEditor = ({
-    initialContents,
+export const PostBody = ({
+    initialDelta,
 }: {
-    initialContents: string | undefined,
+    initialDelta: string | undefined,
 }) => {
 
     const options: QuillOptions = {
@@ -15,8 +15,8 @@ export const ContentEditor = ({
     };
 
     return (
-        <QuillContext options={options} initialContents={initialContents}>
-            <QuillEditor />
+        <QuillContext options={options} initialDelta={initialDelta}>
+            <Editor id="editor-body" />
         </QuillContext >
     );
 };

@@ -208,5 +208,11 @@ body {
             }
         }
 
+        .postcard, .homepage-postcard {
+            .button {
+                @include button-dark();
+            }
+        }
+
     }
 }

@@ -4,12 +4,22 @@ import { paths } from "@/config";
 import * as db from "@/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import type { Data, PostFormState } from "@/types";
+import type { Data, PostFormState, QuillContents } from "@/types";
 import { z } from "zod";
 
 const createSlug = (s: string) => {
     return s.split(" ").join("-").toLowerCase();
 };
+
+const imageURLSchema = z
+    .object({
+        url: z
+            .string()
+            .min(1, { message: "Provide an image for your post" })
+            .refine((val) => val.startsWith("https"), {
+                message: "Only secure urls are allowed"
+            })
+    });
 
 const titleSchema = z
     .object({
@@ -29,15 +39,23 @@ const titleSchema = z
             }, { message: "This title already exists!" }),
     });
 
-const imageURLSchema = z
-    .object({
-        url: z
+const descriptionSchema = z.object({
+    description: z.object({
+        text: z
             .string()
-            .min(1, { message: "Provide an image for your post" })
-            .refine((val) => val.startsWith("https"), {
-                message: "Only secure urls are allowed"
-            })
-    });
+            .min(10, { message: "Post description must have at least 10 characters" }),
+        delta: z.string(),
+    }),
+});
+
+const bodySchema = z.object({
+    body: z.object({
+        text: z
+            .string()
+            .min(10, { message: "Don't forget to write your post!" }),
+        delta: z.string(),
+    }),
+});
 
 const postSchema = z
     .object({
@@ -56,7 +74,15 @@ const postSchema = z
                 return !results;
             }, { message: "Sorry, this title already exists!" }),
 
-        contents: z.string().min(10, { message: "Create a body for your post" }),
+        description: z.object({
+            text: z.string().min(10, { message: "Give a description for your post" }),
+            delta: z.string(),
+        }),
+
+        body: z.object({
+            text: z.string().min(10, { message: "Create a body for your post" }),
+            delta: z.string(),
+        }),
 
         image: z.string().min(1, { message: "Provide an image for your post" }),
 
@@ -75,6 +101,28 @@ export async function checkTitle(title: string) {
     return { message: undefined };
 }
 
+export async function checkDescription(description: QuillContents) {
+    const descriptionValidation = descriptionSchema.safeParse({ description });
+
+    if (!descriptionValidation.success) {
+        const errors = descriptionValidation.error.flatten().fieldErrors;
+        return { message: errors.description?.join(";") };
+    }
+
+    return { message: undefined };
+}
+
+export async function checkBody(body: QuillContents) {
+    const bodyValidation = bodySchema.safeParse({ body });
+
+    if (!bodyValidation.success) {
+        const errors = bodyValidation.error.flatten().fieldErrors;
+        return { message: errors.body?.join(";") };
+    }
+
+    return { message: undefined };
+}
+
 export async function checkImageURL(imageURL: string) {
     const imageURLValidation = imageURLSchema.safeParse({ imageURL });
 
@@ -88,11 +136,12 @@ export async function checkImageURL(imageURL: string) {
 
 export async function createPost(formState: PostFormState, data: Data, authorId: string) {
 
-    const { contents, image, title } = data;
+    const { body, description, image, title } = data;
 
     const validation = await postSchema.safeParseAsync({
         title,
-        contents,
+        description,
+        body,
         image,
         slug: title,
     });
@@ -103,7 +152,8 @@ export async function createPost(formState: PostFormState, data: Data, authorId:
         const newFormState: PostFormState = {
             ...formState,
             titleMessage: errors.title?.join("; "),
-            contentsMessage: errors.contents?.join("; "),
+            descriptionMessage: errors.description?.join(";"),
+            bodyMessage: errors.body?.join("; "),
             imageMessage: errors.image?.join("; "),
         }
         return newFormState;
@@ -112,11 +162,12 @@ export async function createPost(formState: PostFormState, data: Data, authorId:
     /* Save to DB */
     try {
 
-        const { contents, image, slug, title } = validation.data;
+        const { body, description, image, slug, title } = validation.data;
 
         await db.create({
             data: {
-                body: contents,
+                body: body.delta,
+                description: description.delta,
                 slug,
                 title,
                 image,

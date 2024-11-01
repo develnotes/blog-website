@@ -1,12 +1,13 @@
 "use client"
 
+import { useEffect, useState } from "react";
 import { IconEdit } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { paths } from "@/config";
+import { PostBody } from "./PostBody";
 import type { Post, Posts } from "@/types";
-import { useEffect, useState } from "react";
-import { ContentEditor } from "./ContentEditor";
+import { PostDescription } from "./PostDescription";
 
 
 export const PostShow = ({ post, posts }: { post: Post, posts: Posts }) => {
@@ -46,23 +47,30 @@ export const PostShow = ({ post, posts }: { post: Post, posts: Posts }) => {
                 </div>
             </div>
 
+            {
+                post.description &&
+                <div className="post__description">
+                    <PostDescription initialDelta={post.description} />
+                </div>
+            }
+
             <div className="post__body">
-                <ContentEditor initialContents={post.body} />
+                <PostBody initialDelta={post.body} />
             </div>
 
             <div className="suggestion-menu">
                 {
-                    (index !== undefined && index > 0 ) ?
-                    <Link href={paths.dashboard.post(posts[index - 1].slug)}>Prev</Link> :
-                    <span></span>
+                    (index !== undefined && index > 0) ?
+                        <Link href={paths.dashboard.post(posts[index - 1].slug)}>Prev</Link> :
+                        <span></span>
                 }
-                { 
+                {
                     (index !== undefined) ? <span>{index + 1}</span> : <span></span>
                 }
                 {
                     (index !== undefined && index < posts.length - 1) ?
-                    <Link href={paths.dashboard.post(posts[index + 1].slug)}>Next</Link> :
-                    <span></span>
+                        <Link href={paths.dashboard.post(posts[index + 1].slug)}>Next</Link> :
+                        <span></span>
                 }
             </div>
         </div>

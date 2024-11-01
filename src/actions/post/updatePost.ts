@@ -3,28 +3,33 @@
 import { paths } from "@/config";
 import * as db from "@/db";
 import { revalidatePath } from "next/cache";
-import type { EditPostFormState } from "@/types";
+import type { EditPostFormState, UpdateData } from "@/types";
 import { z } from "zod";
 
 
 const editPostSchema = z
     .object({
-        contents: z.string().min(10, {
-            message: "Create a body for your post"
+        description: z.object({
+            text: z.string().min(10, { message: "Give a description for your post" }),
+            delta: z.string(),
         }),
-        image: z.string().min(1, {
-            message: "Provide an image for your post"
+
+        body: z.object({
+            text: z.string().min(10, { message: "Create a body for your post" }),
+            delta: z.string(),
         }),
+
+        image: z.string().min(1, { message: "Provide an image for your post" }),
     });
 
-type UpdateData = { slug: string, contents: string, image: string }
 
 export async function updatePost(formState: EditPostFormState, updateData: UpdateData) {
 
-    const { contents, image, slug } = updateData;
+    const { body, description, image, slug } = updateData;
 
     const validation = await editPostSchema.safeParseAsync({
-        contents,
+        description,
+        body,
         image,
     });
 
@@ -33,7 +38,8 @@ export async function updatePost(formState: EditPostFormState, updateData: Updat
 
         const newFormState: EditPostFormState = {
             ...formState,
-            contentsMessage: errors.contents?.join("; "),
+            bodyMessage: errors.body?.join("; "),
+            descriptionMessage: errors.description?.join(";"),
             imageMessage: errors.image?.join("; "),
         }
         return newFormState;
@@ -42,12 +48,13 @@ export async function updatePost(formState: EditPostFormState, updateData: Updat
     /* Save */
     try {
 
-        const { contents, image } = validation.data;
+        const { body, description, image } = validation.data;
 
         await db.update({
             slug,
             data: {
-                body: contents,
+                body: body.delta,
+                description: description.delta,
                 image,
             }
         });

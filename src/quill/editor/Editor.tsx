@@ -2,14 +2,14 @@
 
 import { useQuill } from "../context/QuillContext";
 
-export const Editor = () => {
+export const Editor = ({id, onBlur}: {id: string, onBlur?: () => void}) => {
 
     const { editorRef, loading } = useQuill();
 
     return (
         <div className="ql-editor-wrapper">
             <Loader loading={loading} />
-            <div ref={editorRef}></div>
+            <div id={id} ref={editorRef} tabIndex={0} onBlur={onBlur}></div>
         </div>
     );
 };

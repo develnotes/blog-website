@@ -5,20 +5,14 @@
     flex-direction: column;
     margin-top: 1rem;
 
-    &__label {
-        font-size: 2rem;
-        margin-bottom: .4rem;
-
-        display: flex;
-        align-items: center;
-        gap: .4rem;
+    &__image, &__title, &__description, &__body {
+        margin-bottom: 2.5rem;
+        //padding: 1rem;
+        //border: 1px solid;
+        //border-radius: .4rem;
     }
 
-    &__image, &__title, &__body {
-        margin-bottom: 2rem;
-    }
-
-    &__body {
+    &__body, &__description {
         position: relative;
         flex-grow: 1;
         display: flex;
@@ -26,14 +20,18 @@
 
         .ql-editor {
             font-size: 1.6rem !important;
+            line-height: 1.6;
             padding: 0 !important;
 
             @include quicksand-font();
         }
 
-        //.ql-editor-wrapper {
-            //outline: 1px solid lightgray;
-        //}
+        .ql-editor-wrapper {
+            border-bottom: 1px solid lightgray;
+            border-left: 1px solid lightgray;
+            border-right: 1px solid lightgray;
+            padding: 1rem;
+        }
 
         .ql-container {
             padding: 2rem !important;

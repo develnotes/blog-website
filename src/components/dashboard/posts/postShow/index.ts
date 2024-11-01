@@ -1,0 +1,1 @@
+export { PostShow } from "./PostShow";

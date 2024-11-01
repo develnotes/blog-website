@@ -13,7 +13,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     };
 
     return (
-        <QuillContext options={options} initialContents={post.body}>
+        <QuillContext options={options} initialDelta={post.body}>
             <Post post={post} />
         </QuillContext>
     );

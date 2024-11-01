@@ -14,7 +14,7 @@ import {
 } from "@tabler/icons-react";
 
 import * as imageActions from "@/actions/image";
-import { Overlay } from "../Overlay";
+import { Overlay } from "./Overlay";
 import { useFormState, useFormStatus } from "react-dom";
 import { SelectImageFromURL } from "./SelectImageFromURL";
 import { SelectImageFromLibrary } from "./SelectImageFromLibrary";

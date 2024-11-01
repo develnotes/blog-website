@@ -35,14 +35,20 @@
         justify-content: space-between;
         align-items: center;
         margin-top: 3.5rem;
-        //margin-right: 1rem;
         margin-bottom: 2rem;
-        //margin-left: 3rem;
         font-size: 4.2rem;
     }
 
+    &__description {
+
+        margin-bottom: 2rem;
+        .ql-editor {
+            font-size: 1.8rem;
+            @include quicksand-font();
+        }
+    }
+
     &__body {
-        //margin-left: 4.5rem;
         flex-grow: 1;
 
         .ql-editor {

@@ -1,0 +1,10 @@
+.label {
+    font-size: 2rem;
+    margin-bottom: 0.4rem;
+
+    &__text {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+}

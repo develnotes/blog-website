@@ -17,7 +17,7 @@ import {
 } from "@tabler/icons-react";
 
 import * as imageActions from "@/actions/image";
-import { Overlay } from "../Overlay";
+import { Overlay } from "./Overlay";
 import { useFormState, useFormStatus } from "react-dom";
 
 /* Image editor component */
