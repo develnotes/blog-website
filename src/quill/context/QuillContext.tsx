@@ -1,8 +1,19 @@
-"use client"
+"use client";
 
 import "@/quill/styles/index.scss";
 
-import { createContext, Dispatch, MutableRefObject, SetStateAction, useContext, useEffect, useRef, useState } from "react";
+import {
+    createContext,
+    Dispatch,
+    MutableRefObject,
+    SetStateAction,
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState
+
+} from "react";
 
 /* Quill */
 import Quill, { QuillOptions } from "quill";
@@ -61,6 +72,75 @@ export default function QuillContext({
     const [characters, setCharacters] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
 
+    const InitQuill = useCallback((editor: HTMLDivElement) => {
+
+        quillRef.current = new Quill(editor, {
+            ...options,
+            modules: {
+                ...options.modules
+            }
+        });
+
+        console.log("Loaded Quill...");
+
+        const quill = quillRef.current;
+
+        const setDeltaString = (quill: Quill) => {
+            const textString = JSON.stringify(quill.getText());
+            setText(textString);
+
+            const words = textString
+                .replaceAll('"', "")
+                .replaceAll("\\n", "")
+                .split(" ")
+                .filter(w => w.length > 0)
+                .length;
+
+            setWords(words)
+
+            const characters = textString
+                .replaceAll('"', "")
+                .replaceAll("\\n", "")
+                .split(" ")
+                .join("").length;
+
+            setCharacters(characters);
+
+            const deltaString = JSON.stringify(quill.getContents());
+            setDelta(deltaString);
+
+            if (setContents) {
+                setContents({
+                    delta: JSON.stringify(quill.getContents()),
+                    text: JSON.stringify(quill.getText()),
+                });
+            }
+        };
+
+        if (quill) {
+            initialDelta && quill.setContents(JSON.parse(initialDelta));
+
+            quill.on("editor-change", renderKatex);
+            renderKatex();
+
+            helpers.queryAllElements("code").forEach(el => hljs.highlightElement(el as HTMLElement));
+
+            if (quill.isEnabled()) {
+                const toolbar = quill.getModule("toolbar") as Toolbar;
+
+                Object.values(handlers).forEach(({ handler, handlerType }) => {
+                    toolbar.addHandler(handlerType, handler(quill));
+                });
+
+                quill.on("text-change", () => setDeltaString(quill));
+
+                setDeltaString(quill);
+            }
+
+            setLoading(false);
+        }
+
+    }, [initialDelta, options, setContents]);
 
     useEffect(() => {
         mountRef.current = true;
@@ -75,71 +155,7 @@ export default function QuillContext({
                     console.log("Init...");
 
                     if (editor) {
-                        quillRef.current = new Quill(editor, {
-                            ...options,
-                            modules: {
-                                ...options.modules
-                            }
-                        });
-
-                        console.log("Loaded Quill...");
-
-                        const quill = quillRef.current;
-
-                        const setDeltaString = (quill: Quill) => {
-                            const textString = JSON.stringify(quill.getText());
-                            setText(textString);
-
-                            const words = textString
-                                .replaceAll('"', "")
-                                .replaceAll("\\n", "")
-                                .split(" ")
-                                .filter(w => w.length > 0)
-                                .length;
-
-                            setWords(words)
-
-                            const characters = textString
-                                .replaceAll('"', "")
-                                .replaceAll("\\n", "")
-                                .split(" ")
-                                .join("").length;
-
-                            setCharacters(characters);
-
-                            const deltaString = JSON.stringify(quill.getContents());
-                            setDelta(deltaString);
-
-                            if (setContents) {
-                                setContents({ 
-                                    delta: JSON.stringify(quill.getContents()),
-                                    text: JSON.stringify(quill.getText()),
-                                });
-                            }
-                        };
-
-                        if (quill) {
-                            initialDelta && quill.setContents(JSON.parse(initialDelta));
-
-                            quill.on("editor-change", renderKatex);
-                            renderKatex();
-
-                            helpers.queryAllElements("code").forEach(el => hljs.highlightElement(el as HTMLElement));
-
-                            if (quill.isEnabled()) {
-                                const toolbar = quill.getModule("toolbar") as Toolbar;
-
-                                Object.values(handlers).forEach(({ handler, handlerType }) => {
-                                    toolbar.addHandler(handlerType, handler(quill));
-                                });
-
-                                quill.on("text-change", () => setDeltaString(quill));
-
-                                setDeltaString(quill);
-                            }
-
-                            setLoading(false);
-                        }
+                        InitQuill(editor);
                     }
                 }
             }
@@ -148,7 +164,7 @@ export default function QuillContext({
         return () => {
             mountRef.current = false;
         }
-    }, [options, initialDelta, editorRef, setContents]);
+    }, [options, initialDelta, editorRef, setContents, InitQuill]);
 
     return (
         <Context.Provider value={{
