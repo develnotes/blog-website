@@ -1,8 +1,8 @@
 "use server";
 
-import * as db from "@/db";
+import { fetchAllPosts } from "@/db";
 
 export const getAllPosts = async () => {
-    const posts = await db.fetchAllPosts();
+    const posts = await fetchAllPosts();
     return posts;
 };

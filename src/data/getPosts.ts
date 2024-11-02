@@ -1,10 +1,14 @@
 "use server";
 
-import * as db from "@/db";
+import { fetchPosts } from "@/db";
+import { getUserId } from "./getUserId";
 
-export const getPosts = async (userId: string | undefined) => {
-    if (userId) {
-        const posts = await db.fetch(userId);
+export const getPosts = async () => {
+
+    const authorId = await getUserId();
+
+    if (authorId) {
+        const posts = await fetchPosts({ authorId });
         return posts;
     }
 };

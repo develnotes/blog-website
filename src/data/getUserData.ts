@@ -1,25 +1,14 @@
 "use sever";
 
-import { Session } from "next-auth";
-import * as db from "@/db";
+import { fetchUser } from "@/db";
+import { getUserEmail } from "./getUserEmail";
 
-export const getUserData = async (session: Session | null) => {
-
-    if (session) {
-
-        const sessionUser = session.user;
-
-        if (sessionUser) {
-            const email = sessionUser.email;
-
-            if (email) {
-                const user = await db.fetchUser({ email });
+export const getUserData = async () => {
     
-                if (user) {
-                    const posts = await db.fetch(user.id);
-                    return { user, posts };
-                }
-            }
-        }
+    const email = await getUserEmail();
+
+    if (email) {
+        const user = await fetchUser({ email });
+        return user;
     }
 };

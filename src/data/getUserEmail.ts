@@ -1,10 +1,8 @@
 "use server";
 
 import { auth } from "@/auth";
-import { fetchUserId } from "@/db";
 
-export const getUserId = async () => {
-
+export const getUserEmail = async () => {
     const session = await auth();
 
     if (session) {
@@ -14,8 +12,7 @@ export const getUserId = async () => {
             const email = sessionUser.email;
 
             if (email) {
-                const userId = await fetchUserId({ email });
-                return userId;
+                return email;
             }
         }
     }

@@ -1,13 +1,6 @@
-import { getPosts } from "./getPosts";
-import { getAllPosts } from "./getAllPosts";
-import { getUser } from "./getUser";
-import { getUserData } from "./getUserData";
-import { getUserId } from "./getUserId";
-
-export {
-    getPosts,
-    getAllPosts,
-    getUser, 
-    getUserData,
-    getUserId,
-};
+export { getAllPosts } from "./getAllPosts";
+export { getPosts } from "./getPosts";
+export { getUser } from "./getUser";
+export { getUserData } from "./getUserData";
+export { getUserEmail } from "./getUserEmail";
+export { getUserId } from "./getUserId";
