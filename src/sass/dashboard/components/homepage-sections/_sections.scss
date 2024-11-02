@@ -10,7 +10,7 @@
     }
 }
 
-@keyframes disapear {
+@keyframes disappear {
     0% {
         opacity: 1;
     }
@@ -42,7 +42,7 @@ section {
     }
 
     .headline__icon {
-        animation-name: disapear;
+        animation-name: disappear;
         animation-duration: 0.35s;
         animation-fill-mode: both;
     }

@@ -7,9 +7,22 @@ import * as actions from "@/actions"
 
 import { IconAsterisk, IconCheck } from "@tabler/icons-react";
 
-import { ImageEditor } from "../imageEditor";
-import { TitleEditor } from "../titleEditor";
+import { useErrorMessages } from "@/contexts/ErrorMessagesContext";
 import { ErrorMessage } from "../errorMessage";
+
+import type { Post, QuillContents } from "@/types";
+
+import dynamic from "next/dynamic";
+
+const ImageEditor = dynamic(
+    () => import("../imageEditor").then(m => m.ImageEditor),
+    { ssr: false }
+);
+
+const TitleEditor = dynamic(
+    () => import("../titleEditor").then(m => m.TitleEditor),
+    { ssr: false }
+);
 
 const BodyEditor = dynamic(
     () => import("../bodyEditor").then(m => m.BodyEditor),
@@ -20,10 +33,6 @@ const DescriptionEditor = dynamic(
     () => import("../descriptionEditor").then(m => m.DescriptionEditor),
     { ssr: false }
 );
-
-import type { Post, QuillContents } from "@/types";
-import { useErrorMessages } from "@/contexts/ErrorMessagesContext";
-import dynamic from "next/dynamic";
 
 
 export const PostEditor = ({ post }: { post: Post }) => {
@@ -71,12 +80,17 @@ export const PostEditor = ({ post }: { post: Post }) => {
     };
 
     useEffect(() => {
-        if (body.delta === post.body && title === post.title && image === post.image) {
+        if (
+            body.delta === post.body && 
+            description.delta === post.description as string &&
+            title === post.title && 
+            image === post.image
+        ) {
             setEdited(false);
         } else {
             setEdited(true);
         }
-    }, [body.delta, post.body, title, post.title, image, post.image]);
+    }, [body.delta, post.body, description.delta, post.description, title, post.title, image, post.image]);
 
     return (
         <div className="post-editor">
