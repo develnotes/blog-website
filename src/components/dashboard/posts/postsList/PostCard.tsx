@@ -1,4 +1,4 @@
-import type { Post } from "@/types";
+import type { PostExtended } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { paths } from "@/config";
@@ -8,11 +8,9 @@ import { Dispatch, SetStateAction } from "react";
 
 export const PostCard = ({ 
     post, 
-    user,
     setLoading,
 }: { 
-    post: Post, 
-    user: { name: string, email: string },
+    post: PostExtended, 
     setLoading: Dispatch<SetStateAction<boolean>>,
 }) => {
 
@@ -23,7 +21,7 @@ export const PostCard = ({
                     <div className="postcard__info__title">
                         {post.title}
                     </div>
-                    <div className="postcard__info__author">Author: {user.name}</div>
+                    <div className="postcard__info__author">Author: {post.author.name}</div>
                     <div className="postcard__info__date">
                         <IconStar size={18} />
                         Created: {new Date(post.createdAt).toLocaleDateString()}

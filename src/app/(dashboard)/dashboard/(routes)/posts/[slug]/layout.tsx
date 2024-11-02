@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const post = await fetchPost(params.slug);
 
     return {
-        title: `${appName} dashboard | ${post.title}`,
+        title: `${appName} dashboard | ${post && post.title}`,
     };
 }
 

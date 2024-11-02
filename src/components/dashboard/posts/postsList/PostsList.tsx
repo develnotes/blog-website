@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { Loader } from "@/components/dashboard/Loader";
-import type { Posts } from "@/types";
 import { PostCard } from "./PostCard";
+import type { PostsList as PostsListType } from "@/types";
 
 
-export const PostsList = ({ posts, user }: { posts: Posts, user: { name: string, email: string } }) => {
+export const PostsList = ({ posts }: { posts: PostsListType }) => {
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -22,7 +22,6 @@ export const PostsList = ({ posts, user }: { posts: Posts, user: { name: string,
                             <li className="posts__list__item" key={post.id}>
                                 <PostCard
                                     post={post}
-                                    user={user}
                                     setLoading={setLoading}
                                 />
                             </li>

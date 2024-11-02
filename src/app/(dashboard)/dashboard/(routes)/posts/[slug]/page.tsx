@@ -1,36 +1,29 @@
 "use server";
 
 import { PostShow } from "@/components/dashboard/posts";
-import * as db from "@/db";
-import { auth } from "@/auth";
+import { fetchAllPosts } from "@/db";
 import { getUserData } from "@/data";
+import { Posts } from "@/types";
 
 
 export default async function Page({ params }: { params: { slug: string } }) {
+    const data = await getUserData();
 
-    const post = await db.fetchPost(params.slug);
-    const session = await auth();
-    const data = await getUserData(session);
-
-    if (data) {
-        const posts = data.posts || [post];
-
-        return (
-            <div className="show-page">
-                <noscript>
-                    <div className="no-script-message">
-                        You must activate Javascript to visualiize the post
-                    </div>
-                </noscript>
-                <PostShow post={post} posts={posts} />
-            </div>
-        );
-    }
+    return (
+        <div className="show-page">
+            <noscript>
+                <div className="no-script-message">
+                    You must activate Javascript to visualiize the post
+                </div>
+            </noscript>
+            <PostShow data={{ slug: params.slug, posts: data?.posts as Posts }} />
+        </div>
+    );
 }
 
 export async function generateStaticParams() {
 
-    const posts = await db.fetchAllPosts();
+    const posts = await fetchAllPosts();
 
     return posts.map(post => {
         return { slug: post.slug };

@@ -1,14 +1,10 @@
-import dynamic from "next/dynamic";
-const QuillContext = dynamic(() => import("@/quill/context/QuillContext"), { ssr: false });
-import { QuillOptions } from "@/quill/context/QuillContext";
+"use client";
+
+import React from "react";
+import QuillContext, { QuillOptions } from "@/quill/context/QuillContext";
 import { Editor } from "@/quill/editor/Editor";
 
-export const PostDescription = ({
-    initialDelta,
-}: {
-    initialDelta: string | undefined,
-}) => {
-
+export const PostDescription = ({ initialDelta }: { initialDelta: string | undefined }) => {
     const options: QuillOptions = {
         theme: "bubble",
         readOnly: true

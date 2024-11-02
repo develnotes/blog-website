@@ -1,20 +1,16 @@
+"use server";
+
 import { Post } from "@/components/blog/Post";
-import * as db from "@/db";
-import QuillContext, { QuillOptions } from "@/quill/context/QuillContext";
-import Image from "next/image";
+import { fetchPost } from "@/db";
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
-    const post = await db.fetchPost(params.slug);
+    const post = await fetchPost(params.slug);
 
-    const options: QuillOptions = {
-        theme: "bubble",
-        readOnly: true,
-    };
+    if (post) {
 
-    return (
-        <QuillContext options={options} initialDelta={post.body}>
+        return (
             <Post post={post} />
-        </QuillContext>
-    );
+        );
+    }
 }

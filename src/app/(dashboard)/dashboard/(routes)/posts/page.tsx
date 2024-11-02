@@ -1,25 +1,17 @@
 "use server";
 
 import { PostsList } from "@/components/dashboard/posts";
-import { auth } from "@/auth";
-import { getUserData } from "@/data";
+import { getPosts } from "@/data";
 
 
 export default async function Posts() {
 
-    const session = await auth();
-    const data = await getUserData(session);
-    
-    if (data) {
+    const posts = await getPosts();
 
-        const { posts, user } = data;
-
-        const email = user.email as string;
-        const name = user.name as string;
-
+    if (posts) {
         return (
             <div className="posts-page">
-                <PostsList posts={posts} user={{ email, name }}/>
+                <PostsList posts={posts} />
             </div>
         );
     }
@@ -29,5 +21,4 @@ export default async function Posts() {
             {"No posts yet"}
         </div>
     );
-
 }

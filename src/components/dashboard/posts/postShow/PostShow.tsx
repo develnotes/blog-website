@@ -5,14 +5,31 @@ import { IconEdit } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { paths } from "@/config";
-import { PostBody } from "./PostBody";
-import type { Post, Posts } from "@/types";
-import { PostDescription } from "./PostDescription";
+import type { Posts } from "@/types";
+import dynamic from "next/dynamic";
 
+type Data = {
+    slug: string,
+    posts: Posts,
+}
 
-export const PostShow = ({ post, posts }: { post: Post, posts: Posts }) => {
+const PostBody = dynamic(
+    () => import("./PostBody").then(m => m.PostBody),
+    { ssr: false }
+);
+
+const PostDescription = dynamic(
+    () => import("./PostDescription").then(m => m.PostDescription),
+    { ssr: false }
+);
+
+export const PostShow = ({ data }: { data: Data }) => {
 
     const [index, setIndex] = useState<number>();
+
+    const { slug, posts } = data;
+
+    const post = posts?.filter(post => post.slug === slug)[0];
 
     useEffect(() => {
         posts.forEach((item, index) => {

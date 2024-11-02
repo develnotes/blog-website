@@ -1,8 +1,22 @@
 import { Editor } from "@/quill/editor/Editor";
-import type { Post as PostType } from "@/types";
+import type { PostExtended } from "@/types";
 import Image from "next/image";
 
-export const Post = ({ post }: { post: PostType }) => {
+import dynamic from "next/dynamic";
+
+const QuillContext = dynamic(
+    () => import("@/quill/context/QuillContext"),
+    { ssr: false },
+);
+
+import { QuillOptions } from "@/quill/context/QuillContext";
+
+export const Post = ({ post }: { post: PostExtended }) => {
+
+    const options: QuillOptions = {
+        theme: "bubble",
+        readOnly: true,
+    };
 
     return (
         <div className="post">
@@ -29,7 +43,9 @@ export const Post = ({ post }: { post: PostType }) => {
             </div>
 
             <div className="post__body">
-                <Editor id="post-editor"/>
+                <QuillContext options={options} initialDelta={post.body}>
+                    <Editor id="post-editor" />
+                </QuillContext>
             </div>
         </div>
     );

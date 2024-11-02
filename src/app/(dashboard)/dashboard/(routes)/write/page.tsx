@@ -1,15 +1,13 @@
 "use server";
 
 import { PostCreate } from "@/components/dashboard/posts";
-import { auth } from "@/auth";
 import { Loader } from "@/components/dashboard/Loader";
 import { getUserId } from "@/data";
 
 
 export default async function Write() {
 
-    const session = await auth();
-    const userId = await getUserId(session);
+    const userId = await getUserId();
 
     if (userId) {
         return (
