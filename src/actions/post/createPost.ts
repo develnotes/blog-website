@@ -11,33 +11,31 @@ const createSlug = (s: string) => {
     return s.split(" ").join("-").toLowerCase();
 };
 
-const imageURLSchema = z
-    .object({
-        url: z
-            .string()
-            .min(1, { message: "Provide an image for your post" })
-            .refine((val) => val.startsWith("https"), {
-                message: "Only secure urls are allowed"
-            })
-    });
+const imageURLSchema = z.object({
+    url: z
+        .string()
+        .min(1, { message: "Provide an image for your post" })
+        .refine((val) => val.startsWith("https"), {
+            message: "Only secure urls are allowed"
+        })
+});
 
-const titleSchema = z
-    .object({
-        title: z
-            .string()
-            .min(10, { message: "Title must have at least 10 characters" })
-            .refine(val => !val.match(/[^a-z0-9- ]/gi), {
-                message: "Only letters and digits are allowed",
-            })
-            .refine(async (title) => {
-                const slug = createSlug(title);
+const titleSchema = z.object({
+    title: z
+        .string()
+        .min(10, { message: "Title must have at least 10 characters" })
+        .refine(val => !val.match(/[^a-z0-9- ]/gi), {
+            message: "Only letters and digits are allowed",
+        })
+        .refine(async (title) => {
+            const slug = createSlug(title);
 
-                /* Check slug is unique */
-                const results = await db.checkSlugIsUnique(slug);
+            /* Check slug is unique */
+            const results = await db.checkSlugIsUnique(slug);
 
-                return !results;
-            }, { message: "This title already exists!" }),
-    });
+            return !results;
+        }, { message: "This title already exists!" }),
+});
 
 const descriptionSchema = z.object({
     description: z.object({
@@ -57,37 +55,36 @@ const bodySchema = z.object({
     }),
 });
 
-const postSchema = z
-    .object({
-        title: z
-            .string()
-            .min(10, { message: "Title must have at least 10 characters" })
-            .refine(val => !val.match(/[^a-z0-9- ]/gi), {
-                message: "Only letters and digits are allowed",
-            })
-            .refine(async (title) => {
-                const slug = createSlug(title);
+const postSchema = z.object({
+    title: z
+        .string()
+        .min(10, { message: "Title must have at least 10 characters" })
+        .refine(val => !val.match(/[^a-z0-9- ]/gi), {
+            message: "Only letters and digits are allowed",
+        })
+        .refine(async (title) => {
+            const slug = createSlug(title);
 
-                /* Check slug is unique */
-                const results = await db.checkSlugIsUnique(slug);
+            /* Check slug is unique */
+            const results = await db.checkSlugIsUnique(slug);
 
-                return !results;
-            }, { message: "Sorry, this title already exists!" }),
+            return !results;
+        }, { message: "Sorry, this title already exists!" }),
 
-        description: z.object({
-            text: z.string().min(10, { message: "Give a description for your post" }),
-            delta: z.string(),
-        }),
+    description: z.object({
+        text: z.string().min(10, { message: "Give a description for your post" }),
+        delta: z.string(),
+    }),
 
-        body: z.object({
-            text: z.string().min(10, { message: "Create a body for your post" }),
-            delta: z.string(),
-        }),
+    body: z.object({
+        text: z.string().min(10, { message: "Create a body for your post" }),
+        delta: z.string(),
+    }),
 
-        image: z.string().min(1, { message: "Provide an image for your post" }),
+    image: z.string().min(1, { message: "Provide an image for your post" }),
 
-        slug: z.string().transform(async (title) => createSlug(title)),
-    });
+    slug: z.string().transform(async (title) => createSlug(title)),
+});
 
 
 export async function checkTitle(title: string) {
@@ -164,7 +161,7 @@ export async function createPost(formState: PostFormState, data: Data, authorId:
 
         const { body, description, image, slug, title } = validation.data;
 
-        await db.create({
+        await db.createPost({
             data: {
                 body: body.delta,
                 description: description.delta,

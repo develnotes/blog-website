@@ -7,20 +7,19 @@ import type { EditPostFormState, UpdateData } from "@/types";
 import { z } from "zod";
 
 
-const editPostSchema = z
-    .object({
-        description: z.object({
-            text: z.string().min(10, { message: "Give a description for your post" }),
-            delta: z.string(),
-        }),
+const editPostSchema = z.object({
+    description: z.object({
+        text: z.string().min(10, { message: "Give a description for your post" }),
+        delta: z.string(),
+    }),
 
-        body: z.object({
-            text: z.string().min(10, { message: "Create a body for your post" }),
-            delta: z.string(),
-        }),
+    body: z.object({
+        text: z.string().min(10, { message: "Create a body for your post" }),
+        delta: z.string(),
+    }),
 
-        image: z.string().min(1, { message: "Provide an image for your post" }),
-    });
+    image: z.string().min(1, { message: "Provide an image for your post" }),
+});
 
 
 export async function updatePost(formState: EditPostFormState, updateData: UpdateData) {
@@ -50,7 +49,7 @@ export async function updatePost(formState: EditPostFormState, updateData: Updat
 
         const { body, description, image } = validation.data;
 
-        await db.update({
+        await db.updatePost({
             slug,
             data: {
                 body: body.delta,
