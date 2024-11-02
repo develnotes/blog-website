@@ -1,6 +1,6 @@
-import type { Post, User, Account, Session } from "@prisma/client";
+import type { Post, User, Tag, Account, Session } from "@prisma/client";
 
-export type { Post, User, Account, Session }
+export type { Post, User, Tag, Account, Session }
 
 export type QuillContents = { delta: string, text: string }
 
@@ -8,14 +8,25 @@ export type Data = { body: QuillContents, description: QuillContents, image: str
 
 export type UpdateData = { slug: string, body: QuillContents, description: QuillContents, image: string }
 
-export type PostData = {
-    title: string;
-    description: string;
-    body: string;
-    slug: string;
-    image: string;
-    authorId: string;
-}
+export type PostData = Omit<
+    Post,
+    "id" |
+    "createdAt" |
+    "updatedAt" |
+    "publishedAt" |
+    "tagIds"
+>
+
+export type PostExtended = Post & {
+    tags: Tag[];
+    _count: {
+        author: number;
+        tags: number;
+    },
+    author: User;
+};
+
+export type PostsList = PostExtended[];
 
 export type PostUpdates = {
     body: string;
@@ -33,9 +44,4 @@ export type PostFormState = {
     errorMessage?: string | undefined;
 }
 
-export type EditPostFormState = {
-    bodyMessage?: string | undefined;
-    descriptionMessage?: string | undefined;
-    imageMessage?: string | undefined;
-    errorMessage?: string | undefined;
-}
+export type EditPostFormState = Omit<PostFormState, "titleMessage">
