@@ -2,11 +2,13 @@
 
 import { cache } from "react";
 import { prisma } from "@/db/prisma";
-import { Post, Posts, PostData, PostUpdates } from "@/types";
+import { PostData, PostUpdates } from "@/types";
 
-export const create = async ({ data }: { data: PostData }) => {
+export const createPost = async ({ data }: { data: PostData }) => {
     try {
-        await prisma.post.create({ data });
+        await prisma
+            .post
+            .create({ data });
     } catch (e) {
         console.error(e);
         process.exit(1);
@@ -16,78 +18,105 @@ export const create = async ({ data }: { data: PostData }) => {
 };
 
 /* Cached version... */
-export const fetch = cache(async (authorId: string) => {
-    console.log("fetching data...");
-    const posts = await prisma.post.findMany({
-        where: { authorId },
-        orderBy: { createdAt: "desc" }
-    });
+export const fetchPosts = cache(async ({ authorId }: { authorId: string }) => {
+    /* Find all posts of user with authorId */
+    const posts = await prisma
+        .post
+        .findMany({
+            where: { authorId },
+            orderBy: { createdAt: "desc" },
+            include: { tags: true, author: true,_count: true },
+        });
     await prisma.$disconnect();
-    return posts as Posts;
+    return posts;
 });
 
 export const fetchAllPosts = cache(async () => {
-    console.log("fetching data...");
-    const posts = await prisma.post.findMany({
-        orderBy: { createdAt: "desc" }
-    });
+    /* Find all posts of all users */
+    const posts = await prisma
+        .post
+        .findMany({
+            orderBy: { createdAt: "desc" },
+            include: { author: true, tags: true, _count: true }
+        });
     await prisma.$disconnect();
-    return posts as Posts;
+    return posts;
 });
 
 /* Cached version... */
 export const fetchPost = cache(async (slug: string) => {
-
-    console.log("fetchin post of slug " + slug);
-    const post = await prisma.post.findUnique({
-        where: { slug }
-    });
+    /* Find a post of given slug */
+    const post = await prisma
+        .post
+        .findUnique({
+            where: { slug },
+            include: { _count: true, author: true, tags: true }
+        });
     await prisma.$disconnect();
-    return post as Post;
+    return post;
 });
 
-export const update = async ({ slug, data }: { slug: string, data: PostUpdates }) => {
-
-    const updated = await prisma.post.update({
-        where: { slug },
-        data
-    });
+export const updatePost = async ({ slug, data }: { slug: string, data: PostUpdates }) => {
+    const updated = await prisma
+        .post
+        .update({
+            where: { slug },
+            data
+        });
     await prisma.$disconnect();
     return updated;
 };
 
 export const deletePost = async ({ slug }: { slug: string }) => {
-    const deleted = await prisma.post.delete({
-        where: { slug }
-    });
+    const deleted = await prisma
+        .post
+        .delete({
+            where: { slug }
+        });
     await prisma.$disconnect();
     return deleted;
 };
 
 export const checkSlugIsUnique = async (slug: string) => {
-    const results = await prisma.post.findFirst({
-        where: { slug }
-    });
+    const results = await prisma
+        .post
+        .findFirst({
+            where: { slug }
+        });
     await prisma.$disconnect();
     return results;
 };
 
 /* User queries */
-export const fetchUser = async ({email, id}: {email?: string, id?: string}) => {
-
+export const fetchUser = async ({ email }: { email: string | undefined }) => {
+    /* Fetch user data */
     if (email) {
-        const user = await prisma.user.findFirst({
-            where: { email }
-        });
+        const user = await prisma
+            .user
+            .findFirst({
+                where: { email },
+                include: {
+                    posts: true,
+                    tags: true,
+                    accounts: true,
+                    sessions: true,
+                    _count: true,
+                },
+            });
         await prisma.$disconnect();
         return user;
     }
+};
 
-    if (id) {
-        const user = await prisma.user.findFirst({
-            where: { id }
-        });
+
+export const fetchUserId = async ({ email }: { email: string | undefined }) => {
+    if (email) {
+        const user = await prisma
+            .user
+            .findFirst({
+                where: { email }
+            });
         await prisma.$disconnect();
-        return user;
+        return user?.id;
     }
 };
