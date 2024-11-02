@@ -11,7 +11,7 @@
   "dependencies": {
     "@auth/prisma-adapter": "^2.5.0",
     "@develnotes/carousel": "^0.0.8",
-    "@prisma/client": "^5.19.1",
+    "@prisma/client": "^5.21.1",
     "@tabler/icons": "^3.16.0",
     "@tabler/icons-react": "^3.16.0",
     "@tabler/icons-webfont": "^3.16.0",
@@ -24,7 +24,6 @@
     "next": "^14.2.12",
     "next-auth": "^5.0.0-beta.21",
     "parchment": "^3.0.0",
-    "prisma": "^5.19.1",
     "quill": "^2.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -40,6 +39,7 @@
     "concurrently": "^9.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",
+    "prisma": "^5.21.1",
     "sass": "^1.78.0",
     "typescript": "^5"
   }
