@@ -3,11 +3,17 @@
 import { PostCreate } from "@/components/dashboard/posts";
 import { Loader } from "@/components/dashboard/Loader";
 import { getUserId } from "@/data";
+import { getTags } from "@/actions";
+import TagsContext from "@/components/dashboard/posts/postEdition/tagsEditor/TagsContext";
 
 
 export default async function Write() {
 
     const userId = await getUserId();
+
+    const tags = await getTags();
+
+    console.log(tags);
 
     if (userId) {
         return (
@@ -17,8 +23,9 @@ export default async function Write() {
                         The editor needs Javascript to work. Please activate Javascript in the Browser.
                     </div>
                 </noscript>
-
-                <PostCreate authorId={userId} />
+                <TagsContext savedTags={tags}>
+                    <PostCreate authorId={userId} />
+                </TagsContext>
             </div>
         );
     } else {

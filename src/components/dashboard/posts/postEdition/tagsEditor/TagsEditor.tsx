@@ -1,8 +1,10 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
+"use client";
+
+import { Dispatch, SetStateAction, useState } from "react";
 import { CheckedStatus } from "../checkedStatus";
 import { Label } from "../label";
 import { IconPlus, IconX } from "@tabler/icons-react";
-import TagsContext, { useTags } from "./TagsContext";
+import { useTags } from "./TagsContext";
 
 import type { TagType } from "./TagsContext";
 
@@ -16,16 +18,14 @@ export const TagsEditor = () => {
                 Tags
                 <CheckedStatus condition={true} />
             </Label>
-            <TagsContext>
-                <Tags
-                    showSuggestions={showSuggestions}
-                    setShowSuggestions={setShowSuggestions}
-                />
-                <TagSuggestions
-                    showSuggestions={showSuggestions}
-                    setShowSuggestions={setShowSuggestions}
-                />
-            </TagsContext>
+            <Tags
+                showSuggestions={showSuggestions}
+                setShowSuggestions={setShowSuggestions}
+            />
+            <TagSuggestions
+                showSuggestions={showSuggestions}
+                setShowSuggestions={setShowSuggestions}
+            />
         </div>
     );
 };
@@ -44,7 +44,7 @@ const Tags = ({
         setTagName,
         addTag,
     } = useTags();
-    
+
     const [expanded, setExpanded] = useState<boolean>(false);
 
     return (
@@ -107,7 +107,7 @@ const Tags = ({
     );
 };
 
-const Tag = ({tag} : {tag: TagType}) => {
+const Tag = ({ tag }: { tag: TagType }) => {
 
     const { removeTag } = useTags();
 

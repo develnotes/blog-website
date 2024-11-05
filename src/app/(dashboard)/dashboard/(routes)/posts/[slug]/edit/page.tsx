@@ -1,11 +1,16 @@
 "use server";
 
+import { getTags } from "@/actions";
 import { PostEdit } from "@/components/dashboard/posts";
+import TagsContext from "@/components/dashboard/posts/postEdition/tagsEditor/TagsContext";
 import { fetchAllPosts, fetchPost } from "@/db";
+
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
     const post = await fetchPost(params.slug);
+
+    const tags = await getTags();
 
     if (post) {
         return (
@@ -15,7 +20,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         The editor needs Javascript to work. Please activate Javascript in the Browser.
                     </div>
                 </noscript>
-                <PostEdit post={post} />
+                <TagsContext savedTags={tags}>
+                    <PostEdit post={post} />
+                </TagsContext>
             </div>
         );
     }

@@ -1,6 +1,17 @@
-import { createContext, Dispatch, SetStateAction, useCallback, useContext, useEffect, useState } from "react";
+"use client";
 
-import { savedTags } from "./savedTags";
+import { createTag } from "@/db";
+import {
+    createContext,
+    Dispatch,
+    SetStateAction,
+    useCallback,
+    useContext,
+    useEffect,
+    useState
+} from "react";
+
+//import { tags as dbTags } from "./tags";
 
 export type TagType = {
     id: string;
@@ -33,12 +44,12 @@ const defaultValue: ContextType = {
 
 const Context = createContext(defaultValue);
 
-const TagsContext = ({ children }: { children: React.ReactNode }) => {
+const TagsContext = ({ savedTags, children }: { savedTags: TagType[],children: React.ReactNode }) => {
 
     const [tagName, setTagName] = useState<string>("");
     const [tags, setTags] = useState<TagType[]>([]);
 
-    const [suggestedTags, setSuggestedTags] = useState<TagType[]>(savedTags);
+    const [suggestedTags, setSuggestedTags] = useState<TagType[]>([]);
     const [filteredTags, setFilteredTags] = useState<TagType[]>([]);
 
     const updateTags = useCallback((tag: TagType) => {
@@ -49,7 +60,8 @@ const TagsContext = ({ children }: { children: React.ReactNode }) => {
 
     const addTag = useCallback((tagName: string) => {
 
-        const foundInSuggestedTags = suggestedTags.find(foundTag => foundTag.name === tagName.toLowerCase());
+        const foundInSuggestedTags = suggestedTags
+            .find(foundTag => foundTag.name === tagName.toLowerCase());
 
         if (foundInSuggestedTags) {
             updateTags(foundInSuggestedTags);
@@ -59,18 +71,20 @@ const TagsContext = ({ children }: { children: React.ReactNode }) => {
                 name: tagName.toLowerCase(),
             };
 
-            const foundInTags = tags.find(foundTag => foundTag.name === tagName.toLowerCase());
-            const foundInSavedTags = savedTags.find(foundTag => foundTag.name === tagName.toLowerCase());
+            const foundInTags = tags
+                .find(foundTag => foundTag.name === tagName.toLowerCase());
+            const foundInSavedTags = savedTags
+                .find(foundTag => foundTag.name === tagName.toLowerCase());
 
             if (!foundInTags) {
                 setTags([...tags, newTag]);
             }
 
             if (!foundInSavedTags) {
-                savedTags.push(newTag);
+                createTag({ data: { name: newTag.name } })
             }
         }
-    }, [tags, suggestedTags, updateTags]);
+    }, [tags, suggestedTags, updateTags, savedTags]);
 
     const removeTag = useCallback((id: string) => {
         setTags([...tags.filter(tag => tag.id !== id)]);
@@ -82,7 +96,7 @@ const TagsContext = ({ children }: { children: React.ReactNode }) => {
                 return !tags.includes(foundTag);
             })
         );
-    }, [tags]);
+    }, [tags, savedTags]);
 
     useEffect(() => {
         setFilteredTags(

@@ -2,7 +2,7 @@
 
 import { cache } from "react";
 import { prisma } from "@/db/prisma";
-import { PostData, PostUpdates } from "@/types";
+import { PostData, PostUpdates, Tag } from "@/types";
 
 export const createPost = async ({ data }: { data: PostData }) => {
     try {
@@ -25,7 +25,7 @@ export const fetchPosts = cache(async ({ authorId }: { authorId: string }) => {
         .findMany({
             where: { authorId },
             orderBy: { createdAt: "desc" },
-            include: { tags: true, author: true,_count: true },
+            include: { tags: true, author: true, _count: true },
         });
     await prisma.$disconnect();
     return posts;
@@ -119,4 +119,31 @@ export const fetchUserId = async ({ email }: { email: string | undefined }) => {
         await prisma.$disconnect();
         return user?.id;
     }
+};
+
+
+export const fetchTags = async () => {
+    const tags = await prisma.tag.findMany();
+    await prisma.$disconnect();
+    return tags;
+};
+
+export const createTag = async ({ data }: { data: { name: string } }) => {
+    try {
+        await prisma.tag.create({ data });
+    } catch (err) {
+        console.log(err);
+        process.exit(1);
+    } finally {
+        await prisma.$disconnect();
+    }
+};
+
+export const updateTag = async ({ id, data }: { id: string, data: { name: string } }) => {
+    const updated = await prisma.tag.update({
+        where: { id },
+        data
+    });
+    await prisma.$disconnect();
+    return updated;
 };
