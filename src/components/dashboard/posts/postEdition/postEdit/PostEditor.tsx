@@ -24,6 +24,11 @@ const TitleEditor = dynamic(
     { ssr: false }
 );
 
+const TagsEditor = dynamic(
+    () => import("../tagsEditor").then(m => m.TagsEditor),
+    { ssr: false }
+);
+
 const BodyEditor = dynamic(
     () => import("../bodyEditor").then(m => m.BodyEditor),
     { ssr: false }
@@ -100,6 +105,10 @@ export const PostEditor = ({ post }: { post: Post }) => {
 
             <div className="post-editor__title">
                 <TitleEditor title={title} setTitle={setTitle} editMode />
+            </div>
+
+            <div className="post-editor__tags">
+                <TagsEditor />
             </div>
 
             <div className="post-editor__description">

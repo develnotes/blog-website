@@ -25,16 +25,16 @@ section {
     margin-bottom: 3rem;
 }
 
-.stats,
-.options,
-.recent-posts,
-.last-edited {
+#stats .stats,
+#options .options,
+#recent .recent-posts,
+#last-edited .last-edited {
     width: 100%;
     margin-bottom: 2rem;
 }
 
 
-.recent-posts:hover {
+#recent.recent-posts:hover {
     .headline__button {
         animation-name: openlink;
         animation-duration: 0.7s;
@@ -92,7 +92,7 @@ section {
 }
 
 
-.options {
+#options .options {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;

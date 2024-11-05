@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 
 import * as actions from '@/actions';
@@ -11,6 +11,7 @@ import { TitleEditor } from "../titleEditor";
 import { ErrorMessage } from "../errorMessage";
 import { DescriptionEditor } from "../descriptionEditor";
 import { BodyEditor } from "../bodyEditor";
+import { TagsEditor } from "../tagsEditor";
 
 export const PostEditor = ({ authorId }: { authorId: string }) => {
 
@@ -29,7 +30,7 @@ export const PostEditor = ({ authorId }: { authorId: string }) => {
     }, authorId);
 
     const [state, action] = useFormState(createPostAction, initialFormState);
-    
+
     useEffect(() => {
         setMessages(state);
     }, [state, setMessages]);
@@ -54,6 +55,10 @@ export const PostEditor = ({ authorId }: { authorId: string }) => {
 
             <div className="post-editor__title">
                 <TitleEditor title={title} setTitle={setTitle} />
+            </div>
+
+            <div className="post-editor__tags">
+                <TagsEditor />
             </div>
 
             <div className="post-editor__description">

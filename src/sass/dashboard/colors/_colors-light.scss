@@ -53,9 +53,8 @@ body {
         }
 
         .home-page {
-
             //&__heading {}
-        
+
             //h2 {}
 
             .headline {
@@ -70,7 +69,7 @@ body {
                         color: $color-blue-1;
                     }
                 }
-        
+
                 &__icon {
                     color: lighten($color: $color-light-1, $amount: 20);
                 }
@@ -227,9 +226,19 @@ body {
             }
         }
 
-        .postcard, .homepage-postcard {
+        .postcard,
+        .homepage-postcard {
             .button {
                 @include button-light();
+            }
+        }
+
+        .tag {
+            background-color: $color-blue-1;
+            color: $color-white-1;
+
+            &__button-remove {
+                color: $color-white-1;
             }
         }
     }
