@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import type { Data, PostFormState, QuillContents } from "@/types";
 import { z } from "zod";
+import { TagType } from "@/components/dashboard/tags";
 
 const createSlug = (s: string) => {
     return s.split(" ").join("-").toLowerCase();
@@ -55,6 +56,17 @@ const bodySchema = z.object({
     }),
 });
 
+const tagsSchema = z.object({
+    tags: z.array(z.object({
+        id: z.string(),
+        name: z
+            .string()
+            .min(3, { message: "Tag name must have at least three characters" }),
+        postIds: z.array(z.string()),
+        userIds: z.array(z.string()),
+    }))
+});
+
 const postSchema = z.object({
     title: z
         .string()
@@ -80,6 +92,13 @@ const postSchema = z.object({
         text: z.string().min(10, { message: "Create a body for your post" }),
         delta: z.string(),
     }),
+
+    tags: z.array(z.object({
+        id: z.string(),
+        name: z.string().min(3, { message: "Tag names must be strings" }),
+        postIds: z.array(z.string()),
+        userIds: z.array(z.string()),
+    })),
 
     image: z.string().min(1, { message: "Provide an image for your post" }),
 
@@ -120,6 +139,15 @@ export async function checkBody(body: QuillContents) {
     return { message: undefined };
 }
 
+export async function checkTags(tags: TagType[]) {
+    const tagsValidation = tagsSchema.safeParse({ tags });
+
+    if (!tagsValidation.success) {
+        const errors = tagsValidation.error.flatten().fieldErrors;
+        return { message: errors.tags?.join(";") };
+    }
+}
+
 export async function checkImageURL(imageURL: string) {
     const imageURLValidation = imageURLSchema.safeParse({ imageURL });
 
@@ -133,12 +161,13 @@ export async function checkImageURL(imageURL: string) {
 
 export async function createPost(formState: PostFormState, data: Data, authorId: string) {
 
-    const { body, description, image, title } = data;
+    const { body, description, image, title, tags } = data;
 
     const validation = await postSchema.safeParseAsync({
         title,
         description,
         body,
+        tags,
         image,
         slug: title,
     });
@@ -151,17 +180,21 @@ export async function createPost(formState: PostFormState, data: Data, authorId:
             titleMessage: errors.title?.join("; "),
             descriptionMessage: errors.description?.join(";"),
             bodyMessage: errors.body?.join("; "),
+            tagsMessage: errors.tags?.join(";"),
             imageMessage: errors.image?.join("; "),
         }
+
         return newFormState;
     }
 
     /* Save to DB */
     try {
 
-        const { body, description, image, slug, title } = validation.data;
+        const { body, description, image, slug, title, tags } = validation.data;
 
-        await db.createPost({
+        const tagIds = tags.map(tag => tag.id);
+
+        const createdPost = await db.createPost({
             data: {
                 body: body.delta,
                 description: description.delta,
@@ -169,6 +202,16 @@ export async function createPost(formState: PostFormState, data: Data, authorId:
                 title,
                 image,
                 authorId,
+                tagIds,
+            }
+        });
+
+        /* Update tags with the created post Id */
+        db.addPostIdToTags({ postId: createdPost.id, tagIds });
+
+        tags.forEach(tag => {
+            if (!tag.userIds.includes(authorId)) {
+                db.addUserIdToTag({ userId: createdPost.authorId, tagId: tag.id });
             }
         });
 

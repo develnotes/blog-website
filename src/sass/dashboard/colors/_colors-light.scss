@@ -224,6 +224,24 @@ body {
             .button {
                 @include button-light();
             }
+
+            &__header {
+                background-color: $background-color-body-light;
+            }
+
+            &__image {
+                &__attribution {
+                    background-color: rgba($color: $color-white-1, $alpha: 0.5);
+                }
+            }
+
+            &__tags {
+                &__list {
+                    &__item {
+                        background-color: $background-color-body-light;
+                    }
+                }
+            }
         }
 
         .postcard,

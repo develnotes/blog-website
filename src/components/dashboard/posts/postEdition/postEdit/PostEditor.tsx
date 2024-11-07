@@ -13,6 +13,7 @@ import { ErrorMessage } from "../errorMessage";
 import type { Post, QuillContents } from "@/types";
 
 import dynamic from "next/dynamic";
+import { useTags } from "@/components/dashboard/tags";
 
 const ImageEditor = dynamic(
     () => import("../imageEditor").then(m => m.ImageEditor),
@@ -47,6 +48,7 @@ export const PostEditor = ({ post }: { post: Post }) => {
     const [description, setDescription] = useState<QuillContents>({ text: "", delta: post.description || "" });
     const [body, setBody] = useState<QuillContents>({ text: "", delta: post.body || "" });
     const [edited, setEdited] = useState<boolean>(false);
+    const { tags } = useTags();
 
     const { messages, setMessages, initialFormState } = useErrorMessages();
 
@@ -55,6 +57,7 @@ export const PostEditor = ({ post }: { post: Post }) => {
         body,
         description,
         image,
+        tags,
     });
 
     const [state, action] = useFormState(updatePostAction, initialFormState);
@@ -86,16 +89,17 @@ export const PostEditor = ({ post }: { post: Post }) => {
 
     useEffect(() => {
         if (
-            body.delta === post.body && 
+            body.delta === post.body &&
             description.delta === post.description as string &&
-            title === post.title && 
-            image === post.image
+            title === post.title &&
+            image === post.image &&
+            JSON.stringify(tags.map(tag => tag.id)) === JSON.stringify(post.tagIds)
         ) {
             setEdited(false);
         } else {
             setEdited(true);
         }
-    }, [body.delta, post.body, description.delta, post.description, title, post.title, image, post.image]);
+    }, [body.delta, post.body, description.delta, post.description, title, post.title, image, post.image, post.tagIds, tags]);
 
     return (
         <div className="post-editor">

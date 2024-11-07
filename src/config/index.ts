@@ -1,4 +1,4 @@
-import { Icon, IconHome, IconInfoCircle, IconLibrary, IconNews, IconProps, IconTextPlus, IconUserCheck, IconWriting } from "@tabler/icons-react";
+import { Icon, IconHome, IconInfoCircle, IconLibrary, IconNews, IconProps, IconTags, IconTextPlus, IconUserCheck, IconWriting } from "@tabler/icons-react";
 
 export const appName = "DevelNotes";
 export const appLogo = "DN";
@@ -28,6 +28,12 @@ export const paths = {
         },
         about() {
             return `/dashboard/about`;
+        },
+        tags() {
+            return `/dashboard/tags`;
+        },
+        tag(tagName: string) {
+            return `/dashboard/tags/${tagName}`;
         }
     },
 
@@ -73,17 +79,24 @@ export const menuItems = [
         id: 2,
     },
     {
+        path: "/tags",
+        href: paths.dashboard.tags(),
+        Icon: IconTags,
+        label: "Tags",
+        id: 3,
+    },
+    {
         path: "/account",
         href: paths.dashboard.account(),
         Icon: IconUserCheck,
         label: "Account",
-        id: 3,
+        id: 4,
     },
     {
         path: "/about",
         href: paths.dashboard.about(),
         Icon: IconInfoCircle,
         label: "About",
-        id: 4,
+        id: 5,
     }
 ];

@@ -18,18 +18,26 @@ const editPostSchema = z.object({
         delta: z.string(),
     }),
 
+    tags: z.array(z.object({
+        id: z.string(),
+        name: z.string().min(3, { message: "Tag names must be strings" }),
+        postIds: z.array(z.string()),
+        userIds: z.array(z.string()),
+    })),
+
     image: z.string().min(1, { message: "Provide an image for your post" }),
 });
 
 
 export async function updatePost(formState: EditPostFormState, updateData: UpdateData) {
 
-    const { body, description, image, slug } = updateData;
+    const { body, description, image, slug, tags } = updateData;
 
     const validation = await editPostSchema.safeParseAsync({
         description,
         body,
         image,
+        tags,
     });
 
     if (!validation.success) {
@@ -40,6 +48,7 @@ export async function updatePost(formState: EditPostFormState, updateData: Updat
             bodyMessage: errors.body?.join("; "),
             descriptionMessage: errors.description?.join(";"),
             imageMessage: errors.image?.join("; "),
+            tagsMessage: errors.tags?.join(";"),
         }
         return newFormState;
     }
@@ -47,14 +56,42 @@ export async function updatePost(formState: EditPostFormState, updateData: Updat
     /* Save */
     try {
 
-        const { body, description, image } = validation.data;
+        const { body, description, image, tags } = validation.data;
 
-        await db.updatePost({
+        const tagIds = tags.map(tag => tag.id);
+
+        const formerTagIds = await db.fetchPostTagIds({ slug });
+
+        const updatedPost = await db.updatePost({
             slug,
             data: {
                 body: body.delta,
                 description: description.delta,
                 image,
+                tagIds,
+            }
+        });
+
+        tags.forEach(tag => {
+            if (!tag.postIds.includes(updatedPost.id)) {
+                db.addPostIdToTag({ postId: updatedPost.id, tagId: tag.id });
+            }
+
+            if (!tag.userIds.includes(updatedPost.authorId)) {
+                db.addUserIdToTag({ userId: updatedPost.authorId, tagId: tag.id });
+            }
+        });
+
+        /*  
+        Compare former tags with new tags;
+        
+        If a tag is removed from the post, 
+        then we have to remove that post id from 
+        the tag's `postIds` list  
+        */
+        formerTagIds?.forEach(id => {
+            if (!tagIds.includes(id)) {
+                db.removePostIdFromTag({ postId: updatedPost.id, tagId: id });
             }
         });
 

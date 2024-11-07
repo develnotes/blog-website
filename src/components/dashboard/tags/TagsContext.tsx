@@ -1,6 +1,7 @@
 "use client";
 
 import { createTag } from "@/db";
+
 import {
     createContext,
     Dispatch,
@@ -11,23 +12,18 @@ import {
     useState
 } from "react";
 
-//import { tags as dbTags } from "./tags";
-
-export type TagType = {
-    id: string;
-    name: string;
-}
+import type { Tag } from "@/types";
 
 type ContextType = {
     tagName: string;
     setTagName: Dispatch<SetStateAction<string>>;
-    tags: TagType[];
-    setTags: Dispatch<SetStateAction<TagType[]>>;
+    tags: Tag[];
+    setTags: Dispatch<SetStateAction<Tag[]>>;
     addTag: (tagName: string) => void;
     removeTag: (id: string) => void;
-    suggestedTags: TagType[];
-    filteredTags: TagType[];
-    updateTags: (tag: TagType) => void;
+    suggestedTags: Tag[];
+    filteredTags: Tag[];
+    updateTags: (tag: Tag) => void;
 }
 
 const defaultValue: ContextType = {
@@ -44,15 +40,23 @@ const defaultValue: ContextType = {
 
 const Context = createContext(defaultValue);
 
-const TagsContext = ({ savedTags, children }: { savedTags: TagType[],children: React.ReactNode }) => {
+export const TagsContext = ({
+    savedTags,
+    currentTags,
+    children
+}: {
+    savedTags: Tag[],
+    currentTags?: Tag[],
+    children: React.ReactNode
+}) => {
 
     const [tagName, setTagName] = useState<string>("");
-    const [tags, setTags] = useState<TagType[]>([]);
+    const [tags, setTags] = useState<Tag[]>(currentTags || []);
 
-    const [suggestedTags, setSuggestedTags] = useState<TagType[]>([]);
-    const [filteredTags, setFilteredTags] = useState<TagType[]>([]);
+    const [suggestedTags, setSuggestedTags] = useState<Tag[]>([]);
+    const [filteredTags, setFilteredTags] = useState<Tag[]>([]);
 
-    const updateTags = useCallback((tag: TagType) => {
+    const updateTags = useCallback((tag: Tag) => {
         if (!tags.map(tag => tag.name).includes(tag.name)) {
             setTags([...tags, tag]);
         }
@@ -66,22 +70,25 @@ const TagsContext = ({ savedTags, children }: { savedTags: TagType[],children: R
         if (foundInSuggestedTags) {
             updateTags(foundInSuggestedTags);
         } else {
-            const newTag: TagType = {
-                id: (Math.random() * 999).toFixed(0),
-                name: tagName.toLowerCase(),
-            };
 
             const foundInTags = tags
                 .find(foundTag => foundTag.name === tagName.toLowerCase());
+
             const foundInSavedTags = savedTags
                 .find(foundTag => foundTag.name === tagName.toLowerCase());
 
             if (!foundInTags) {
-                setTags([...tags, newTag]);
-            }
-
-            if (!foundInSavedTags) {
-                createTag({ data: { name: newTag.name } })
+                /* Check if it is in saved tags */
+                if (foundInSavedTags) {
+                    setTags([...tags, foundInSavedTags]);
+                } else {
+                    createTag({ data: { name: tagName.toLowerCase() } })
+                        .then(tag => {
+                            if (tag) {
+                                setTags([...tags, tag]);
+                            }
+                        });
+                }
             }
         }
     }, [tags, suggestedTags, updateTags, savedTags]);
@@ -93,7 +100,7 @@ const TagsContext = ({ savedTags, children }: { savedTags: TagType[],children: R
     useEffect(() => {
         setSuggestedTags(
             savedTags.filter(foundTag => {
-                return !tags.includes(foundTag);
+                return !tags.map(tag => tag.id).includes(foundTag.id);
             })
         );
     }, [tags, savedTags]);
@@ -122,7 +129,5 @@ const TagsContext = ({ savedTags, children }: { savedTags: TagType[],children: R
         </Context.Provider>
     );
 };
-
-export default TagsContext;
 
 export const useTags = () => useContext(Context);

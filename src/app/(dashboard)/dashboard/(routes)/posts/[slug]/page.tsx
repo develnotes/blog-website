@@ -3,11 +3,14 @@
 import { PostShow } from "@/components/dashboard/posts";
 import { fetchAllPosts } from "@/db";
 import { getUserData } from "@/data";
-import { Posts } from "@/types";
+import { Post, Tag } from "@/types";
 
 
 export default async function Page({ params }: { params: { slug: string } }) {
+
+    const { slug } = params;
     const data = await getUserData();
+    const posts = data?.posts as (Post & { tags: Tag[] })[];
 
     return (
         <div className="show-page">
@@ -16,7 +19,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     You must activate Javascript to visualiize the post
                 </div>
             </noscript>
-            <PostShow data={{ slug: params.slug, posts: data?.posts as Posts }} />
+            <PostShow data={{ slug, posts }} />
         </div>
     );
 }

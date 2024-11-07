@@ -12,6 +12,7 @@ import { ErrorMessage } from "../errorMessage";
 import { DescriptionEditor } from "../descriptionEditor";
 import { BodyEditor } from "../bodyEditor";
 import { TagsEditor } from "../tagsEditor";
+import { useTags } from "@/components/dashboard/tags";
 
 export const PostEditor = ({ authorId }: { authorId: string }) => {
 
@@ -19,6 +20,7 @@ export const PostEditor = ({ authorId }: { authorId: string }) => {
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<QuillContents>({ delta: "", text: "" });
     const [body, setBody] = useState<QuillContents>({ delta: "", text: "" });
+    const { tags } = useTags();
 
     const { initialFormState, messages, setMessages } = useErrorMessages();
 
@@ -27,6 +29,7 @@ export const PostEditor = ({ authorId }: { authorId: string }) => {
         title,
         description,
         body,
+        tags,
     }, authorId);
 
     const [state, action] = useFormState(createPostAction, initialFormState);

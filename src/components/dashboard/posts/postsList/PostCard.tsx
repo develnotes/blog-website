@@ -6,11 +6,11 @@ import { IconEdit, IconEye, IconStar } from "@tabler/icons-react";
 import { Dispatch, SetStateAction } from "react";
 
 
-export const PostCard = ({ 
-    post, 
+export const PostCard = ({
+    post,
     setLoading,
-}: { 
-    post: PostExtended, 
+}: {
+    post: PostExtended,
     setLoading: Dispatch<SetStateAction<boolean>>,
 }) => {
 
@@ -21,7 +21,9 @@ export const PostCard = ({
                     <div className="postcard__info__title">
                         {post.title}
                     </div>
-                    <div className="postcard__info__author">Author: {post.author.name}</div>
+                    <div className="postcard__info__author">
+                        Author: {post.author.name}
+                    </div>
                     <div className="postcard__info__date">
                         <IconStar size={18} />
                         Created: {new Date(post.createdAt).toLocaleDateString()}
@@ -30,6 +32,22 @@ export const PostCard = ({
                         <IconEdit size={18} />
                         Updated: {new Date(post.updatedAt).toLocaleDateString()}
                     </div>
+                    <>
+                        {
+                            post.tags &&
+                            <div className="postcard__tags">
+                                <ul className="postcard__tags__list">
+                                    {
+                                        post.tags.map(tag => {
+                                            return <li className="postcard__tags__list__item" key={tag.id}>
+                                                {tag.name}
+                                            </li>
+                                        })
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </>
                 </div>
                 <div className="postcard__options">
                     <Link

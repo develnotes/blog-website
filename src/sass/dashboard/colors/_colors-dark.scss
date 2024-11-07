@@ -208,6 +208,30 @@ body {
             }
         }
 
+        .post {
+            .button {
+                @include button-dark();
+            }
+
+            &__header {
+                background-color: $background-color-body-dark;
+            }
+
+            &__image {
+                &__attribution {
+                    background-color: rgba($color: $color-dark-1, $alpha: 0.5);
+                }
+            }
+
+            &__tags {
+                &__list {
+                    &__item {
+                        background-color: $background-color-body-dark;
+                    }
+                }
+            }
+        }
+
         .postcard, .homepage-postcard {
             .button {
                 @include button-dark();

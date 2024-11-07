@@ -44,6 +44,19 @@
         }
     }
 
+    &__tags {
+        &__list {
+            display: flex;
+            gap: 1rem;
+
+            &__item {
+                padding: 1rem;
+                background-color: $background-color-body-light;
+                border-radius: 1rem;
+            }
+        }
+    }
+
     &__options {
         display: flex;
         gap: 0.4rem;

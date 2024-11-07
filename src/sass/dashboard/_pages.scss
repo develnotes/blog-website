@@ -4,7 +4,9 @@
 .edit-page,
 .show-page,
 .posts-page,
-.account-page {
+.account-page,
+.tags-page,
+.tag-page {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -25,4 +27,79 @@
     }
 
     @include appear();
+}
+
+.tags-page {
+    .tags {
+        margin: 2rem 1rem;
+
+        &__list {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+
+            a {
+                text-decoration: none;
+            }
+
+            &__item {
+                padding: 1rem 2rem;
+                background-color: $background-color-body-light;
+                border-radius: 1rem;
+                font-size: 1.6rem;
+            }
+        }
+    }
+}
+
+.tag-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .tag-name {
+        font-size: 1.6rem;
+        margin: 2rem 1rem;
+    }
+
+    .no-posts-message {
+        margin: 0 1rem;
+    }
+}
+
+.tag-posts {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &__list {
+        a {
+            text-decoration: none;
+        }
+
+        &__item {
+            border: 0.1rem solid $background-color-body-light;
+
+            .tag-post {
+                padding: 1rem;
+
+                &__title {
+                    font-size: 1.6rem;
+                }
+
+                &__tags {
+                    &__list {
+                        display: flex;
+                        gap: 1rem;
+
+                        &__item {
+                            padding: 1rem;
+                            background-color: $background-color-body-light;
+                            border-radius: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

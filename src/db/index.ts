@@ -6,14 +6,15 @@ import { PostData, PostUpdates, Tag } from "@/types";
 
 export const createPost = async ({ data }: { data: PostData }) => {
     try {
-        await prisma
+        const createdPost = await prisma
             .post
             .create({ data });
+
+        await prisma.$disconnect();
+        return createdPost;
     } catch (e) {
         console.error(e);
         process.exit(1);
-    } finally {
-        await prisma.$disconnect();
     }
 };
 
@@ -96,7 +97,11 @@ export const fetchUser = async ({ email }: { email: string | undefined }) => {
             .findFirst({
                 where: { email },
                 include: {
-                    posts: true,
+                    posts: {
+                        include: {
+                            tags: true
+                        }
+                    },
                     tags: true,
                     accounts: true,
                     sessions: true,
@@ -128,21 +133,132 @@ export const fetchTags = async () => {
     return tags;
 };
 
+export const fetchPostTagIds = async ({
+    postId,
+    slug,
+}: {
+    postId?: string,
+    slug?: string,
+}) => {
+    const post = await prisma.post.findFirst({
+        where: { id: postId, slug },
+        include: { tags: true },
+    });
+    await prisma.$disconnect();
+    return post?.tagIds;
+};
+
+export const fetchPostsByTagName = async ({
+    tagName
+}: {
+    tagName: string
+}) => {
+    const tag = await prisma.tag.findFirst({
+        where: { name: tagName },
+        include: {
+            posts: {
+                include: {
+                    author: true,
+                    tags: true,
+                    _count: true,
+                },
+            },
+        },
+    });
+
+    return tag?.posts;
+};
+
+export const addPostIdToTags = async ({
+    postId,
+    tagIds
+}: {
+    postId: string,
+    tagIds: string[]
+}) => {
+    await prisma.tag.updateMany({
+        where: { id: { in: tagIds } },
+        data: { postIds: { push: postId } }
+    });
+    await prisma.$disconnect();
+};
+
+export const addPostIdToTag = async ({
+    postId,
+    tagId,
+}: {
+    postId: string,
+    tagId: string
+}) => {
+    await prisma.tag.update({
+        where: { id: tagId },
+        data: { postIds: { push: postId } }
+    });
+    await prisma.$disconnect();
+};
+
+export const removePostIdFromTag = async ({
+    postId,
+    tagId,
+}: {
+    postId: string,
+    tagId: string,
+}) => {
+    const postIds = (
+        await prisma.tag.findFirst({ where: { id: tagId } })
+    )?.postIds;
+
+    const updatedPostIds = postIds?.filter(id => id !== postId);
+
+    await prisma.tag.update({
+        where: { id: tagId },
+        data: { postIds: { set: updatedPostIds } },
+    })
+};
+
+export const addUserIdToTags = async ({
+    userId,
+    tagIds
+}: {
+    userId: string,
+    tagIds: string[]
+}) => {
+    await prisma.tag.updateMany({
+        where: { id: { in: tagIds } },
+        data: { userIds: { push: userId } }
+    });
+    await prisma.$disconnect();
+};
+
+export const addUserIdToTag = async ({
+    userId,
+    tagId,
+}: {
+    userId: string,
+    tagId: string
+}) => {
+    await prisma.tag.update({
+        where: { id: tagId },
+        data: { userIds: { push: userId } }
+    });
+    await prisma.$disconnect();
+};
+
 export const createTag = async ({ data }: { data: { name: string } }) => {
     try {
-        await prisma.tag.create({ data });
+        const tag = await prisma.tag.create({ data });
+        await prisma.$disconnect();
+        return tag;
     } catch (err) {
         console.log(err);
         process.exit(1);
-    } finally {
-        await prisma.$disconnect();
     }
 };
 
 export const updateTag = async ({ id, data }: { id: string, data: { name: string } }) => {
     const updated = await prisma.tag.update({
         where: { id },
-        data
+        data,
     });
     await prisma.$disconnect();
     return updated;

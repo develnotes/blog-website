@@ -4,7 +4,7 @@ import { PostCreate } from "@/components/dashboard/posts";
 import { Loader } from "@/components/dashboard/Loader";
 import { getUserId } from "@/data";
 import { getTags } from "@/actions";
-import TagsContext from "@/components/dashboard/posts/postEdition/tagsEditor/TagsContext";
+import { TagsContext } from "@/components/dashboard/tags/TagsContext";
 
 
 export default async function Write() {
@@ -12,8 +12,6 @@ export default async function Write() {
     const userId = await getUserId();
 
     const tags = await getTags();
-
-    console.log(tags);
 
     if (userId) {
         return (
