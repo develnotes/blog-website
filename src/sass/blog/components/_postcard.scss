@@ -40,6 +40,21 @@
         }
     }
 
+    &__tags {
+        margin: 2rem 0;
+
+        &__list {
+            display: flex;
+            gap: 1rem;
+
+            &__item {
+                padding: 1rem;
+                border-radius: 1rem;
+                background-color: lighten($color: #d1d1d1, $amount: 10)
+            }
+        }
+    }
+
     &__image {
         position: relative;
         width: 100%;

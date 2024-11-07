@@ -13,11 +13,6 @@ import { QuillOptions } from "@/quill/context/QuillContext";
 
 export const Post = ({ post }: { post: PostExtended }) => {
 
-    const options: QuillOptions = {
-        theme: "bubble",
-        readOnly: true,
-    };
-
     return (
         <div className="post">
 
@@ -29,6 +24,34 @@ export const Post = ({ post }: { post: PostExtended }) => {
                 {post.title}
             </div>
 
+            {
+                post.description &&
+                <div className="post__description">
+                    <QuillContext
+                        options={{ theme: "bubble", readOnly: true }}
+                        initialDelta={post.description}
+                    >
+                        <Editor id="description-editor" />
+                    </QuillContext>
+                </div>
+            }
+
+            {
+                post.tags &&
+                <div className="post__tags">
+                    <ul className="post__tags__list">
+                        {
+                            post.tags.map(tag => {
+                                return (
+                                    <li key={tag.id} className="post__tags__list__item">
+                                        {tag.name}
+                                    </li>
+                                );
+                            })
+                        }
+                    </ul>
+                </div>
+            }
             <div className="post__date">
 
                 <div className="post__date__created">
@@ -43,8 +66,15 @@ export const Post = ({ post }: { post: PostExtended }) => {
             </div>
 
             <div className="post__body">
-                <QuillContext options={options} initialDelta={post.body}>
+                <QuillContext
+                    options={{
+                        theme: "bubble",
+                        readOnly: true,
+                    }}
+                    initialDelta={post.body}>
+
                     <Editor id="post-editor" />
+
                 </QuillContext>
             </div>
         </div>
