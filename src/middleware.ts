@@ -8,16 +8,17 @@ console.log("middleware");
 export const { handlers, auth: middleware } = NextAuth(async (req) => {
 
     const path = req?.nextUrl.pathname;
+
     const routes = [
         "/dashboard",
         "/dashboard/write",
         "/dashboard/posts",
         "/dashboard/account",
+        "/dashboard/tags",
         "/dashboard/about"
     ];
 
     if (path && routes.includes(path)) {
-
         console.log(req?.nextUrl.pathname);
         console.log(req.headers.get("accept-language"));
     }

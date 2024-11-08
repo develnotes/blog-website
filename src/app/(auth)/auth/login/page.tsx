@@ -2,7 +2,7 @@
 
 import { login } from "@/actions/auth";
 import { appName } from "@/config";
-import { IconBrandGithub, IconBrandGithubFilled } from "@tabler/icons-react";
+import { IconBrandGithub } from "@tabler/icons-react";
 import loginImage from "./Blog_post-bro.svg";
 import Image from "next/image";
 import appLogo from "@/images/Blogging-cuate-blue.svg";
