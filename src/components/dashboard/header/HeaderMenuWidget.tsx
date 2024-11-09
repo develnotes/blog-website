@@ -23,12 +23,14 @@ export const HeaderMenuWidget = () => {
     if (show) {
         return (
             <div className="header__menu-widget">
-                <button
-                    onClick={() => setShow(false)}
-                    className="header__menu-widget__button header__menu-widget__button--close">
-                    <IconX />
-                </button>
-                <Menu setShow={setShow} />
+                <div className="header__menu-widget__scrollable-container">
+                    <button
+                        onClick={() => setShow(false)}
+                        className="header__menu-widget__button header__menu-widget__button--close">
+                        <IconX />
+                    </button>
+                    <Menu setShow={setShow} />
+                </div>
             </div>
         );
     } else {
