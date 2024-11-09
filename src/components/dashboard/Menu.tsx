@@ -5,6 +5,7 @@ import { useSelectedLayoutSegments } from "next/navigation";
 import { paths } from "@/config";
 import { AppLogo } from "./AppLogo";
 import { MenuIcon, menuItems } from "@/config";
+import { Logout } from "./Logout";
 
 interface Menu { show?: boolean, setShow?: React.Dispatch<React.SetStateAction<boolean>> }
 
@@ -43,8 +44,10 @@ export const Menu = ({ show, setShow }: Menu) => {
                             Blog
                         </Link>
                     </li>
+
                 </ul>
             </nav>
+            <Logout />
         </>
     );
 };

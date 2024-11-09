@@ -7,6 +7,7 @@ import { useSelectedLayoutSegments } from "next/navigation";
 import Image from "next/image";
 import { User } from "@/auth";
 import { logout } from "@/actions/auth";
+import { Logout } from "../Logout";
 
 export const HeaderAccountWidget = ({ user }: { user: User }) => {
 
@@ -41,12 +42,7 @@ export const HeaderAccountWidget = ({ user }: { user: User }) => {
                         </div>
                     </Link>
 
-                    <form action={logout}>
-                        <button className="button header__account-widget__details__button"
-                            type="submit">
-                            Logout
-                        </button>
-                    </form>
+                    <Logout />
                 </div>
             </Details>
         </div>
