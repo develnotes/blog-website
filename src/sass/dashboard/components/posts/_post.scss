@@ -47,11 +47,16 @@
             display: flex;
             gap: 1rem;
 
+            a {
+                text-decoration: none;
+            }
+
             &__item {
                 padding: 1rem;
-                
                 border-radius: 1rem;
-                
+                display: flex;
+                gap: .6rem;
+                align-items: center;
             }
         }
     }

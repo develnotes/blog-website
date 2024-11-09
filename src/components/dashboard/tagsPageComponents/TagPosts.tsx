@@ -1,5 +1,6 @@
 import { paths } from "@/config";
 import { PostExtended } from "@/types";
+import { IconTag } from "@tabler/icons-react";
 import Link from "next/link";
 
 export const TagPosts = ({ posts }: { posts: PostExtended[] }) => {
@@ -9,8 +10,8 @@ export const TagPosts = ({ posts }: { posts: PostExtended[] }) => {
                 {
                     posts.map(post => {
                         return (
-                            <Link href={paths.dashboard.post(post.slug)}>
-                                <li className="tag-posts__list__item" key={post.id}>
+                            <Link href={paths.dashboard.post(post.slug)} key={post.id}>
+                                <li className="tag-posts__list__item">
                                     <div className="tag-post">
                                         <div className="tag-post__title">
                                             {post.title}
@@ -21,7 +22,8 @@ export const TagPosts = ({ posts }: { posts: PostExtended[] }) => {
                                             <ul className="tag-post__tags__list">
                                                 {
                                                     post.tags.map(tag => {
-                                                        return <li className="tag-post__tags__list__item">
+                                                        return <li className="tag-post__tags__list__item" key={tag.id}>
+                                                            <IconTag size={14} />
                                                             {tag.name}
                                                         </li>
                                                     })

@@ -3,6 +3,7 @@
 import { TagPosts } from "@/components/dashboard/tagsPageComponents/TagPosts";
 import { fetchPostsByTagName } from "@/db";
 import { PostExtended } from "@/types";
+import { IconTag } from "@tabler/icons-react";
 
 export default async function Page({ params }: { params: { tagName: string } }) {
 
@@ -11,12 +12,13 @@ export default async function Page({ params }: { params: { tagName: string } }) 
     /* Get all posts that contains this tagName and list them below*/
     const posts = await fetchPostsByTagName({ tagName }) as PostExtended[];
 
-    console.log(posts);
-
     return (
         <div className="tag-page">
 
-            <div className="tag-name">{tagName}</div>
+            <div className="tag-name">
+                <IconTag size={18} />
+                {tagName}
+                </div>
             {
                 posts.length > 0 ?
                     (

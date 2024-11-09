@@ -47,6 +47,9 @@
                 background-color: $background-color-body-light;
                 border-radius: 1rem;
                 font-size: 1.6rem;
+                display: flex;
+                gap: 0.6rem;
+                align-items: center;
             }
         }
     }
@@ -60,6 +63,9 @@
     .tag-name {
         font-size: 1.6rem;
         margin: 2rem 1rem;
+        display: flex;
+        gap: 0.6rem;
+        align-items: center;
     }
 
     .no-posts-message {
@@ -78,12 +84,13 @@
         }
 
         &__item {
-            border: 0.1rem solid $background-color-body-light;
+            margin-bottom: 2rem;
 
             .tag-post {
                 padding: 1rem;
 
                 &__title {
+                    text-transform: capitalize;
                     font-size: 1.6rem;
                 }
 
@@ -96,6 +103,9 @@
                             padding: 1rem;
                             background-color: $background-color-body-light;
                             border-radius: 1rem;
+                            display: flex;
+                            gap: 0.4rem;
+                            align-items: center;
                         }
                     }
                 }
