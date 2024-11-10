@@ -1,6 +1,6 @@
 import { IconX } from "@tabler/icons-react";
 import { useTags } from ".";
-import type { TagType } from ".";
+import type { Tag as TagType } from "@/types";
 
 export const Tag = ({ tag }: { tag: TagType }) => {
 

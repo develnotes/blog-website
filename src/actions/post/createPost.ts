@@ -4,9 +4,8 @@ import { paths } from "@/config";
 import * as db from "@/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import type { Data, PostFormState, QuillContents } from "@/types";
+import type { Data, PostFormState, QuillContents, Tag } from "@/types";
 import { z } from "zod";
-import { TagType } from "@/components/dashboard/tags";
 
 const createSlug = (s: string) => {
     return s.split(" ").join("-").toLowerCase();
@@ -139,7 +138,7 @@ export async function checkBody(body: QuillContents) {
     return { message: undefined };
 }
 
-export async function checkTags(tags: TagType[]) {
+export async function checkTags(tags: Tag[]) {
     const tagsValidation = tagsSchema.safeParse({ tags });
 
     if (!tagsValidation.success) {

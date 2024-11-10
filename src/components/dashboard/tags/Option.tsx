@@ -1,7 +1,7 @@
 import { useTags } from ".";
-import type { TagType } from ".";
+import type { Tag } from "@/types";
 
-export const Option = ({ tag }: { tag: TagType }) => {
+export const Option = ({ tag }: { tag: Tag }) => {
 
     const { updateTags } = useTags();
 
