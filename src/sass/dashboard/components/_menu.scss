@@ -1,4 +1,10 @@
 .menu {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     &__header {
         width: $menu-width;
         display: flex;
@@ -28,7 +34,6 @@
 
             list-style: none;
 
-
             &__item {
                 font-size: 2rem;
 
@@ -54,6 +59,15 @@
             &__item--active &__item__link {
                 cursor: default;
             }
+        }
+    }
+
+    &__footer {
+        width: 100%;
+        padding: 1rem;
+
+        .button-logout {
+            width: 100%;
         }
     }
 }

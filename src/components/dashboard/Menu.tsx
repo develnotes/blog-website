@@ -16,7 +16,7 @@ export const Menu = ({ show, setShow }: Menu) => {
     const path = "/" + segments.slice(1).join("/");
 
     return (
-        <>
+        <div className="menu">
             <div className="menu__header">
                 <AppLogo />
             </div>
@@ -47,8 +47,10 @@ export const Menu = ({ show, setShow }: Menu) => {
 
                 </ul>
             </nav>
-            <Logout />
-        </>
+            <div className="menu__footer">
+                <Logout />
+            </div>
+        </div>
     );
 };
 
