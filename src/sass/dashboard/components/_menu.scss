@@ -1,6 +1,5 @@
 .menu {
     height: 100vh;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -9,23 +8,32 @@
         width: $menu-width;
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         flex-wrap: wrap;
+
+        padding: 1rem 1.6rem;
     }
 
     width: $menu-width;
     min-width: $menu-width;
 
+    @media screen and (max-width: $breakpoint-md) {
+        width: 100%;
+        padding: 0 4rem;
+    }
+
     &__nav {
         flex-grow: 1;
-        margin-top: 3rem;
+        margin-top: 1rem;
 
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
 
-        overflow: scroll;
+        @media screen and (min-width: $breakpoint-md) {
+            overflow: scroll;
+        }
 
         &__list {
             display: flex;

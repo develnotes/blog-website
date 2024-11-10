@@ -1,4 +1,5 @@
 .header__menu-widget {
+    padding: 5rem 0;
     display: none;
 
     &__button {
@@ -20,9 +21,7 @@
         color: white;
 
         &__scrollable-container {
-            overflow-y: scroll;
-            padding: 5rem;
-
+            overflow: scroll;
             .button-logout {
                 font-size: 2rem;
                 font-weight: 100;
