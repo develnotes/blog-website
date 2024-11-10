@@ -89,10 +89,10 @@ export const PostEditor = ({ post }: { post: Post }) => {
 
     useEffect(() => {
         if (
-            body.delta === post.body &&
-            description.delta === post.description as string &&
-            title === post.title &&
-            image === post.image &&
+            JSON.stringify(body.delta) === JSON.stringify(post.body) &&
+            JSON.stringify(description.delta) === JSON.stringify(post.description) as string &&
+            JSON.stringify(title) === JSON.stringify(post.title) &&
+            JSON.stringify(image) === JSON.stringify(post.image) &&
             JSON.stringify(tags.map(tag => tag.id)) === JSON.stringify(post.tagIds)
         ) {
             setEdited(false);
