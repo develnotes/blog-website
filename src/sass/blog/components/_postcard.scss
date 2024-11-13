@@ -4,27 +4,34 @@
     border: 1px solid;
     border-radius: 0.4rem;
 
-    &:hover {
-        transform: scale(1.05);
-        transition: transform 0.2s;
+    @media screen and (min-width: $breakpoint-sm) and (max-width: $breakpoint-md) {
+        width: 50rem;
+        height: 50rem;
     }
 
-    transition: transform 0.1s;
+    @media screen and (min-width: $breakpoint-sm) {
+        &:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s;
+        }
 
-    @media screen and (max-width: $breakpoint-md) {
-        width: 90%;
+        transition: transform 0.1s;
     }
 }
 
 .postcard-link {
     position: relative;
     z-index: 1;
+    user-select: none;
 }
 
 .postcard {
-    width: 100%;
-    height: 100%;
     position: relative;
+    @include postcard-layout();
+
+    @media screen and (max-width: $breakpoint-sm) {
+        width: 100%;
+    }
 
     &__overlay {
         position: absolute;
@@ -36,12 +43,13 @@
 
         &:hover {
             background-color: rgba(#d1d1d1, 0.15);
-            transition: background-color .4s;
+            transition: background-color 0.4s;
         }
     }
 
     &__tags {
         margin: 2rem 0;
+        overflow: hidden;
 
         &__list {
             display: flex;
@@ -50,7 +58,7 @@
             &__item {
                 padding: 1rem;
                 border-radius: 1rem;
-                background-color: lighten($color: #d1d1d1, $amount: 10)
+                background-color: lighten($color: #d1d1d1, $amount: 10);
             }
         }
     }
@@ -59,6 +67,10 @@
         position: relative;
         width: 100%;
         height: 25rem;
+
+        @media screen and (min-width: $breakpoint-sm) and (max-width: $breakpoint-md) {
+            height: 35rem;
+        }
 
         img {
             border-top-left-radius: 0.4rem;
@@ -74,11 +86,48 @@
     }
 
     &__title {
-        font-size: 3rem;
         text-transform: capitalize;
+        max-width: 100%;
+
+        * {
+            font-size: 2.8rem;
+
+            @media screen and (max-width: $breakpoint-sm) {
+                font-size: 2.4rem;
+            }
+    
+            @media screen and (min-width: $breakpoint-sm) and (max-width: $breakpoint-md) {
+                font-size: 3.5rem;
+            }
+        }
+
     }
 
     &__date {
         font-size: 1.4rem;
+    }
+}
+
+.postcard-title {
+    &__heading {
+        text-wrap: nowrap;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    &__text {
+        width: auto;
+        &--hidden {
+            visibility: hidden;
+        }
+    }
+}
+
+.postcard-tooltip {
+    z-index: 1000;
+
+    p {
+        font-size: 1.6rem;
+        max-width: 25rem;
     }
 }
