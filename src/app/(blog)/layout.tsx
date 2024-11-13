@@ -2,7 +2,7 @@ import "@/sass/blog/main.scss";
 
 import type { Metadata } from "next";
 import { Header } from "@/components/blog/Header";
-import { GoToTopButton } from "@/components/common/GoToTopButton";
+import { GoToTopButton } from "@/components/common";
 
 export const metadata: Metadata = {
 	title: "Blog Website",
