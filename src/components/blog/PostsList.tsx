@@ -1,6 +1,6 @@
 "use client";
 
-import type { PostExtended, Posts } from "@/types"
+import type { PostExtended } from "@/types"
 import { PostCard } from "./PostCard";
 
 export const PostsList = ({ posts }: { posts: PostExtended[] }) => {

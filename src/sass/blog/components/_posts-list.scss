@@ -2,6 +2,10 @@
     width: 100vw;
     padding: 5rem;
 
+    @media screen and (max-width: $breakpoint-sm) {
+        padding: 1rem;
+    }
+
     &__list {
         width: 100%;
         display: flex;
@@ -10,7 +14,9 @@
         gap: 3rem;
 
         &__item {
-            @include postcard-layout();
+            @media screen and (max-width: $breakpoint-sm) {
+                width: 100%;   
+            }
         }
     }
 }
