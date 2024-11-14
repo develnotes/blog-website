@@ -8,9 +8,11 @@ export async function publishPost(formState: PublishPostFormState, publishData: 
     const { slug } = publishData;
 
     try {
-        const publishPost = await db.publishPost({
+        const publishedPost = await db.publishPost({
             slug,
         });
+
+        return publishedPost;
     } catch (err) {
 
         if (err instanceof Error) {
