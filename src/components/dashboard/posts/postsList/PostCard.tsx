@@ -18,29 +18,35 @@ export const PostCard = ({
         <div className="postcard">
             <div className="postcard__details">
                 <div className="postcard__info">
-                    <div className="postcard__info__title">
-                        {post.title}
+                    <div className="postcard__info__wrapper">
+                        <div className="postcard__title">
+                            {post.title}
+                        </div>
+                        <div className="postcard__author">
+                            Author: {post.author.name}
+                        </div>
                     </div>
-                    <div className="postcard__info__author">
-                        Author: {post.author.name}
+
+                    <div className="postcard__info__wrapper">
+                        <div className="postcard__date">
+                            <IconStar size={18} />
+                            Created: {new Date(post.createdAt).toLocaleDateString()}
+                        </div>
+                        <div className="postcard__date">
+                            <IconEdit size={18} />
+                            Updated: {new Date(post.updatedAt).toLocaleDateString()}
+                        </div>
+                        <div className="postcard__date">
+                            <IconWorldUp size={18} />
+                            {
+                                post.published ?
+                                    <span>Published at {post.publishedAt?.toLocaleDateString()}</span> :
+                                    <span>unpublished</span>
+                            }
+                        </div>
                     </div>
-                    <div className="postcard__info__date">
-                        <IconStar size={18} />
-                        Created: {new Date(post.createdAt).toLocaleDateString()}
-                    </div>
-                    <div className="postcard__info__date">
-                        <IconEdit size={18} />
-                        Updated: {new Date(post.updatedAt).toLocaleDateString()}
-                    </div>
-                    <div className="postcard__info__date">
-                        <IconWorldUp size={18} />
-                        {
-                            post.published ?
-                                <span>Published at { post.publishedAt?.toLocaleDateString() }</span> :
-                                <span>unpublished</span>
-                        }
-                    </div>
-                    <>
+
+                    <div className="postcard__info__wrapper">
                         {
                             post.tags &&
                             <div className="postcard__tags">
@@ -56,7 +62,7 @@ export const PostCard = ({
                                 </ul>
                             </div>
                         }
-                    </>
+                    </div>
                 </div>
                 <div className="postcard__options">
                     <Link
