@@ -38,7 +38,8 @@ export type PostData = Omit<
     "id" |
     "createdAt" |
     "updatedAt" |
-    "publishedAt" 
+    "publishedAt" |
+    "published"
 >
 
 export type PostExtended = Post & {
