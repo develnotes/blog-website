@@ -1,6 +1,6 @@
 "use client";
 
-import { EditPostFormState, PostFormState, PublishPostFormState } from "@/types";
+import { PostFormState } from "@/types";
 
 import { 
     createContext, 
@@ -19,9 +19,9 @@ const initialFormStateValue = {
 };
 
 type ContextType = {
-    messages: PostFormState | EditPostFormState | PublishPostFormState,
-    setMessages: Dispatch<SetStateAction<PostFormState | EditPostFormState | PublishPostFormState>>,
-    initialFormState: PostFormState | EditPostFormState | PublishPostFormState,
+    messages: PostFormState,
+    setMessages: Dispatch<SetStateAction<PostFormState>>,
+    initialFormState: PostFormState,
 };
 
 const initialValue: ContextType = {
@@ -37,10 +37,10 @@ export default function ErrorMessagesContext({
     initialFormState
 }: {
     children: React.ReactNode,
-    initialFormState: PostFormState | EditPostFormState | PublishPostFormState,
+    initialFormState: PostFormState,
 }) {
 
-    const [messages, setMessages] = useState<PostFormState | EditPostFormState | PublishPostFormState>(initialFormState);
+    const [messages, setMessages] = useState<PostFormState>(initialFormState);
 
     return (
         <Context.Provider value={{
