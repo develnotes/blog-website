@@ -53,6 +53,10 @@
                 padding: 1rem;
                 background-color: $background-color-body-light;
                 border-radius: 1rem;
+
+                display: flex;
+                align-items: center;
+                gap: .4rem;
             }
         }
     }

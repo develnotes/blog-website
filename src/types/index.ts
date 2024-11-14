@@ -29,12 +29,16 @@ export type UpdateData = {
     tags: Tag[],
 }
 
+export type PublishData = {
+    slug: string,
+}
+
 export type PostData = Omit<
     Post,
     "id" |
     "createdAt" |
     "updatedAt" |
-    "publishedAt"
+    "publishedAt" 
 >
 
 export type PostExtended = Post & {
@@ -67,3 +71,7 @@ export type PostFormState = {
 }
 
 export type EditPostFormState = Omit<PostFormState, "titleMessage">
+
+export type PublishPostFormState = {
+    errorMessage?: string | undefined;
+}

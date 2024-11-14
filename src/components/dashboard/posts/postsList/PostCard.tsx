@@ -2,7 +2,7 @@ import type { PostExtended } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { paths } from "@/config";
-import { IconEdit, IconEye, IconStar } from "@tabler/icons-react";
+import { IconEdit, IconEye, IconStar, IconTags, IconWorldUp } from "@tabler/icons-react";
 import { Dispatch, SetStateAction } from "react";
 
 
@@ -32,6 +32,14 @@ export const PostCard = ({
                         <IconEdit size={18} />
                         Updated: {new Date(post.updatedAt).toLocaleDateString()}
                     </div>
+                    <div className="postcard__info__date">
+                        <IconWorldUp size={18} />
+                        {
+                            post.published ?
+                                <span>Published at { post.publishedAt?.toLocaleDateString() }</span> :
+                                <span>unpublished</span>
+                        }
+                    </div>
                     <>
                         {
                             post.tags &&
@@ -40,6 +48,7 @@ export const PostCard = ({
                                     {
                                         post.tags.map(tag => {
                                             return <li className="postcard__tags__list__item" key={tag.id}>
+                                                <IconTags size={16} />
                                                 {tag.name}
                                             </li>
                                         })
@@ -65,7 +74,7 @@ export const PostCard = ({
                         <IconEdit size={20} />
                     </Link>
                 </div>
-            </div>
+            </div >
             <div className="postcard__image">
                 <Image
                     src={post.image || "/mountains-8564328_1280.png"}
@@ -74,6 +83,6 @@ export const PostCard = ({
                     sizes="200"
                 />
             </div>
-        </div>
+        </div >
     );
 };

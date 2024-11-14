@@ -68,6 +68,20 @@ export const updatePost = async ({ slug, data }: { slug: string, data: PostUpdat
     return updated;
 };
 
+export const publishPost = async ({ slug }: { slug: string }) => {
+    const published = await prisma
+        .post
+        .update({
+            where: { slug },
+            data: {
+                published: true,
+                publishedAt: new Date(Date.now())
+            }
+        });
+        await prisma.$disconnect();
+        return published;
+};
+
 export const deletePost = async ({ slug }: { slug: string }) => {
     const deleted = await prisma
         .post

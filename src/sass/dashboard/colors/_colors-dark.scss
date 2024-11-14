@@ -11,11 +11,11 @@
     background-color: $button-background-dark;
     border: 0.1rem solid $border-color-dark;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background-color: $button-background-hovered-dark;
     }
 
-    &__submit {
+    &__submit, &__publish {
         &:disabled {
             background-color: $button-background-disabled-dark;
         }

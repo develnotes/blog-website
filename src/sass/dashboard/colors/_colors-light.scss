@@ -12,11 +12,11 @@
     color: $button-color-light;
     background-color: $button-background-light;
 
-    &:hover {
+    &:hover:not(:disabled) {
         background-color: $button-background-hovered-light;
     }
 
-    &__submit {
+    &__submit, &__publish {
         &:disabled {
             background-color: $button-background-disabled-light;
         }

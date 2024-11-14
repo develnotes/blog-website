@@ -49,13 +49,15 @@
     &__footer {
         display: flex;
         justify-content: flex-end;
-        padding-bottom: 0.4rem;
-        margin-bottom: 6rem;
+        gap: 1rem;
+        padding: 1rem 0;
+        z-index: $button-submit-z-index;
+        position: sticky;
+        bottom: 0;
     }
 
     &__form {
         display: flex;
         flex-direction: column;
-        flex-grow: 1;
     }
 }

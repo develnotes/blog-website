@@ -15,12 +15,14 @@
 .button {
     @include base-button();
 
-    &__submit {
-        position: fixed;
-        bottom: 10px;
-        margin-right: 1rem;
-        z-index: $button-submit-z-index;
+    &__submit, &__publish {
+        display: flex;
+        align-items: center;
+        gap: .4rem;
         font-size: 1.2rem;
+        
+        min-width: min-content;
+        max-width: max-content;
 
         &:disabled {
             cursor: default;

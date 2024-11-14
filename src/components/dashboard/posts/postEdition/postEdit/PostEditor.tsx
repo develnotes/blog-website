@@ -5,7 +5,7 @@ import { useFormState, useFormStatus } from "react-dom";
 
 import * as actions from "@/actions"
 
-import { IconAsterisk, IconCheck } from "@tabler/icons-react";
+import { IconAsterisk, IconCheck, IconWorldUp } from "@tabler/icons-react";
 
 import { useErrorMessages } from "@/contexts/ErrorMessagesContext";
 import { ErrorMessage } from "../errorMessage";
@@ -62,6 +62,12 @@ export const PostEditor = ({ post }: { post: Post }) => {
 
     const [state, action] = useFormState(updatePostAction, initialFormState);
 
+    const publishPostAction = actions.publishPost.bind(null, initialFormState, {
+        slug: post.slug,
+    });
+
+    const [publishState, publishAction] = useFormState(publishPostAction, initialFormState);
+
     useEffect(() => {
         setMessages(state);
     }, [state, setMessages]);
@@ -86,6 +92,25 @@ export const PostEditor = ({ post }: { post: Post }) => {
             </button>
         );
     };
+
+    const PublishButton = () => {
+        const { pending } = useFormStatus();
+        return (
+            <button
+                type="submit"
+                disabled={pending || edited}
+                className="button button__publish">
+                {
+                    pending ?
+                        "Publishing..." :
+                        <>
+                            <IconWorldUp size={12} />
+                            Publish
+                        </>
+                }
+            </button>
+        );
+    }
 
     useEffect(() => {
         if (
@@ -123,11 +148,26 @@ export const PostEditor = ({ post }: { post: Post }) => {
                 <BodyEditor initialDelta={post.body} setContents={setBody} />
             </div>
 
+            <div className="post-editor__publish-status">
+
+            </div>
+
             <ErrorMessage message={messages.errorMessage} />
 
             <div className="post-editor__footer">
                 <form action={action} className="post-editor__form">
                     <SubmitButton />
+                </form>
+
+                <form action={publishAction}>
+                    {
+                        post.published ?
+                            (
+                                <span>Status: Published</span>
+                            )
+                            :
+                            <PublishButton />
+                    }
                 </form>
             </div>
         </div>

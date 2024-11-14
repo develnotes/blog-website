@@ -25,6 +25,7 @@ model Post {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   publishedAt DateTime?
+  published   Boolean?
   tags        Tag[]     @relation(fields: [tagIds], references: [id])
   tagIds      String[]  @db.ObjectId
 }
