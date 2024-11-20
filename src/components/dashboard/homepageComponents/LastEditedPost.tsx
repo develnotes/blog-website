@@ -8,7 +8,7 @@ import { IconChevronRight } from "@tabler/icons-react";
 
 export const LastEditedPost = ({ posts }: { posts: Posts | undefined }) => {
 
-    if (posts) {
+    if (posts && posts.length > 0) {
 
         const lastEditedPost = posts.sort((a, b) => {
             return Number(b.updatedAt) - Number(a.updatedAt);
@@ -31,5 +31,7 @@ export const LastEditedPost = ({ posts }: { posts: Posts | undefined }) => {
                 </div>
             </section>
         );
+    } else {
+        return null;
     }
 }

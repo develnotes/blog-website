@@ -5,6 +5,12 @@ import Link from "next/link";
 
 export const Tags = ({ tags }: { tags: Tag[] }) => {
 
+    if (tags.length === 0) {
+        return (
+            <div className="tags tags__empty">No tags yet</div>
+        );
+    }
+
     return (
         <div className="tags">
             <ul className="tags__list">

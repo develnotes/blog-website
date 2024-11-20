@@ -8,6 +8,14 @@
     flex-wrap: wrap;
     gap: 0.8rem;
 
+    &__empty {
+        padding: 2rem 1rem;
+
+        &__link {
+            margin-top: 1rem;
+        }
+    }
+
     &__list {
         display: flex;
         flex-wrap: wrap;

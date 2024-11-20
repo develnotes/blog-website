@@ -12,7 +12,7 @@ export const RecentPosts = ({ posts }: { posts: Posts | undefined }) => {
 
     const renderPost = (item: Post) => <PostCard post={item} />;
 
-    if (posts) {
+    if (posts && posts.length > 0) {
         return (
             <section id="recent">
                 <div className="recent-posts">
@@ -34,5 +34,7 @@ export const RecentPosts = ({ posts }: { posts: Posts | undefined }) => {
                 </div >
             </section>
         );
+    } else {
+        return null;
     }
 };

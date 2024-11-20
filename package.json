@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate && prisma db push && next build"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.5.0",
@@ -24,6 +26,7 @@
     "next": "^14.2.12",
     "next-auth": "^5.0.0-beta.21",
     "parchment": "^3.0.0",
+    "prisma": "^5.22.0",
     "quill": "^2.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -39,7 +42,6 @@
     "concurrently": "^9.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",
-    "prisma": "^5.22.0",
     "sass": "^1.78.0",
     "typescript": "^5"
   }

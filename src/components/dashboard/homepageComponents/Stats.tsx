@@ -2,7 +2,7 @@ import { Posts } from "@/types";
 
 export const Stats = ({ posts }: { posts: Posts | undefined }) => {
 
-    if (posts) {
+    if (posts && posts.length > 0) {
         const dateRange = posts?.map(post => post.createdAt).sort((a, b) => Number(a) - Number(b)) as Date[];
         const initialDate = new Date(dateRange[0]).toLocaleDateString();
         const finalDate = new Date(dateRange[dateRange.length - 1]).toLocaleDateString();
@@ -14,5 +14,7 @@ export const Stats = ({ posts }: { posts: Posts | undefined }) => {
                 </div>
             </section>
         );
+    } else {
+        return null;
     }
 };
