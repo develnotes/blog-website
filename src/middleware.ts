@@ -1,13 +1,13 @@
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 
-console.log("middleware");
+//console.log("middleware");
 
 //export const { auth: middleware } = NextAuth(authConfig);
 
 export const { handlers, auth: middleware } = NextAuth(async (req) => {
 
-    const path = req?.nextUrl.pathname;
+/*     const path = req?.nextUrl.pathname;
 
     const routes = [
         "/dashboard",
@@ -21,7 +21,7 @@ export const { handlers, auth: middleware } = NextAuth(async (req) => {
     if (path && routes.includes(path)) {
         console.log(req?.nextUrl.pathname);
         console.log(req.headers.get("accept-language"));
-    }
+    } */
 
     return authConfig;
 });
