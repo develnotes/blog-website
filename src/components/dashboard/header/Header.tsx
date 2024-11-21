@@ -1,5 +1,5 @@
 import { auth, Session } from "@/auth";
-import { HeaderAccountWidget } from "@/components/dashboard/header/HeaderAccountWidget"; 
+import { HeaderAccountWidget } from "@/components/dashboard/header/HeaderAccountWidget";
 import { HeaderMenuWidget } from "@/components/dashboard/header/HeaderMenuWidget";
 import { HeaderThemeWidget } from "@/components/dashboard/header/HeaderThemeWidget";
 
@@ -17,8 +17,9 @@ export const Header = async () => {
             <HeaderThemeWidget />
 
             {
-                user &&
-                <HeaderAccountWidget user={user} />
+                user ?
+                    <HeaderAccountWidget user={user} /> :
+                    <div>No session</div>
             }
 
         </header>

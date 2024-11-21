@@ -6,7 +6,6 @@ import { paths } from "@/config";
 import { useSelectedLayoutSegments } from "next/navigation";
 import Image from "next/image";
 import { User } from "@/auth";
-import { logout } from "@/actions/auth";
 import { Logout } from "../Logout";
 
 export const HeaderAccountWidget = ({ user }: { user: User }) => {
