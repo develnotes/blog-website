@@ -72,6 +72,10 @@ export async function updatePost(formState: EditPostFormState, updateData: Updat
             }
         });
 
+        if (!updatedPost) {
+            throw new Error("Could not update post");
+        }
+
         tags.forEach(tag => {
             if (!tag.postIds.includes(updatedPost.id)) {
                 db.addPostIdToTag({ postId: updatedPost.id, tagId: tag.id });

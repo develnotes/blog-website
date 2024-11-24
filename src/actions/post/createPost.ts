@@ -205,6 +205,10 @@ export async function createPost(formState: PostFormState, data: Data, authorId:
             }
         });
 
+        if (!createdPost) {
+            throw new Error("Could not create post");
+        }
+
         /* Update tags with the created post Id */
         db.addPostIdToTags({ postId: createdPost.id, tagIds });
 
@@ -217,10 +221,11 @@ export async function createPost(formState: PostFormState, data: Data, authorId:
     } catch (err) {
 
         if (err instanceof Error) {
-            console.log(err.message);
+            console.log("Error while creating post: ", err.message);
 
             const newFormState: PostFormState = {
-                ...formState, errorMessage: err.message
+                ...formState, 
+                errorMessage: err.message
             };
 
             return newFormState;

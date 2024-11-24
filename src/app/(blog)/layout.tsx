@@ -3,6 +3,8 @@ import "@/sass/blog/main.scss";
 import type { Metadata } from "next";
 import { Header } from "@/components/blog/Header";
 import { GoToTopButton } from "@/components/common";
+import ThemeContext from "@/contexts/ThemeContext";
+import { Footer } from "@/components/blog/Footer";
 
 export const metadata: Metadata = {
 	title: "Blog Website",
@@ -17,11 +19,14 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<div className="blog">
-					<Header />
-					{children}
-					<GoToTopButton />
-				</div>
+				<ThemeContext>
+					<div className="blog">
+						<Header />
+						{children}
+						<GoToTopButton />
+					</div>
+					<Footer />
+				</ThemeContext>
 			</body>
 		</html>
 	);

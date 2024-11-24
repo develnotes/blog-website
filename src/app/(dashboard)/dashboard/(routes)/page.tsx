@@ -12,7 +12,7 @@ export default async function Dashboard() {
 
     const posts = user?.posts;
 
-    const latestPosts = posts?.slice(0, 5);
+    //const limited = posts?.reverse().slice(0, 2);
 
     return (
         <div className="home-page">
@@ -23,8 +23,10 @@ export default async function Dashboard() {
 
             <Options />
 
-            <RecentPosts posts={latestPosts} />
+            {/* TODO: Pass only published posts */}
+            <RecentPosts posts={posts} />
 
+            {/* TODO: Pass only the drafts (unpublished) posts */}
             <LastEditedPost posts={posts} />
         </div>
     );

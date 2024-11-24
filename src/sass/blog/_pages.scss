@@ -1,4 +1,12 @@
-.blog-homepage {
-
+.blog,
+.blog-homepage,
+.about-page,
+.error-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    margin: 0 1rem;
     width: 100vw;
 }

@@ -20,7 +20,7 @@ export default async function Page({ params }: { params: { tagName: string } }) 
                 {tagName}
                 </div>
             {
-                posts.length > 0 ?
+                posts && posts.length > 0 ?
                     (
                         <TagPosts posts={posts} />
                     ) :

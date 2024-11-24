@@ -2,7 +2,7 @@ import type { Post } from "@/types";
 import Link from "next/link";
 import * as config from "@/config";
 import Image from "next/image";
-import { IconEdit, IconEye, IconStarFilled } from "@tabler/icons-react";
+import { IconEdit, IconEye, IconStarFilled, IconWorld } from "@tabler/icons-react";
 
 export const PostCard = ({ post }: { post: Post }) => {
     return (
@@ -19,6 +19,13 @@ export const PostCard = ({ post }: { post: Post }) => {
                         <div className="homepage-postcard__date">
                             <IconEdit size={16}/>
                             Last updated {new Date(post.updatedAt).toLocaleDateString()}
+                        </div>
+                    }
+                    {
+                        (post.published && post.publishedAt) &&
+                        <div className="homepage-postcard__date">
+                            <IconWorld size={16}/>
+                            Published {new Date(post.publishedAt).toLocaleDateString()}
                         </div>
                     }
                 </div>

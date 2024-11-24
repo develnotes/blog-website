@@ -1,15 +1,18 @@
-import { Editor } from "@/quill/editor/Editor";
+"use client";
+
 import type { PostExtended } from "@/types";
 import Image from "next/image";
 
 import dynamic from "next/dynamic";
 
-const QuillContext = dynamic(
-    () => import("@/quill/context/QuillContext"),
+const PostDescription = dynamic(
+    () => import("./PostDescription").then(m => m.PostDescription),
     { ssr: false },
 );
-
-import { QuillOptions } from "@/quill/context/QuillContext";
+const PostBody = dynamic(
+    () => import("./PostBody").then(m => m.PostBody),
+    { ssr: false },
+);
 
 export const Post = ({ post }: { post: PostExtended }) => {
 
@@ -27,12 +30,7 @@ export const Post = ({ post }: { post: PostExtended }) => {
             {
                 post.description &&
                 <div className="post__description">
-                    <QuillContext
-                        options={{ theme: "bubble", readOnly: true }}
-                        initialDelta={post.description}
-                    >
-                        <Editor id="description-editor" />
-                    </QuillContext>
+                    <PostDescription description={post.description} />
                 </div>
             }
 
@@ -66,16 +64,7 @@ export const Post = ({ post }: { post: PostExtended }) => {
             </div>
 
             <div className="post__body">
-                <QuillContext
-                    options={{
-                        theme: "bubble",
-                        readOnly: true,
-                    }}
-                    initialDelta={post.body}>
-
-                    <Editor id="post-editor" />
-
-                </QuillContext>
+                <PostBody content={post.body} />
             </div>
         </div>
     );

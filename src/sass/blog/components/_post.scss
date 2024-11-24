@@ -57,4 +57,10 @@
             font-size: 1.6em;
         }
     }
+
+    &__title, &__description, &__body, &__tags, &__date {
+        padding: 0 1rem;
+    }
+
+    padding-bottom: 3rem;
 }

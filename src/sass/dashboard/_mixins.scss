@@ -1,0 +1,7 @@
+@mixin empty-list {
+    padding: 2rem 1rem;
+
+    &__link {
+        margin-top: 1rem;
+    }
+}

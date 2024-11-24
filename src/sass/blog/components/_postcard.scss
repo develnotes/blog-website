@@ -1,17 +1,11 @@
 @mixin postcard-layout {
-    width: 40rem;
-    height: 40rem;
-    border: 1px solid;
-    border-radius: 0.4rem;
-
-    @media screen and (min-width: $breakpoint-sm) and (max-width: $breakpoint-md) {
-        width: 50rem;
-        height: 50rem;
-    }
+    height: 100%;
+    width: 100%;
+    border-radius: .4rem;
 
     @media screen and (min-width: $breakpoint-sm) {
         &:hover {
-            transform: scale(1.05);
+            transform: scale(1.02);
             transition: transform 0.2s;
         }
 
@@ -19,19 +13,22 @@
     }
 }
 
+@mixin postcard-headline-layout {
+    height: 40rem;
+}
+
 .postcard-link {
     position: relative;
     z-index: 1;
     user-select: none;
+    width: 100%;
+    height: 100%;
 }
 
 .postcard {
     position: relative;
-    @include postcard-layout();
 
-    @media screen and (max-width: $breakpoint-sm) {
-        width: 100%;
-    }
+    @include postcard-layout();
 
     &__overlay {
         position: absolute;
@@ -66,11 +63,7 @@
     &__image {
         position: relative;
         width: 100%;
-        height: 25rem;
-
-        @media screen and (min-width: $breakpoint-sm) and (max-width: $breakpoint-md) {
-            height: 35rem;
-        }
+        height: 50%;
 
         img {
             border-top-left-radius: 0.4rem;
@@ -95,16 +88,61 @@
             @media screen and (max-width: $breakpoint-sm) {
                 font-size: 2.4rem;
             }
-    
+
             @media screen and (min-width: $breakpoint-sm) and (max-width: $breakpoint-md) {
                 font-size: 3.5rem;
             }
         }
-
     }
 
     &__date {
         font-size: 1.4rem;
+    }
+
+    /* Styles for the first post only */
+    &__headline {
+
+        @media screen and (max-width: $breakpoint-md) {
+            .postcard__description {
+                display: none;
+            }            
+        }
+
+        @media screen and (min-width: $breakpoint-md) {
+            @include postcard-headline-layout();
+
+            display: flex;
+            flex-direction: row;
+
+            .postcard {
+                //&__overlay {}
+
+                &__image {
+                    position: relative;
+                    width: 50%;
+                    height: 100%;
+
+                    img {
+                        border-radius: 0;
+                        border-top-left-radius: 0.4rem;
+                        border-bottom-left-radius: 0.4rem;
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+
+                &__details {
+                    width: 50%;
+                }
+
+                &__title {
+                    * {
+                        font-size: 5rem;
+                    }
+                }
+            }
+        }
     }
 }
 

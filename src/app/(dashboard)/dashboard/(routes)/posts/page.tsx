@@ -8,7 +8,7 @@ export default async function Posts() {
 
     const posts = await getPosts();
 
-    if (posts) {
+    if (posts && posts.length > 0) {
         return (
             <div className="posts-page">
                 <PostsList posts={posts} />
@@ -18,7 +18,9 @@ export default async function Posts() {
 
     return (
         <div className="posts-page">
-            {"No posts yet"}
+            <div className="posts-page__empty">
+                No posts yet
+            </div>
         </div>
     );
 }

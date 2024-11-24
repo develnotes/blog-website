@@ -1,11 +1,11 @@
 "use client";
 
 import { Post, Posts } from "@/types";
-import Link from "next/link";
-import * as config from "@/config";
-import { IconChevronRight } from "@tabler/icons-react";
 import { PostCard } from "./PostCard";
 import Carousel from "@develnotes/carousel";
+import { IconChevronRight } from "@tabler/icons-react";
+import Link from "next/link";
+import * as config from "@/config";
 
 
 export const RecentPosts = ({ posts }: { posts: Posts | undefined }) => {
@@ -13,6 +13,14 @@ export const RecentPosts = ({ posts }: { posts: Posts | undefined }) => {
     const renderPost = (item: Post) => <PostCard post={item} />;
 
     if (posts && posts.length > 0) {
+
+        const recentPosts = posts
+            .filter((post) => post.published)
+            .sort((a, b) => {
+                return Number(b.updatedAt) - Number(a.updatedAt);
+            })
+            .slice(0, 5); /* Show 5 posts max */
+
         return (
             <section id="recent">
                 <div className="recent-posts">
@@ -30,7 +38,11 @@ export const RecentPosts = ({ posts }: { posts: Posts | undefined }) => {
                             <IconChevronRight size={20} />
                         </div>
                     </div>
-                    <Carousel list={posts} renderComponent={renderPost} />
+
+                    <Carousel
+                        list={recentPosts}
+                        renderComponent={renderPost}
+                    />
                 </div >
             </section>
         );

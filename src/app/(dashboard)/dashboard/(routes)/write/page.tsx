@@ -1,7 +1,6 @@
 "use server";
 
 import { PostCreate } from "@/components/dashboard/posts";
-import { Loader } from "@/components/dashboard/Loader";
 import { getUserId } from "@/data";
 import { getTags } from "@/actions";
 import { TagsContext } from "@/components/dashboard/tags/TagsContext";
@@ -13,6 +12,7 @@ export default async function Write() {
 
     const tags = await getTags();
 
+    // If user is logged in, show the editor
     if (userId) {
         return (
             <div className="write-page">
@@ -26,7 +26,8 @@ export default async function Write() {
                 </TagsContext>
             </div>
         );
-    } else {
-        return <Loader loading />
     }
+
+    // If user is not logged in, show a message
+    return <div className="write-page">You need to be logged in to write a post.</div>;
 }

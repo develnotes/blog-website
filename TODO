@@ -1,0 +1,18 @@
+
+# Check warning: 
+
+    (node:257004) ExperimentalWarning: buffer.File is an experimental feature and might change at any time
+    (Use `node --trace-warnings ...` to show where the warning was created)
+
+This warning appeared after a clicked the buttom "create post"
+
+# Finish the "publish" functionality.
+
+# Create the "about page" editor.
+
+# Reorder the "Recent posts list"; Must show the recent posts from newest to oldest. 
+
+# Design the "Not found" page.
+
+#
+useSearchParams() should be wrapped in a suspense boundary at page "/error". Read more: https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
