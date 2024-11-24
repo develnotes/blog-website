@@ -22,6 +22,7 @@ export type Data = {
 }
 
 export type UpdateData = { 
+    title: string,
     slug: string, 
     body: QuillContents, 
     description: QuillContents, 
@@ -54,6 +55,7 @@ export type PostExtended = Post & {
 export type PostsList = PostExtended[];
 
 export type PostUpdates = {
+    title: string,
     body: string;
     description: string;
     image: string;
@@ -71,7 +73,7 @@ export type PostFormState = {
     errorMessage?: string | undefined;
 }
 
-export type EditPostFormState = Omit<PostFormState, "titleMessage">
+export type EditPostFormState = PostFormState; //Omit<PostFormState, "titleMessage">
 
 export type PublishPostFormState = {
     errorMessage?: string | undefined;

@@ -53,6 +53,7 @@ export const PostEditor = ({ post }: { post: Post }) => {
     const { messages, setMessages, initialFormState } = useErrorMessages();
 
     const updatePostAction = actions.updatePost.bind(null, initialFormState, {
+        title,
         slug: post.slug,
         body,
         description,
@@ -133,7 +134,7 @@ export const PostEditor = ({ post }: { post: Post }) => {
             </div>
 
             <div className="post-editor__title">
-                <TitleEditor title={title} setTitle={setTitle} editMode />
+                <TitleEditor title={title} setTitle={setTitle} />
             </div>
 
             <div className="post-editor__tags">
@@ -163,7 +164,7 @@ export const PostEditor = ({ post }: { post: Post }) => {
                     {
                         post.published ?
                             (
-                                <span>Status: Published</span>
+                                <span className="button button__publish">Published</span>
                             )
                             :
                             <PublishButton />

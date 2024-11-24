@@ -18,14 +18,16 @@ export const TitleEditor = ({
     const { messages, setMessages } = useErrorMessages();
 
     const onBlur = useCallback(() => {
-        actions.checkTitle(title)
-            .then(r => {
-                setMessages({
-                    ...messages,
-                    titleMessage: r.message
+        if (!editMode) {
+            actions.checkTitle(title)
+                .then(r => {
+                    setMessages({
+                        ...messages,
+                        titleMessage: r.message
+                    });
                 });
-            });
-    }, [title, messages, setMessages]);
+        }
+    }, [title, messages, setMessages, editMode]);
 
     return (
         <>
@@ -44,7 +46,7 @@ export const TitleEditor = ({
                         e.preventDefault();
                     }
                 }}
-                readOnly={editMode}
+                //readOnly={editMode}
                 onBlur={onBlur}
             />
             {

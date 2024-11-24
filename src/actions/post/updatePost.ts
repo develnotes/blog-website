@@ -8,6 +8,13 @@ import { z } from "zod";
 
 
 const editPostSchema = z.object({
+    title: z
+        .string()
+        .min(10, { message: "Title must have at least 10 characters" })
+        .refine(val => !val.match(/[^a-z0-9- :]/gi), {
+            message: "Only letters and digits are allowed",
+        }),
+
     description: z.object({
         text: z.string().min(10, { message: "Give a description for your post" }),
         delta: z.string(),
@@ -31,9 +38,10 @@ const editPostSchema = z.object({
 
 export async function updatePost(formState: EditPostFormState, updateData: UpdateData) {
 
-    const { body, description, image, slug, tags } = updateData;
+    const { title, body, description, image, slug, tags } = updateData;
 
     const validation = await editPostSchema.safeParseAsync({
+        title, 
         description,
         body,
         image,
@@ -45,6 +53,7 @@ export async function updatePost(formState: EditPostFormState, updateData: Updat
 
         const newFormState: EditPostFormState = {
             ...formState,
+            titleMessage: errors.title?.join("; "),
             bodyMessage: errors.body?.join("; "),
             descriptionMessage: errors.description?.join(";"),
             imageMessage: errors.image?.join("; "),
@@ -65,6 +74,7 @@ export async function updatePost(formState: EditPostFormState, updateData: Updat
         const updatedPost = await db.updatePost({
             slug,
             data: {
+                title,
                 body: body.delta,
                 description: description.delta,
                 image,

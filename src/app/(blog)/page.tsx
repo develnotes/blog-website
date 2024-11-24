@@ -2,6 +2,7 @@ import { PostsList } from "@/components/blog/PostsList";
 import { getAllPosts } from "@/data";
 //import { PostExtended } from "@/types"; /* For "no posts" simulation purpose */
 
+const env = process.env.NODE_ENV;
 
 export default async function Home() {
 
@@ -16,7 +17,8 @@ export default async function Home() {
 		);
 	}
 
-	const publishedPosts = posts; //posts.filter(post => post.published);
+	const publishedPosts = env === "development" ? posts : posts.filter(post => post.published);
+	//const publishedPosts = posts.filter(post => post.published);
 
 	return (
 		<div className="blog-homepage">

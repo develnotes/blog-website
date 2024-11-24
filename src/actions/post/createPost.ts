@@ -24,7 +24,7 @@ const titleSchema = z.object({
     title: z
         .string()
         .min(10, { message: "Title must have at least 10 characters" })
-        .refine(val => !val.match(/[^a-z0-9- ]/gi), {
+        .refine(val => !val.match(/[^a-z0-9- :]/gi), {
             message: "Only letters and digits are allowed",
         })
         .refine(async (title) => {
@@ -70,7 +70,7 @@ const postSchema = z.object({
     title: z
         .string()
         .min(10, { message: "Title must have at least 10 characters" })
-        .refine(val => !val.match(/[^a-z0-9- ]/gi), {
+        .refine(val => !val.match(/[^a-z0-9- :]/gi), {
             message: "Only letters and digits are allowed",
         })
         .refine(async (title) => {
