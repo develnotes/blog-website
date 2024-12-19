@@ -39,6 +39,7 @@ export const TitleEditor = ({
                 type="text"
                 name="title"
                 className="title-input"
+                placeholder="Title"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
                 onKeyDown={e => {
