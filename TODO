@@ -14,5 +14,10 @@ This warning appeared after a clicked the buttom "create post"
 
 # Design the "Not found" page.
 
-#
+# Check:
 useSearchParams() should be wrapped in a suspense boundary at page "/error". Read more: https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+
+
+# Check:
+https://github.com/bvaughn/react-error-boundary
+
