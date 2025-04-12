@@ -1,7 +1,6 @@
 "use server";
 
 import { PostShow } from "@/components/dashboard/posts";
-import { fetchAllPosts } from "@/db";
 import { getUserData } from "@/data";
 import { Post, Tag } from "@/types";
 
@@ -23,12 +22,3 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </div>
     );
 }
-
-//export async function generateStaticParams() {
-//
-//    const posts = await fetchAllPosts();
-//
-//    return posts.map(post => {
-//        return { slug: post.slug };
-//    });
-//}

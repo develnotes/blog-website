@@ -3,7 +3,7 @@
 import { getTags } from "@/actions";
 import { PostEdit } from "@/components/dashboard/posts";
 import { TagsContext } from "@/components/dashboard/tags/TagsContext";
-import { fetchAllPosts, fetchPost } from "@/db";
+import { fetchPost } from "@/db";
 
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -27,12 +27,3 @@ export default async function Page({ params }: { params: { slug: string } }) {
         );
     }
 }
-
-//export async function generateStaticParams() {
-//
-//    const posts = await fetchAllPosts();
-//
-//    return posts.map(post => {
-//        return { slug: post.slug };
-//    });
-//}
