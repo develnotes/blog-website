@@ -5,6 +5,7 @@ import { Header } from "@/components/blog/Header";
 import { GoToTopButton } from "@/components/common";
 import ThemeContext from "@/contexts/ThemeContext";
 import { Footer } from "@/components/blog/Footer";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
 	title: "Blog Website",
@@ -27,6 +28,7 @@ export default function RootLayout({
 					</div>
 					<Footer />
 				</ThemeContext>
+				<Analytics />
 			</body>
 		</html>
 	);
