@@ -36,6 +36,7 @@ export type { ToolbarConfig } from "quill/modules/toolbar";
 
 type ContextType = {
     editorRef: MutableRefObject<HTMLDivElement | null>,
+    quillRef: MutableRefObject<Quill | undefined>,
     contents: { delta: string, text: string },
     stats: { words: number, characters: number },
     loading: boolean,
@@ -43,6 +44,7 @@ type ContextType = {
 
 const defaultValue: ContextType = {
     editorRef: { current: null },
+    quillRef: { current: undefined },
     contents: { delta: "", text: "" },
     stats: { words: 0, characters: 0 },
     loading: true,
@@ -72,6 +74,38 @@ export default function QuillContext({
     const [characters, setCharacters] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
 
+    const setDeltaString = useCallback((quill: Quill) => {
+        const textString = JSON.stringify(quill.getText());
+        setText(textString);
+
+        const words = textString
+            .replaceAll('"', "")
+            .replaceAll("\\n", "")
+            .split(" ")
+            .filter(w => w.length > 0)
+            .length;
+
+        setWords(words)
+
+        const characters = textString
+            .replaceAll('"', "")
+            .replaceAll("\\n", "")
+            .split(" ")
+            .join("").length;
+
+        setCharacters(characters);
+
+        const deltaString = JSON.stringify(quill.getContents());
+        setDelta(deltaString);
+
+        if (setContents) {
+            setContents({
+                delta: JSON.stringify(quill.getContents()),
+                text: JSON.stringify(quill.getText()),
+            });
+        }
+    }, [setContents]);
+
     const InitQuill = useCallback((editor: HTMLDivElement) => {
 
         quillRef.current = new Quill(editor, {
@@ -84,38 +118,6 @@ export default function QuillContext({
         console.log("Loaded Quill...");
 
         const quill = quillRef.current;
-
-        const setDeltaString = (quill: Quill) => {
-            const textString = JSON.stringify(quill.getText());
-            setText(textString);
-
-            const words = textString
-                .replaceAll('"', "")
-                .replaceAll("\\n", "")
-                .split(" ")
-                .filter(w => w.length > 0)
-                .length;
-
-            setWords(words)
-
-            const characters = textString
-                .replaceAll('"', "")
-                .replaceAll("\\n", "")
-                .split(" ")
-                .join("").length;
-
-            setCharacters(characters);
-
-            const deltaString = JSON.stringify(quill.getContents());
-            setDelta(deltaString);
-
-            if (setContents) {
-                setContents({
-                    delta: JSON.stringify(quill.getContents()),
-                    text: JSON.stringify(quill.getText()),
-                });
-            }
-        };
 
         if (quill) {
             initialDelta && quill.setContents(JSON.parse(initialDelta));
@@ -140,7 +142,7 @@ export default function QuillContext({
             setLoading(false);
         }
 
-    }, [initialDelta, options, setContents]);
+    }, [initialDelta, options, setDeltaString]);
 
     useEffect(() => {
         mountRef.current = true;
@@ -169,6 +171,7 @@ export default function QuillContext({
     return (
         <Context.Provider value={{
             editorRef,
+            quillRef,
             contents: { delta, text },
             stats: { characters, words },
             loading,
