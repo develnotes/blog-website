@@ -28,11 +28,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
     }
 }
 
-export async function generateStaticParams() {
-
-    const posts = await fetchAllPosts();
-
-    return posts.map(post => {
-        return { slug: post.slug };
-    });
-}
+//export async function generateStaticParams() {
+//
+//    const posts = await fetchAllPosts();
+//
+//    return posts.map(post => {
+//        return { slug: post.slug };
+//    });
+//}
